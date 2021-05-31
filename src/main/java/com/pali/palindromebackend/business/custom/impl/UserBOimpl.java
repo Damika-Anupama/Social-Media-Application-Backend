@@ -29,6 +29,7 @@ public class UserBOimpl implements UserBO {
 
     @Override
     public void saveUser(UserDTO dto) throws Exception {
+        System.out.println(Exception.class);
         userDAO.save(mapper.getUser(dto));
     }
 

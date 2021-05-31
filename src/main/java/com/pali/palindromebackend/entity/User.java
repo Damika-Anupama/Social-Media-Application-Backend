@@ -10,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -23,24 +24,32 @@ import java.util.Date;
 @Table(name = "user")
 @Data
 public class User implements SuperEntity {
-
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
     @Id
     @Column(updatable = false)
     private String username;
+    @Column(name = "created_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private boolean isActive;
     @NotNull(message = "Password is required")
     @NotEmpty(message = "Password should not be empty")
     @NotBlank(message = "Password shouldn't be a blank")
     @ColumnDefault("'dubfiskdnhfjsd2fajsfioad7jfkmadrfj9pqeor90ru2jfinfkjgndfoksodkfwa'")
     private String password;
-    private boolean isActive;
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private Role role;
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at")
-    private Date createdAt;
     @UpdateTimestamp
     @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+//    @Size(max = 20)
+    private Date updatedAt;
+
+    public boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
 }

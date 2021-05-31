@@ -14,5 +14,4 @@ import java.io.Serializable;
 public class LoginDTO implements Serializable {
     private String username;
     private String password;
-
 }

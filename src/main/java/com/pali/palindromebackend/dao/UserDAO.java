@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author : Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
  * @since : 28/04/2021
  **/
-public interface UserDAO extends JpaRepository<User,Integer> {
+public interface UserDAO extends JpaRepository<User,Object> {
 }

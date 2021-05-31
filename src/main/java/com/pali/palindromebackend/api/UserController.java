@@ -66,6 +66,7 @@ public class UserController {
             bo.saveUser(dto);
             return new ResponseEntity<>(dto, HttpStatus.CREATED);
         } catch (Exception e) {
+            System.out.println(e);
             return new ResponseEntity<>("Something went wrong", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

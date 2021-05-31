@@ -4,9 +4,11 @@ import com.pali.palindromebackend.business.util.MyUserDetailsService;
 import com.pali.palindromebackend.dto.LoginDTO;
 import com.pali.palindromebackend.util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,19 +35,21 @@ public class AuthenticateController {
 
     @PostMapping(value = "/api/v1/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginDTO loginDTO) throws Exception {
+        System.out.println(loginDTO);
         try {
-            System.out.println(loginDTO);
-            Authentication authenticate = authenticationManager.authenticate(
+            authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword())
             );
-            System.out.println(authenticate);
 
-        } catch (BadCredentialsException e) {
-            throw new Exception("Incorrect username or password", e);
+        }catch (DisabledException e){
+            return new ResponseEntity<>("You are deactivated! please contact the admin", HttpStatus.FORBIDDEN);
+        }catch (BadCredentialsException e){
+            return new ResponseEntity<>("Incorrect username or password", HttpStatus.UNAUTHORIZED);
+        }catch (Throwable e){
+            throw  new Error(e);
         }
         final UserDetails userDetails = myUserDetailsService.loadUserByUsername(loginDTO.getUsername());
         final String jwt = jwtUtil.generateToken(userDetails);
-        System.out.println(userDetails);
         return ResponseEntity.ok(jwt);
     }
 }

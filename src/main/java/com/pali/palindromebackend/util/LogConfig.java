@@ -13,7 +13,7 @@ import java.util.logging.SimpleFormatter;
  **/
 public class LogConfig {
     public static void initLogging(){
-        Properties prop = new Properties();
+        /*Properties prop = new Properties();
         String logFilePath;
         try{
             if(prop.getProperty("app.log_dir") != null){
@@ -29,6 +29,6 @@ public class LogConfig {
             Logger.getLogger("").addHandler(fileHandler);
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }

@@ -1,8 +1,8 @@
 package com.pali.palindromebackend.business.util;
 
 import com.pali.palindromebackend.dao.UserDAO;
+import com.pali.palindromebackend.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

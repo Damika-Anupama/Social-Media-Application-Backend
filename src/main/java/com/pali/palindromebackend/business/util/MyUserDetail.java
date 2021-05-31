@@ -23,7 +23,7 @@ public class MyUserDetail implements UserDetails {
     public MyUserDetail(User user) {
         this.username = user.getUsername();
         this.password = user.getPassword();
-        this.isActive = user.isActive();
+        this.isActive = user.getIsActive();
         this.authorities = Arrays.asList(new SimpleGrantedAuthority(user.getRole().toString()));
     }
 
