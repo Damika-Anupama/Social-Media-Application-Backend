@@ -27,7 +27,7 @@ public class UserController {
     @Autowired
     private EntityDTOMapper mapper;
 
-    public UserController() throws SQLException{
+    public UserController() throws SQLException {
 
     }
 
@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/{userId}",
-            produces = MediaType.APPLICATION_JSON_VALUE )
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public ResponseEntity<Object> getUserById(@PathVariable("userId") Integer userId) throws Exception {
@@ -66,7 +66,6 @@ public class UserController {
             bo.saveUser(dto);
             return new ResponseEntity<>(dto, HttpStatus.CREATED);
         } catch (Exception e) {
-            System.out.println(e);
             return new ResponseEntity<>("Something went wrong", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

@@ -29,7 +29,6 @@ public class UserBOimpl implements UserBO {
 
     @Override
     public void saveUser(UserDTO dto) throws Exception {
-        System.out.println(Exception.class);
         userDAO.save(mapper.getUser(dto));
     }
 
@@ -46,7 +45,8 @@ public class UserBOimpl implements UserBO {
     @Transactional(readOnly = true)
     @Override
     public List<UserDTO> getAllUsers() throws Exception {
-        return userDAO.findAll().stream().map(user -> mapper.getUserDTO(user)).collect(Collectors.toList());
+        return userDAO.findAll().stream().
+                map(user -> mapper.getUserDTO(user)).collect(Collectors.toList());
     }
 
     @Override
