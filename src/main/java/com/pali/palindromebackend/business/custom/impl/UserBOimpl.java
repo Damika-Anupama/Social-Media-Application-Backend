@@ -50,7 +50,7 @@ public class UserBOimpl implements UserBO {
     }
 
     @Override
-    public UserDTO getUser(Integer  userId) throws Exception {
+    public UserDTO getUser(Object userId) throws Exception {
         return userDAO.findById(userId).map(user -> mapper.getUserDTO(user)).get();
     }
 }

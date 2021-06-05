@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.sql.SQLException;
@@ -43,7 +44,7 @@ public class UserController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<Object> getUserById(@PathVariable("userId") Integer userId) throws Exception {
+    public ResponseEntity<Object> getUserById(@PathVariable("userId") String userId) throws Exception {
         System.out.println("One");
         try {
             return new ResponseEntity<>(bo.getUser(userId), HttpStatus.OK);

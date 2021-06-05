@@ -1,21 +1,19 @@
-package com.pali.palindromebackend.dto;
+package com.pali.palindromebackend.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author : Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
- * @since : 01/06/2021
+ * @since : 03/06/2021
  **/
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class LaunchDTO implements Serializable {
-    private String id;
-    private String media;
+public class LaunchBody {
+    private MultipartFile file;
     private String description;
     private String feeling;
 }

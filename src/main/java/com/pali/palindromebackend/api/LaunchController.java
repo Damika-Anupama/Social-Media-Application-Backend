@@ -3,6 +3,8 @@ package com.pali.palindromebackend.api;
 import com.pali.palindromebackend.business.custom.LaunchBO;
 import com.pali.palindromebackend.business.util.EntityDTOMapper;
 import com.pali.palindromebackend.dto.LaunchDTO;
+import com.pali.palindromebackend.model.LaunchBody;
+import com.pali.palindromebackend.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -50,16 +52,24 @@ public class LaunchController {
         }
     }
 
+    @Autowired
+    private FileService fileService;
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(
-            produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE
+            produces = MediaType.MULTIPART_FORM_DATA_VALUE,
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
     @ResponseBody
-    public ResponseEntity<Object> saveLaunch(@Valid @RequestBody LaunchDTO dto) throws Exception {
+    public ResponseEntity<Object> saveLaunch( @ModelAttribute LaunchBody body) throws Exception {
         try {
+            final String mediaPath = fileService.saveFile(body.getFile(), body.getFile().getContentType());
+            LaunchDTO dto = new LaunchDTO();
+            dto.setDescription(body.getDescription());
+            dto.setFeeling(body.getFeeling());
+            dto.setMedia(mediaPath);
             bo.saveLaunch(dto);
-            return new ResponseEntity<>(dto, HttpStatus.CREATED);
+            return new ResponseEntity<>(dto.getId(), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Something went wrong !!", HttpStatus.INTERNAL_SERVER_ERROR);
         }

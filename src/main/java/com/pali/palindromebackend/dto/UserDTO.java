@@ -1,5 +1,6 @@
 package com.pali.palindromebackend.dto;
 
+import com.pali.palindromebackend.entity.Gender;
 import com.pali.palindromebackend.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,6 +27,8 @@ public class UserDTO implements Serializable {
     private String password;
     private Role role;
     private Date updatedAt;
+    private Gender gender;
+    private String email;
 
     public boolean getIsActive() {
         return isActive;

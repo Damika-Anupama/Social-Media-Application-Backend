@@ -21,16 +21,17 @@ import java.util.Date;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "user")
+@Table(name = "user",uniqueConstraints = @UniqueConstraint(columnNames = {"id","username"}))
 @Data
 public class User implements SuperEntity {
     @Id
-    @Column(updatable = false)
+    @Column(name = "username",updatable = false)
     private String username;
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
     private boolean isActive;
     @NotNull(message = "Password is required")
@@ -42,8 +43,10 @@ public class User implements SuperEntity {
     private Role role;
     @UpdateTimestamp
     @Column(name = "updated_at")
-//    @Size(max = 20)
     private Date updatedAt;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+    private String email;
 
     public boolean getIsActive() {
         return isActive;
