@@ -4,15 +4,23 @@ import com.pali.palindromebackend.business.custom.LaunchBO;
 import com.pali.palindromebackend.business.util.EntityDTOMapper;
 import com.pali.palindromebackend.dto.LaunchDTO;
 import com.pali.palindromebackend.model.LaunchBody;
+import com.pali.palindromebackend.model.ResponseLaunchBody;
 import com.pali.palindromebackend.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import sun.text.resources.FormatData;
 
 import javax.validation.Valid;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -26,17 +34,32 @@ public class LaunchController {
     @Autowired
     private LaunchBO bo;
 
-    @Autowired
     private EntityDTOMapper mapper;
 
     public LaunchController() throws SQLException {
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+
+    @PreAuthorize("permitAll()")
+    @GetMapping (produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<List<LaunchDTO>> getAllLaunches() throws Exception {
-        return new ResponseEntity<List<LaunchDTO>>(bo.getAllLaunches(), HttpStatus.OK);
+    public ResponseEntity<?> getAllLaunches() throws Exception {
+        try {
+            List<LaunchDTO> launches = bo.getAllLaunches();
+            List<ResponseLaunchBody> launches1 = new ArrayList<ResponseLaunchBody>();
+            launches.forEach(dto -> {
+                ResponseLaunchBody launchBody = new ResponseLaunchBody();
+                launchBody.setFile(fileService.getMedia(dto.getMedia()));
+                launchBody.setDescription(dto.getDescription());
+                launchBody.setFeeling(dto.getFeeling());
+                launches1.add(launchBody);
+            });
+            return new ResponseEntity<>(launches1, HttpStatus.OK);
+        }catch (Exception e){
+            System.out.println(e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping(value = "/{launchId}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -57,13 +80,13 @@ public class LaunchController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(
-            produces = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
     @ResponseBody
     public ResponseEntity<Object> saveLaunch( @ModelAttribute LaunchBody body) throws Exception {
         try {
-            final String mediaPath = fileService.saveFile(body.getFile(), body.getFile().getContentType());
+            final String mediaPath = fileService.saveMediaFile(body.getFile(), body.getFile().getContentType());
             LaunchDTO dto = new LaunchDTO();
             dto.setDescription(body.getDescription());
             dto.setFeeling(body.getFeeling());

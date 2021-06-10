@@ -22,4 +22,8 @@ public class Launch implements SuperEntity{
     private String media;
     private String description;
     private String feeling;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id",referencedColumnName = "id",nullable = false)
+    private User user;
 }

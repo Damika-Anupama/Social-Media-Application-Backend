@@ -16,6 +16,4 @@ public interface EntityDTOMapper {
     User getUser(UserDTO dto);
     UserDTO getUserDTO(User user);
 
-    Launch getLaunch(LaunchDTO dto);
-    LaunchDTO getLaunchDTO(Launch launch);
 }

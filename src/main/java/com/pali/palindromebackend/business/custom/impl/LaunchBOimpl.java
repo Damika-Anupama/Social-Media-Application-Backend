@@ -2,6 +2,7 @@ package com.pali.palindromebackend.business.custom.impl;
 
 import com.pali.palindromebackend.business.custom.LaunchBO;
 import com.pali.palindromebackend.business.util.EntityDTOMapper;
+import com.pali.palindromebackend.business.util.LaunchEntityDTOMapper;
 import com.pali.palindromebackend.dao.LaunchDAO;
 import com.pali.palindromebackend.dto.LaunchDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,7 @@ public class LaunchBOimpl implements LaunchBO {
     @Autowired
     private LaunchDAO dao;
 
-    @Autowired
-    private EntityDTOMapper mapper;
+    private LaunchEntityDTOMapper mapper;
 
     public LaunchBOimpl() {
     }

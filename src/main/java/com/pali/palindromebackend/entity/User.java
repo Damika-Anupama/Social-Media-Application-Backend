@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author : Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
@@ -47,6 +48,10 @@ public class User implements SuperEntity {
     @Enumerated(EnumType.STRING)
     private Gender gender;
     private String email;
+
+
+    @OneToMany(mappedBy = "user")
+    private List<Launch> launches;
 
     public boolean getIsActive() {
         return isActive;

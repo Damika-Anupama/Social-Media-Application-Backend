@@ -25,7 +25,6 @@ public class UserController {
     @Autowired
     private UserBO bo;
 
-    @Autowired
     private EntityDTOMapper mapper;
 
     public UserController() throws SQLException {

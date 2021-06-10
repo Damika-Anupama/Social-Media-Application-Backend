@@ -48,7 +48,6 @@ public class AuthenticateController {
         }catch (Throwable e){
             throw  new Error(e);
         }
-        System.out.println("fdsfds");
         final UserDetails userDetails = myUserDetailsService.loadUserByUsername(loginDTO.getUsername());
         final String jwt = jwtUtil.generateToken(userDetails);
         return ResponseEntity.ok(jwt);
