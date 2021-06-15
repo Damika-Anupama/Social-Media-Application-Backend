@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.sql.SQLException;
@@ -25,6 +24,7 @@ public class UserController {
     @Autowired
     private UserBO bo;
 
+    @Autowired
     private EntityDTOMapper mapper;
 
     public UserController() throws SQLException {
@@ -43,7 +43,7 @@ public class UserController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<Object> getUserById(@PathVariable("userId") String userId) throws Exception {
+    public ResponseEntity<Object> getUserById(@PathVariable("userId") int userId) throws Exception {
         System.out.println("One");
         try {
             return new ResponseEntity<>(bo.getUser(userId), HttpStatus.OK);
@@ -73,7 +73,7 @@ public class UserController {
     @DeleteMapping("/{userId}")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public ResponseEntity<Object> deleteUser(@PathVariable("userId") Integer userId) throws Exception {
+    public ResponseEntity<Object> deleteUser(@PathVariable("userId") int userId) throws Exception {
         try {
             System.out.println(userId);
             bo.getUser(userId);
@@ -93,9 +93,9 @@ public class UserController {
     )
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<Object> updateUser(@Valid @RequestBody UserDTO dto, @PathVariable("userId") Integer userId)
+    public ResponseEntity<Object> updateUser(@Valid @RequestBody UserDTO dto, @PathVariable("userId") int userId)
             throws Exception {
-        if (dto.getId() != userId) {
+        if (dto.getId()!=userId) {
             return new ResponseEntity<>("Mismatch userId !!", HttpStatus.BAD_REQUEST);
         }
         try {

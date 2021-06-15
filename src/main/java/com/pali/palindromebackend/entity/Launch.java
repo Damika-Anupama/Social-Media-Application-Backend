@@ -1,5 +1,6 @@
 package com.pali.palindromebackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,9 @@ public class Launch implements SuperEntity{
     private String description;
     private String feeling;
 
-    @ManyToOne
+    @JsonIgnoreProperties("launches")
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "user_id",referencedColumnName = "id",nullable = false)
     private User user;
+
 }

@@ -22,6 +22,7 @@ public class LaunchBOimpl implements LaunchBO {
     @Autowired
     private LaunchDAO dao;
 
+    @Autowired
     private LaunchEntityDTOMapper mapper;
 
     public LaunchBOimpl() {
@@ -38,7 +39,7 @@ public class LaunchBOimpl implements LaunchBO {
     }
 
     @Override
-    public void deleteLaunch(String launchId) throws Exception {
+    public void deleteLaunch(int launchId) throws Exception {
         dao.deleteById(launchId);
     }
 
@@ -50,7 +51,13 @@ public class LaunchBOimpl implements LaunchBO {
     }
 
     @Override
-    public LaunchDTO getLaunch(String launchId) throws Exception {
+    public LaunchDTO getLaunch(int launchId) throws Exception {
         return dao.findById(launchId).map(launch -> mapper.getLaunchDTO(launch)).get();
+    }
+
+    @Override
+    public List<LaunchDTO> getLaunchesByUserId(int userId) throws Exception {
+        return dao.findLaunchesByUserId(userId).stream().
+                map(launch -> mapper.getLaunchDTO(launch)).collect(Collectors.toList());
     }
 }

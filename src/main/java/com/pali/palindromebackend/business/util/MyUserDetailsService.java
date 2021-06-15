@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 /**
@@ -21,7 +22,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> user = userDAO.findById(username);
+        Optional<User> user = userDAO.findUserByUsername(username);
         return user.map(MyUserDetail::new)
                 .orElseThrow(() -> new UsernameNotFoundException(username+" cannot find"));
     }

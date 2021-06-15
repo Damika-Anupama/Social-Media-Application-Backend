@@ -1,8 +1,7 @@
 package com.pali.palindromebackend.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -25,12 +24,12 @@ import java.util.List;
 @Table(name = "user",uniqueConstraints = @UniqueConstraint(columnNames = {"id","username"}))
 @Data
 public class User implements SuperEntity {
-    @Id
     @Column(name = "username",updatable = false)
     private String username;
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
@@ -49,7 +48,8 @@ public class User implements SuperEntity {
     private Gender gender;
     private String email;
 
-
+    @Setter(AccessLevel.NONE)
+    @JsonIgnoreProperties("user")
     @OneToMany(mappedBy = "user")
     private List<Launch> launches;
 

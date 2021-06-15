@@ -18,5 +18,5 @@ public class LaunchBody implements Serializable {
     private MultipartFile file;
     private String description;
     private String feeling;
-    private String user;
+    private int user;
 }

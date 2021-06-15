@@ -14,9 +14,11 @@ public interface LaunchBO extends SuperBO {
 
     public void updateLaunch(LaunchDTO dto) throws Exception;
 
-    public void deleteLaunch(String launchId) throws Exception;
+    public void deleteLaunch(int launchId) throws Exception;
 
     public List<LaunchDTO> getAllLaunches() throws Exception;
 
-    public LaunchDTO getLaunch(String launchId) throws Exception;
+    public LaunchDTO getLaunch(int launchId) throws Exception;
+
+    public List<LaunchDTO> getLaunchesByUserId(int userId) throws Exception;
 }

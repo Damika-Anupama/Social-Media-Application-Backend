@@ -14,9 +14,9 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Data
 public class LaunchDTO implements Serializable {
-    private String id;
+    private int id;
     private String media;
     private String description;
     private String feeling;
-    private String user;
+    private int user;
 }

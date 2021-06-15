@@ -7,16 +7,11 @@ import com.pali.palindromebackend.model.LaunchBody;
 import com.pali.palindromebackend.model.ResponseLaunchBody;
 import com.pali.palindromebackend.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import sun.text.resources.FormatData;
 
 import javax.validation.Valid;
 import java.sql.SQLException;
@@ -41,7 +36,7 @@ public class LaunchController {
 
 
     @PreAuthorize("permitAll()")
-    @GetMapping (produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public ResponseEntity<?> getAllLaunches() throws Exception {
@@ -56,16 +51,40 @@ public class LaunchController {
                 launches1.add(launchBody);
             });
             return new ResponseEntity<>(launches1, HttpStatus.OK);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+    @PreAuthorize("permitAll()")
+    @GetMapping(value = "/user/{userId}",produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public ResponseEntity<?> getLaunchesByUserId(@PathVariable("userId") int userId)throws Exception{
+        try{
+            List<LaunchDTO> launches = bo.getLaunchesByUserId(userId);
+            List<ResponseLaunchBody> launches1 = new ArrayList<ResponseLaunchBody>();
+            launches.forEach(dto -> {
+                ResponseLaunchBody launchBody = new ResponseLaunchBody();
+                launchBody.setFile(fileService.getMedia(dto.getMedia()));
+                launchBody.setDescription(dto.getDescription());
+                launchBody.setFeeling(dto.getFeeling());
+                launches1.add(launchBody);
+            });
+            return new ResponseEntity<>(launches1,HttpStatus.OK);
+        }catch (NoSuchElementException e){
+            return new ResponseEntity<>("No Launch Found !!",HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            return new ResponseEntity<>("Something went wrong !!",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
     @GetMapping(value = "/{launchId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<Object> getLaunchById(@PathVariable("launchId") String launchId) throws Exception {
+    public ResponseEntity<Object> getLaunchById(@PathVariable("launchId") int launchId) throws Exception {
         try {
             return new ResponseEntity<>(bo.getLaunch(launchId), HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -84,15 +103,16 @@ public class LaunchController {
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
     @ResponseBody
-    public ResponseEntity<Object> saveLaunch( @ModelAttribute LaunchBody body) throws Exception {
+    public ResponseEntity<Object> saveLaunch(@ModelAttribute LaunchBody body) throws Exception {
         try {
             final String mediaPath = fileService.saveMediaFile(body.getFile(), body.getFile().getContentType());
             LaunchDTO dto = new LaunchDTO();
             dto.setDescription(body.getDescription());
             dto.setFeeling(body.getFeeling());
             dto.setMedia(mediaPath);
+            dto.setUser(body.getUser());
             bo.saveLaunch(dto);
-            return new ResponseEntity<>(dto.getId(), HttpStatus.CREATED);
+            return new ResponseEntity<>(dto.getUser(), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Something went wrong !!", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -101,7 +121,7 @@ public class LaunchController {
     @DeleteMapping("/{launchId}")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public ResponseEntity<Object> deleteLaunch(@PathVariable("launchId") String launchId) throws Exception {
+    public ResponseEntity<Object> deleteLaunch(@PathVariable("launchId") int launchId) throws Exception {
         try {
             System.out.println(launchId);
             bo.getLaunch(launchId);
@@ -122,8 +142,8 @@ public class LaunchController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public ResponseEntity<Object> updateLaunch(@Valid @RequestBody LaunchDTO dto,
-                                               @PathVariable("launchId") String launchId) throws Exception {
-        if (!(dto.getId().equals(launchId))) {
+                                               @PathVariable("launchId") int launchId) throws Exception {
+        if (!(dto.getId() == launchId)) {
             return new ResponseEntity<>("Mismatch launchId :(", HttpStatus.BAD_REQUEST);
         }
         try {

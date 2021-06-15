@@ -12,7 +12,7 @@ import java.util.List;
 public interface UserBO extends SuperBO {
     public void saveUser(UserDTO dto) throws Exception;
     public void updateUser(UserDTO dto) throws Exception;
-    public void deleteUser(Integer userId) throws Exception;
+    public void deleteUser(int userId) throws Exception;
     public List<UserDTO> getAllUsers() throws Exception;
-    public UserDTO getUser(Object userName) throws Exception;
+    public UserDTO getUser(int userId) throws Exception;
 }
