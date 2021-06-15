@@ -34,9 +34,14 @@ public class UserController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<List<UserDTO>> getAllUsers() throws Exception {
-        System.out.println("get");
-        return new ResponseEntity<List<UserDTO>>(bo.getAllUsers(), HttpStatus.OK);
+    public ResponseEntity<?> getAllUsers() throws Exception {
+        try {
+            return new ResponseEntity<List<UserDTO>>(bo.getAllUsers(), HttpStatus.OK);
+        }catch (NoSuchElementException e) {
+            return new ResponseEntity<>("No user found !!", HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Something went wrong !!", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping(value = "/{userId}",
@@ -95,7 +100,7 @@ public class UserController {
     @ResponseBody
     public ResponseEntity<Object> updateUser(@Valid @RequestBody UserDTO dto, @PathVariable("userId") int userId)
             throws Exception {
-        if (dto.getId()!=userId) {
+        if (dto.getId() != userId) {
             return new ResponseEntity<>("Mismatch userId !!", HttpStatus.BAD_REQUEST);
         }
         try {

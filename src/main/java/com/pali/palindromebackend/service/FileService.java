@@ -1,7 +1,6 @@
 package com.pali.palindromebackend.service;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -9,8 +8,10 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * @author : Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
@@ -18,15 +19,17 @@ import java.time.format.DateTimeFormatter;
  **/
 @Service
 public class FileService {
-    @Value("${upload.path}")
-    private String uploadPath;
+    @Value("${media-upload.path}")
+    private String UploadPath;
+
+    private final String mediaUploadPath = UploadPath + "media/";
 
     public String saveMediaFile(MultipartFile file, String fileType) {
         String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss-"));
         String fileName = date + file.getOriginalFilename();
 
         // folderPath here is /sismed/temp/exames
-        String folderPath = uploadPath + fileType;
+        String folderPath = mediaUploadPath + fileType;
         File f1 = new File(folderPath);
         f1.mkdirs();
         String filePath = folderPath + File.separator + fileName;
@@ -48,7 +51,7 @@ public class FileService {
         try {
             Path p = Paths.get(path);
             byte[] bytes = Files.readAllBytes(p);
-            if(bytes == null) {
+            if (bytes == null) {
                 System.out.println("empty");
             }
             return bytes;
@@ -58,6 +61,24 @@ public class FileService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public String saveFriend(int userId, int friendId, Date frinendshipSince) throws IOException {
+        String friendSavePath = UploadPath + "friend/";
+        String pathName = friendSavePath + userId + ".txt";
+        File file = new File(pathName);
+        System.out.println(pathName);
+        if (!file.exists()) {
+            try {
+                boolean newFile = file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        String saveFriend = String.valueOf(friendId) + "- " + frinendshipSince + "," +System.lineSeparator();
+        byte[] bytes = saveFriend.getBytes();
+        Files.write(Paths.get(pathName),bytes,StandardOpenOption.APPEND);
+        return pathName;
     }
 }
 

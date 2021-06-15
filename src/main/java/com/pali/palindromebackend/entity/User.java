@@ -53,6 +53,11 @@ public class User implements SuperEntity {
     @OneToMany(mappedBy = "user")
     private List<Launch> launches;
 
+    @Setter(AccessLevel.NONE)
+    @JsonIgnoreProperties("user")
+    @OneToMany(mappedBy = "user")
+    private List<Friend> friends;
+
     public boolean getIsActive() {
         return isActive;
     }
