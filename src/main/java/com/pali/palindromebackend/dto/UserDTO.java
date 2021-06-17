@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -29,6 +30,8 @@ public class UserDTO implements Serializable {
     private Date updatedAt;
     private Gender gender;
     private String email;
+    private String shortDescription;
+    private String profilePicture;
 
     public boolean getIsActive() {
         return isActive;

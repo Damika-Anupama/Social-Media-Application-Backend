@@ -9,8 +9,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -21,10 +19,10 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "user",uniqueConstraints = @UniqueConstraint(columnNames = {"id","username"}))
+@Table(name = "user", uniqueConstraints = @UniqueConstraint(columnNames = {"id", "username"}))
 @Data
 public class User implements SuperEntity {
-    @Column(name = "username",updatable = false)
+    @Column(name = "username", updatable = false)
     private String username;
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
@@ -47,6 +45,10 @@ public class User implements SuperEntity {
     @Enumerated(EnumType.STRING)
     private Gender gender;
     private String email;
+    @Column(name = "short_description")
+    private String shortDescription;
+    @Column(name = "profile_picture")
+    private String profilePicture;
 
     @Setter(AccessLevel.NONE)
     @JsonIgnoreProperties("user")
@@ -57,6 +59,10 @@ public class User implements SuperEntity {
     @JsonIgnoreProperties("user")
     @OneToMany(mappedBy = "user")
     private List<Friend> friends;
+
+    @Setter(AccessLevel.NONE)
+    @ManyToMany(mappedBy = "users")
+    private List<Community> communities;
 
     public boolean getIsActive() {
         return isActive;
