@@ -29,6 +29,9 @@ public class LaunchController {
     @Autowired
     private LaunchBO bo;
 
+    @Autowired
+    private FileService fileService;
+
     private EntityDTOMapper mapper;
 
     public LaunchController() throws SQLException {
@@ -93,9 +96,6 @@ public class LaunchController {
             return new ResponseEntity<>("Something went wrong !!", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    @Autowired
-    private FileService fileService;
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(

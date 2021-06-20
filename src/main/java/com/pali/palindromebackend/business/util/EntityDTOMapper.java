@@ -15,8 +15,8 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface EntityDTOMapper {
     User getUser(UserDTO dto);
-
     UserDTO getUserDTO(User user);
+
     Community getCommunity(CommunityDTO dto);
     CommunityDTO getCommunityDTO(Community community);
 }

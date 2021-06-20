@@ -32,6 +32,7 @@ public class UserDTO implements Serializable {
     private String email;
     private String shortDescription;
     private String profilePicture;
+    private String phoneNum;
 
     public boolean getIsActive() {
         return isActive;

@@ -14,4 +14,8 @@ import java.io.Serializable;
 public class SendingUserBody implements Serializable {
     private String username;
     private String password;
+    private String email;
+    private String shortDescription;
+    private String profilePicture;
+
 }

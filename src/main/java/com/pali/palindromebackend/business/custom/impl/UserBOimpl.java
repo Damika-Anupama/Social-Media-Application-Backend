@@ -53,4 +53,9 @@ public class UserBOimpl implements UserBO {
     public UserDTO getUser(int userId) throws Exception {
         return userDAO.findById(userId).map(user -> mapper.getUserDTO(user)).get();
     }
+
+    @Override
+    public UserDTO getUserByName(String userName) throws Exception {
+        return userDAO.findUserByUsername(userName).map(user -> mapper.getUserDTO(user)).get();
+    }
 }

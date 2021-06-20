@@ -49,6 +49,8 @@ public class User implements SuperEntity {
     private String shortDescription;
     @Column(name = "profile_picture")
     private String profilePicture;
+    @Column(name = "phone_number")
+    private String phoneNum;
 
     @Setter(AccessLevel.NONE)
     @JsonIgnoreProperties("user")
@@ -63,6 +65,11 @@ public class User implements SuperEntity {
     @Setter(AccessLevel.NONE)
     @ManyToMany(mappedBy = "users")
     private List<Community> communities;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnoreProperties("user")
+    @Setter(AccessLevel.NONE)
+    private List<Suggestion> suggestions;
 
     public boolean getIsActive() {
         return isActive;

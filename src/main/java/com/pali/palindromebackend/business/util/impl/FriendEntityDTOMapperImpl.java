@@ -8,7 +8,7 @@ import com.pali.palindromebackend.entity.Friend;
  * @author : Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
  * @since : 15/06/2021
  **/
-public class FriendEntityDTOMapperimpl extends FriendEntityDTOMapper {
+public class FriendEntityDTOMapperImpl extends FriendEntityDTOMapper {
     @Override
     public Friend getFriend(FriendDTO dto) {
         if (dto == null) {

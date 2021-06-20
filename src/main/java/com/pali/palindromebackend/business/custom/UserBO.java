@@ -15,4 +15,5 @@ public interface UserBO extends SuperBO {
     public void deleteUser(int userId) throws Exception;
     public List<UserDTO> getAllUsers() throws Exception;
     public UserDTO getUser(int userId) throws Exception;
+    public UserDTO getUserByName(String userName) throws Exception;
 }

@@ -5,10 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
+import java.nio.file.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -22,9 +19,10 @@ public class FileService {
     @Value("${media-upload.path}")
     private String UploadPath;
 
-    private final String mediaUploadPath = UploadPath + "media/";
+
 
     public String saveMediaFile(MultipartFile file, String fileType) {
+        String mediaUploadPath = UploadPath + "media/";
         String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss-"));
         String fileName = date + file.getOriginalFilename();
 
@@ -79,6 +77,44 @@ public class FileService {
         byte[] bytes = saveFriend.getBytes();
         Files.write(Paths.get(pathName),bytes,StandardOpenOption.APPEND);
         return pathName;
+    }
+
+    public String saveUserProfilePicture(MultipartFile file) {
+        String mediaUploadPath = UploadPath + "users/";
+        String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss-"));
+        String fileName = date + file.getOriginalFilename();
+        String filePath = mediaUploadPath + File.separator + fileName;
+
+        try {
+            byte[] bytes = file.getBytes();
+            File file1 = new File(filePath);
+            FileOutputStream fos = new FileOutputStream(file1);
+            fos.write(bytes);
+            fos.close();
+        } catch (IOException e) {
+            System.out.println(e);
+            e.printStackTrace();
+        }
+        return filePath;
+    }
+
+    public void deleteFile(String profilePicture) {
+        try {
+            Files.deleteIfExists(Paths.get(profilePicture));
+        } catch(NoSuchFileException e)
+        {
+            System.out.println("No such file/directory exists");
+        }
+        catch(DirectoryNotEmptyException e)
+        {
+            System.out.println("Directory is not empty.");
+        }
+        catch(IOException e)
+        {
+            System.out.println("Invalid permissions.");
+        }
+
+        System.out.println("Successfully deleted user's previous profilePicture");
     }
 }
 
