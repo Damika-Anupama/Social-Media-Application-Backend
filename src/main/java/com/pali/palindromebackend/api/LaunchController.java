@@ -3,6 +3,8 @@ package com.pali.palindromebackend.api;
 import com.pali.palindromebackend.business.custom.LaunchBO;
 import com.pali.palindromebackend.business.util.EntityDTOMapper;
 import com.pali.palindromebackend.dto.LaunchDTO;
+import com.pali.palindromebackend.entity.custom.LaunchUserDetails;
+import com.pali.palindromebackend.model.DashboardLaunchDetail;
 import com.pali.palindromebackend.model.LaunchBody;
 import com.pali.palindromebackend.model.ResponseLaunchBody;
 import com.pali.palindromebackend.service.FileService;
@@ -38,7 +40,7 @@ public class LaunchController {
     }
 
 
-    @PreAuthorize("permitAll()")
+/*    @PreAuthorize("permitAll()")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -54,6 +56,27 @@ public class LaunchController {
                 launches1.add(launchBody);
             });
             return new ResponseEntity<>(launches1, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }*/
+
+    @PreAuthorize("permitAll()")
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public ResponseEntity<?> getAllLaunchesWithUserDetails() throws Exception {
+        try {
+            List<LaunchUserDetails> luds = bo.getAllLaunchesWithUserDetails();
+            ArrayList<DashboardLaunchDetail> dlds = new ArrayList<>();
+            luds.forEach(detail -> {
+                byte[] launchMedia = fileService.getMedia(detail.getMedia());
+                byte[] userMedia = fileService.getMedia(detail.getProfilePicture());
+                DashboardLaunchDetail dld = new DashboardLaunchDetail(launchMedia,detail.getMediaType(), detail.getDescription(), detail.getFeeling(), detail.getUserId(),detail.getUserName(),detail.getShortDescription(),userMedia);
+                dlds.add(dld);
+            });
+            return new ResponseEntity<>(dlds, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -110,6 +133,7 @@ public class LaunchController {
             dto.setDescription(body.getDescription());
             dto.setFeeling(body.getFeeling());
             dto.setMedia(mediaPath);
+            dto.setMediaType(body.getFile().getContentType());
             dto.setUser(body.getUser());
             bo.saveLaunch(dto);
             return new ResponseEntity<>(dto.getUser(), HttpStatus.CREATED);

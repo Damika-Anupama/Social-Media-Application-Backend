@@ -32,6 +32,8 @@ public class LaunchEntityDTOMapperImpl extends LaunchEntityDTOMapper {
         launch.setId(dto.getId());
         launch.setDescription(dto.getDescription());
         launch.setFeeling(dto.getFeeling());
+        launch.setMedia(dto.getMedia());
+        launch.setMediaType(dto.getMediaType());
         return launch;
     }
 
@@ -47,6 +49,7 @@ public class LaunchEntityDTOMapperImpl extends LaunchEntityDTOMapper {
         dto.setId(launch.getId());
         dto.setDescription(launch.getDescription());
         dto.setMedia(launch.getMedia());
+        dto.setMediaType(launch.getMediaType());
         dto.setFeeling(launch.getFeeling());
         return dto;
     }

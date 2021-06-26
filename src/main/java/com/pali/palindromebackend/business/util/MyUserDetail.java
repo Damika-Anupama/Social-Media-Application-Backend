@@ -1,6 +1,7 @@
 package com.pali.palindromebackend.business.util;
 
 import com.pali.palindromebackend.entity.User;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +19,7 @@ public class MyUserDetail implements UserDetails {
     private String username;
     private String password;
     private boolean isActive;
+    private int id;
     private List<GrantedAuthority> authorities;
 
     public MyUserDetail(User user) {
@@ -25,6 +27,7 @@ public class MyUserDetail implements UserDetails {
         this.password = user.getPassword();
         this.isActive = user.getIsActive();
         this.authorities = Arrays.asList(new SimpleGrantedAuthority(user.getRole().toString()));
+        this.id = user.getId();
     }
 
     @Override
@@ -40,6 +43,10 @@ public class MyUserDetail implements UserDetails {
     @Override
     public String getUsername() {
         return username;
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override

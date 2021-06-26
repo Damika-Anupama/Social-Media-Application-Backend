@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -18,7 +21,6 @@ import java.util.Date;
 public class FileService {
     @Value("${media-upload.path}")
     private String UploadPath;
-
 
 
     public String saveMediaFile(MultipartFile file, String fileType) {
@@ -47,12 +49,12 @@ public class FileService {
 
     public byte[] getMedia(String path) {
         try {
-            Path p = Paths.get(path);
-            byte[] bytes = Files.readAllBytes(p);
-            if (bytes == null) {
-                System.out.println("empty");
+
+            if (!(path == null)) {
+                Path p = Paths.get(path);
+                byte[] bytes = Files.readAllBytes(p);
+                return bytes;
             }
-            return bytes;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -73,14 +75,14 @@ public class FileService {
                 e.printStackTrace();
             }
         }
-        String saveFriend = String.valueOf(friendId) + "- " + frinendshipSince + "," +System.lineSeparator();
+        String saveFriend = String.valueOf(friendId) + "- " + frinendshipSince + "," + System.lineSeparator();
         byte[] bytes = saveFriend.getBytes();
-        Files.write(Paths.get(pathName),bytes,StandardOpenOption.APPEND);
+        Files.write(Paths.get(pathName), bytes, StandardOpenOption.APPEND);
         return pathName;
     }
 
     public String saveUserProfilePicture(MultipartFile file) {
-        String mediaUploadPath = UploadPath + "users/";
+        String mediaUploadPath = UploadPath + "users";
         String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss-"));
         String fileName = date + file.getOriginalFilename();
         String filePath = mediaUploadPath + File.separator + fileName;
@@ -100,21 +102,15 @@ public class FileService {
 
     public void deleteFile(String profilePicture) {
         try {
-            Files.deleteIfExists(Paths.get(profilePicture));
-        } catch(NoSuchFileException e)
-        {
+            if (profilePicture != null)
+                Files.deleteIfExists(Paths.get(profilePicture));
+        } catch (NoSuchFileException e) {
             System.out.println("No such file/directory exists");
-        }
-        catch(DirectoryNotEmptyException e)
-        {
+        } catch (DirectoryNotEmptyException e) {
             System.out.println("Directory is not empty.");
-        }
-        catch(IOException e)
-        {
+        } catch (IOException e) {
             System.out.println("Invalid permissions.");
         }
-
-        System.out.println("Successfully deleted user's previous profilePicture");
     }
 }
 

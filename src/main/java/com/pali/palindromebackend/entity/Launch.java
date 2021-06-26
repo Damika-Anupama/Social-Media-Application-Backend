@@ -21,6 +21,8 @@ public class Launch implements SuperEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String media;
+    @Column(name = "media_type")
+    private String mediaType;
     private String description;
     private String feeling;
 

@@ -19,18 +19,18 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "user", uniqueConstraints = @UniqueConstraint(columnNames = {"id", "username"}))
+@Table(name = "user", uniqueConstraints = @UniqueConstraint(columnNames = {"id"}))
 @Data
 public class User implements SuperEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
     @Column(name = "username", updatable = false)
     private String username;
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
     private boolean isActive;
     @NotNull(message = "Password is required")
     @NotEmpty(message = "Password should not be empty")
@@ -49,8 +49,10 @@ public class User implements SuperEntity {
     private String shortDescription;
     @Column(name = "profile_picture")
     private String profilePicture;
-    @Column(name = "phone_number")
-    private String phoneNum;
+    @Column(name = "contact_number")
+    private String contactNum;
+    @Column(name = "last_login")
+    private Date lastLogin;
 
     @Setter(AccessLevel.NONE)
     @JsonIgnoreProperties("user")

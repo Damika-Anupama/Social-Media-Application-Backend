@@ -40,8 +40,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/v1/authenticate").permitAll()
                 .antMatchers(HttpMethod.POST,"/api/v1/users").permitAll()
                 .antMatchers(HttpMethod.GET,"/api/v1/users/name/**").permitAll()
-                .antMatchers("/api/v1/launches").permitAll()
-                .antMatchers("/api/v1/friends").permitAll()
                 .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

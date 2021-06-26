@@ -6,23 +6,23 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
  * @author : Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
  * @since : 28/04/2021
  **/
-@AllArgsConstructor@NoArgsConstructor@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class UserDTO implements Serializable {
+    private int id;
     @NotEmpty(message = "username cannot be empty !!")
     private String username;
     private Date createdAt;
-    private int id;
     private boolean isActive;
     @NotNull(message = "password cannot be null !!")
     private String password;
@@ -32,7 +32,8 @@ public class UserDTO implements Serializable {
     private String email;
     private String shortDescription;
     private String profilePicture;
-    private String phoneNum;
+    private String contactNum;
+    private Date lastLogin;
 
     public boolean getIsActive() {
         return isActive;

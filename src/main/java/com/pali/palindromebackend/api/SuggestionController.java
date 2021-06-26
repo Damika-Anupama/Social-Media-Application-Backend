@@ -43,7 +43,7 @@ public class SuggestionController {
     @ResponseBody
     public ResponseEntity<?> getAllSuggestions() throws Exception {
         try {
-            return new ResponseEntity<List<SuggestionDTO>>(bo.getAllSuggestions(), HttpStatus.OK);
+            return new ResponseEntity<List<SuggestionDTO>>( bo.getAllSuggestions(), HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>("No Suggestion found !!", HttpStatus.NOT_FOUND);
         } catch (Exception e) {
@@ -51,7 +51,7 @@ public class SuggestionController {
         }
     }
 
-    @GetMapping(produces = MediaType.MULTIPART_FORM_DATA_VALUE, value = "/user")
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/user")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public ResponseEntity<?> getAllSuggestionsWithUsers() throws Exception {

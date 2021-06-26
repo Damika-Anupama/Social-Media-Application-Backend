@@ -3,6 +3,8 @@ package com.pali.palindromebackend.api;
 import com.pali.palindromebackend.business.custom.UserBO;
 import com.pali.palindromebackend.business.util.EntityDTOMapper;
 import com.pali.palindromebackend.dto.UserDTO;
+import com.pali.palindromebackend.model.HomePageLoading;
+import com.pali.palindromebackend.model.SendingUserBody;
 import com.pali.palindromebackend.model.UserBody;
 import com.pali.palindromebackend.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletRequest;
 import javax.validation.Valid;
 import java.sql.SQLException;
 import java.util.List;
@@ -54,9 +57,25 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public ResponseEntity<Object> getUserById(@PathVariable("userId") int userId) throws Exception {
-        System.out.println("getUserById");
         try {
-            return new ResponseEntity<>(bo.getUser(userId), HttpStatus.OK);
+            UserDTO user = bo.getUser(userId);
+            SendingUserBody body = new SendingUserBody(fileService.getMedia(user.getProfilePicture()), user.getShortDescription(), user.getUsername(), user.getEmail(), user.getContactNum(), user.getPassword());
+            return new ResponseEntity<>(body, HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>("No user found !!", HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Something went wrong !!", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping(value = "/picture/{id}",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public ResponseEntity<?> getUserProfilePicture(@PathVariable("id") int id) throws Exception {
+        try {
+            HomePageLoading hpl = new HomePageLoading(fileService.getMedia(bo.getUserProfilePicture(id)));
+            return new ResponseEntity<>(hpl, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>("No user found !!", HttpStatus.NOT_FOUND);
         } catch (Exception e) {
@@ -80,27 +99,13 @@ public class UserController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping()
+    @PostMapping(
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<Object> saveUser(@ModelAttribute UserBody body) throws Exception {
-        System.out.println(body);
+    public ResponseEntity<?> saveUser(@Valid @RequestBody UserDTO dto) throws Exception {
         try {
-            String filePath = null;
-            if(body.getProfilePic()!=null) {
-                filePath = fileService.saveUserProfilePicture(body.getProfilePic());
-            }
-            UserDTO dto = new UserDTO();
-            dto.setUsername(body.getUsername());
-            dto.setEmail(body.getEmail());
-            dto.setPassword(body.getPassword());
-            dto.setGender(body.getGender());
-            dto.setCreatedAt(body.getCreatedAt());
-            dto.setRole(body.getRole());
-            dto.setPhoneNum(body.getPhoneNum());
-            dto.setIsActive(body.isActive());
-            dto.setShortDescription(body.getShortDes());
-            dto.setProfilePicture(filePath);
-            bo.saveUser(dto);
+            System.out.println(bo.saveUser(dto));
             return new ResponseEntity<>(dto, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Something went wrong", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -124,38 +129,34 @@ public class UserController {
     }
 
     @PutMapping(
-            value = "/{userId}",
+            value = "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<?> updateUser(@ModelAttribute UserBody body,@PathVariable("userId") int userId)
+    public ResponseEntity<?> updateUser(@Valid @ModelAttribute UserBody body, @PathVariable("id") int id)
             throws Exception {
-        if (body.getUserId() != userId) {
+        if (body.getId() != id) {
             return new ResponseEntity<>("Mismatch userId !!", HttpStatus.BAD_REQUEST);
         }
         try {
             String filePath = null;
-            if(body.getProfilePic()!=null) {
+            if (body.getProfilePic() != null) {
                 filePath = fileService.saveUserProfilePicture(body.getProfilePic());
-                UserDTO user = bo.getUser(userId);
+                UserDTO user = bo.getUser(id);
                 fileService.deleteFile(user.getProfilePicture());
             }
             UserDTO dto = new UserDTO();
+            dto.setId(body.getId());
             dto.setUsername(body.getUsername());
             dto.setEmail(body.getEmail());
-            dto.setPassword(body.getPassword());
-            dto.setGender(body.getGender());
-            dto.setCreatedAt(body.getCreatedAt());
-            dto.setRole(body.getRole());
-            dto.setPhoneNum(body.getPhoneNum());
-            dto.setIsActive(body.isActive());
             dto.setShortDescription(body.getShortDes());
             dto.setProfilePicture(filePath);
-            bo.updateUser(dto);
+            dto.setContactNum(body.getPhoneNum());
+            bo.updateUserNormalDetails(dto);
             return new ResponseEntity<>(dto, HttpStatus.CREATED);
-        }catch (NoSuchElementException e) {
+        } catch (NoSuchElementException e) {
             return new ResponseEntity<>("No user is found !!", HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>("Something went wrong !!", HttpStatus.INTERNAL_SERVER_ERROR);

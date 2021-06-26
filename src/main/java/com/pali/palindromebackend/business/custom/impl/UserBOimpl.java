@@ -4,10 +4,12 @@ import com.pali.palindromebackend.business.custom.UserBO;
 import com.pali.palindromebackend.business.util.EntityDTOMapper;
 import com.pali.palindromebackend.dao.UserDAO;
 import com.pali.palindromebackend.dto.UserDTO;
+import com.pali.palindromebackend.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,12 +30,20 @@ public class UserBOimpl implements UserBO {
     }
 
     @Override
-    public void saveUser(UserDTO dto) throws Exception {
-        userDAO.save(mapper.getUser(dto));
+    public String saveUser(UserDTO dto) throws Exception {
+        User user = mapper.getUser(dto);
+        user.setCreatedAt(new Date(System.currentTimeMillis()));
+        user.setIsActive(true);
+        user.setUpdatedAt(new Date(System.currentTimeMillis()));
+        user.setLastLogin(new Date(System.currentTimeMillis()));
+        userDAO.save(user);
+        return "User Saved Successfully";
     }
 
     @Override
     public void updateUser(UserDTO dto) throws Exception {
+        User user = mapper.getUser(dto);
+        user.setUpdatedAt(new Date(System.currentTimeMillis()));
         userDAO.save(mapper.getUser(dto));
     }
 
@@ -57,5 +67,15 @@ public class UserBOimpl implements UserBO {
     @Override
     public UserDTO getUserByName(String userName) throws Exception {
         return userDAO.findUserByUsername(userName).map(user -> mapper.getUserDTO(user)).get();
+    }
+
+    @Override
+    public String getUserProfilePicture(int id) throws Exception {
+        return userDAO.findUserProfilePicture(id);
+    }
+
+    @Override
+    public void updateUserNormalDetails(UserDTO dto) {
+        userDAO.updateUserNormalDetails(dto.getId(), dto.getUsername(), dto.getEmail(), dto.getShortDescription(), dto.getProfilePicture(), dto.getContactNum());
     }
 }

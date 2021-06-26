@@ -12,10 +12,10 @@ import java.io.Serializable;
  **/
 @AllArgsConstructor@NoArgsConstructor@Data
 public class SendingUserBody implements Serializable {
-    private String username;
-    private String password;
-    private String email;
+    private byte[] profilePicture;
     private String shortDescription;
-    private String profilePicture;
-
+    private String username;
+    private String email;
+    private String contactNum;
+    private String password;
 }

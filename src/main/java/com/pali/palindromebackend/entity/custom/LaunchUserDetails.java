@@ -1,4 +1,4 @@
-package com.pali.palindromebackend.dto;
+package com.pali.palindromebackend.entity.custom;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,16 +8,19 @@ import java.io.Serializable;
 
 /**
  * @author : Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
- * @since : 01/06/2021
+ * @since : 13/06/2021
  **/
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class LaunchDTO implements Serializable {
+public class LaunchUserDetails implements Serializable {
     private int id;
     private String media;
     private String mediaType;
     private String description;
     private String feeling;
-    private int user;
+    private int userId;
+    private String userName;
+    private String shortDescription;
+    private String profilePicture;
 }

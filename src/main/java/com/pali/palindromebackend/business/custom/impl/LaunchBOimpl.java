@@ -5,10 +5,14 @@ import com.pali.palindromebackend.business.util.EntityDTOMapper;
 import com.pali.palindromebackend.business.util.LaunchEntityDTOMapper;
 import com.pali.palindromebackend.dao.LaunchDAO;
 import com.pali.palindromebackend.dto.LaunchDTO;
+import com.pali.palindromebackend.entity.custom.LaunchUserDetails;
+import com.pali.palindromebackend.model.DashboardLaunchDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,5 +63,11 @@ public class LaunchBOimpl implements LaunchBO {
     public List<LaunchDTO> getLaunchesByUserId(int userId) throws Exception {
         return dao.findLaunchesByUserId(userId).stream().
                 map(launch -> mapper.getLaunchDTO(launch)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<LaunchUserDetails> getAllLaunchesWithUserDetails() throws Exception {
+        Collection<LaunchUserDetails> launchesWithUserDetails = dao.findLaunchesWithUserDetails();
+        return new ArrayList<LaunchUserDetails>(dao.findLaunchesWithUserDetails());
     }
 }
