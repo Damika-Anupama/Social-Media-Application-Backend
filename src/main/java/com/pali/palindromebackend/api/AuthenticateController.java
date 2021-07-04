@@ -5,6 +5,7 @@ import com.pali.palindromebackend.dao.UserDAO;
 import com.pali.palindromebackend.dto.LoginDTO;
 import com.pali.palindromebackend.entity.User;
 import com.pali.palindromebackend.model.AuthenticateBody;
+import com.pali.palindromebackend.service.FileService;
 import com.pali.palindromebackend.util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,6 +42,10 @@ public class AuthenticateController {
     @Autowired
     private UserDAO userDAO;
 
+
+    @Autowired
+    private FileService fileService;
+
     @PostMapping(value = "/api/v1/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginDTO loginDTO) throws Exception {
         System.out.println(loginDTO);
@@ -59,7 +64,9 @@ public class AuthenticateController {
         Optional<User> user = userDAO.findUserByUsername(loginDTO.getUsername());
         final UserDetails userDetails = myUserDetailsService.loadUserByUsername(loginDTO.getUsername());
         final String jwt = jwtUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new AuthenticateBody(jwt, user.get().getId()));
+        byte[] media = fileService.getMedia(user.get().getProfilePicture());
+        AuthenticateBody body = new AuthenticateBody(jwt, user.get().getId(), media, user.get().getUsername());
+        return ResponseEntity.ok(body);
     }
 }
 

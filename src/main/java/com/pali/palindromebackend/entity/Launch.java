@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * @author : Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
@@ -25,6 +26,10 @@ public class Launch implements SuperEntity{
     private String mediaType;
     private String description;
     private String feeling;
+    @Column(name = "created_date")
+    private Date createdDate;
+    @Column(name = "updated_date")
+    private Date updatedDate;
 
     @JsonIgnoreProperties("launches")
     @ManyToOne(cascade = {CascadeType.ALL})

@@ -25,6 +25,7 @@ public class Friend implements SuperEntity {
     @Column(name = "friendship_date")
     private Date friendshipDate;
     private boolean isBlocked;
+    private boolean isConfirmed;
     @JsonIgnoreProperties("launches")
     @JoinColumn(name = "user", referencedColumnName = "id", nullable = false)
     @ManyToOne(cascade = {CascadeType.ALL})

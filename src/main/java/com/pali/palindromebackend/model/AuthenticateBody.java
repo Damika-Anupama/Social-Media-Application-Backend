@@ -16,4 +16,6 @@ import java.io.Serializable;
 public class AuthenticateBody implements Serializable {
     private String jwt;
     private int userId;
+    private byte[] profilePicture;
+    private String userName;
 }

@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author : Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
@@ -20,4 +22,6 @@ public class LaunchDTO implements Serializable {
     private String description;
     private String feeling;
     private int user;
+    private Date createdDate;
+    private Date updatedDate;
 }

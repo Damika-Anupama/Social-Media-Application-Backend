@@ -13,7 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.ServletRequest;
 import javax.validation.Valid;
 import java.sql.SQLException;
 import java.util.List;
@@ -51,6 +50,21 @@ public class UserController {
             return new ResponseEntity<>("Something went wrong !!", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    // send data to load the profile page
+    @GetMapping(value = "/info/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public ResponseEntity<?> getUserInfoForProfilePage(@PathVariable("userId") int userId) throws Exception {
+        try {
+            return new ResponseEntity<List<UserDTO>>(bo.getAllUsers(), HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>("No user found !!", HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Something went wrong !!", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    //
 
     @GetMapping(value = "/{userId}",
             produces = MediaType.APPLICATION_JSON_VALUE)
