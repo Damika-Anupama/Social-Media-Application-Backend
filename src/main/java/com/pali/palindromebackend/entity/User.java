@@ -62,11 +62,20 @@ public class User implements SuperEntity {
     @Setter(AccessLevel.NONE)
     @JsonIgnoreProperties("user")
     @OneToMany(mappedBy = "user")
+    private List<Status> status;
+
+    @Setter(AccessLevel.NONE)
+    @JsonIgnoreProperties("user")
+    @OneToMany(mappedBy = "user")
     private List<Friend> friends;
 
     @Setter(AccessLevel.NONE)
     @ManyToMany(mappedBy = "users")
     private List<Community> communities;
+
+    @Setter(AccessLevel.NONE)
+    @ManyToMany(mappedBy = "users")
+    private List<Page> pages;
 
     @OneToMany(mappedBy = "user")
     @JsonIgnoreProperties("user")
