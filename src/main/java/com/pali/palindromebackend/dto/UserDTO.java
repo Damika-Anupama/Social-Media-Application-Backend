@@ -18,7 +18,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class UserDTO implements Serializable {
+public class UserDTO implements SuperDTO {
     private int id;
     @NotEmpty(message = "username cannot be empty !!")
     private String username;

@@ -3,21 +3,22 @@ package com.pali.palindromebackend.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.bytebuddy.implementation.bind.annotation.Super;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author : Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
- * @since : 17/06/2021
+ * @since : 01/05/2021
  **/
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class CommunityDTO implements SuperDTO {
-    private int communityId;
-    private String title;
+public class PageDTO implements SuperDTO {
+    private int pageId;
+    private String name;
     private String description;
     private Date createdDate;
+    private Date lastUpdate;
+    private int user;
 }

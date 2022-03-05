@@ -15,7 +15,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StatusDTO implements Serializable {
+public class StatusDTO implements SuperDTO {
     private int id;
     private String details;
     private String media;

@@ -14,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class FriendDTO implements Serializable {
+public class FriendDTO implements SuperDTO {
     private int friendshipId;
     private int user;
     private int friendId;

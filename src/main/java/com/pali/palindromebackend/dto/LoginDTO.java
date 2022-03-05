@@ -3,6 +3,7 @@ package com.pali.palindromebackend.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.bytebuddy.implementation.bind.annotation.Super;
 
 import java.io.Serializable;
 
@@ -11,7 +12,7 @@ import java.io.Serializable;
  * @since : 01/05/2021
  **/
 @Data@AllArgsConstructor@NoArgsConstructor
-public class LoginDTO implements Serializable {
+public class LoginDTO implements SuperDTO {
     private String username;
     private String password;
 }

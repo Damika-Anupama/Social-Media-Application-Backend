@@ -13,7 +13,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class SuggestionDTO implements Serializable {
+public class SuggestionDTO implements SuperDTO {
     private int id;
     private String message;
     private String priority;
