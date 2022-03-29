@@ -1,11 +1,10 @@
 package com.pali.palindromebackend.api;
 
 import com.pali.palindromebackend.business.custom.PageBO;
-import com.pali.palindromebackend.business.util.PageEntityDTOMapper;
+import com.pali.palindromebackend.business.util.EntityDTOMapper;
 import com.pali.palindromebackend.dto.PageDTO;
 import com.pali.palindromebackend.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +26,7 @@ public class PageController {
     private PageBO bo;
 
     @Autowired
-    private PageEntityDTOMapper mapper;
+    private EntityDTOMapper mapper;
 
     @Autowired
     private FileService fileService;
@@ -39,7 +38,7 @@ public class PageController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<?> getAllPagees() throws Exception {
+    public ResponseEntity<?> getAllPages() throws Exception {
         try {
             return new ResponseEntity<List<PageDTO>>( bo.getAllPages(), HttpStatus.OK);
         } catch (NoSuchElementException e) {

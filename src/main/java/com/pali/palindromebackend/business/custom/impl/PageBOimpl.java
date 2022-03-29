@@ -1,7 +1,7 @@
 package com.pali.palindromebackend.business.custom.impl;
 
 import com.pali.palindromebackend.business.custom.PageBO;
-import com.pali.palindromebackend.business.util.PageEntityDTOMapper;
+import com.pali.palindromebackend.business.util.EntityDTOMapper;
 import com.pali.palindromebackend.dao.PageDAO;
 import com.pali.palindromebackend.dto.PageDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class PageBOimpl implements PageBO {
     private PageDAO dao;
 
     @Autowired
-    private PageEntityDTOMapper mapper;
+    private EntityDTOMapper mapper;
 
     public PageBOimpl() {
     }

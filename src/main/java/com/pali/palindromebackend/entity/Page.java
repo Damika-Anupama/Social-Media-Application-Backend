@@ -37,5 +37,11 @@ public class Page {
             inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
     private List<User> users;
 
-
+    public Page(int pageId, String name, String description, Date createdDate, Date lastUpdated) {
+        PageId = pageId;
+        this.name = name;
+        this.description = description;
+        this.createdDate = createdDate;
+        this.lastUpdated = lastUpdated;
+    }
 }
