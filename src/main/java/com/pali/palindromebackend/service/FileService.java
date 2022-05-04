@@ -85,6 +85,10 @@ public class FileService {
         String mediaUploadPath = UploadPath + "users";
         String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss-"));
         String fileName = date + file.getOriginalFilename();
+
+        // folderPath here is /sismed/temp/exames
+        File f1 = new File(mediaUploadPath);
+        f1.mkdirs();
         String filePath = mediaUploadPath + File.separator + fileName;
 
         try {

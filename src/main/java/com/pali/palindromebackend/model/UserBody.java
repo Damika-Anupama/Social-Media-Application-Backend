@@ -19,6 +19,6 @@ public class UserBody implements Serializable {
     private String username;
     private String email;
     private String shortDes;
-    private String phoneNum;
     private MultipartFile profilePic;
+    private String phoneNum;
 }
