@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author : Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
@@ -21,4 +22,5 @@ public class UserBody implements Serializable {
     private String shortDes;
     private MultipartFile profilePic;
     private String phoneNum;
+    private Date lastLogin;
 }

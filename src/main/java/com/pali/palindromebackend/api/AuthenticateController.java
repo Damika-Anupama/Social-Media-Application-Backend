@@ -5,6 +5,7 @@ import com.pali.palindromebackend.dao.UserDAO;
 import com.pali.palindromebackend.dto.LoginDTO;
 import com.pali.palindromebackend.entity.User;
 import com.pali.palindromebackend.model.AuthenticateBody;
+import com.pali.palindromebackend.model.UserBody;
 import com.pali.palindromebackend.service.FileService;
 import com.pali.palindromebackend.util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 /**
@@ -48,7 +52,10 @@ public class AuthenticateController {
 
     @PostMapping(value = "/api/v1/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginDTO loginDTO) throws Exception {
-        System.out.println(loginDTO);
+        UserController userController = new UserController();
+        UserBody userBody = new UserBody();
+        java.util.Date date=new java.util.Date();
+        userBody.setLastLogin(date);
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword())
@@ -66,6 +73,7 @@ public class AuthenticateController {
         final String jwt = jwtUtil.generateToken(userDetails);
         byte[] media = fileService.getMedia(user.get().getProfilePicture());
         AuthenticateBody body = new AuthenticateBody(jwt, user.get().getId(), media, user.get().getUsername());
+        userController.updateUserLastLogin(userBody, user.get().getId());// update the last login time of the user
         return ResponseEntity.ok(body);
     }
 }

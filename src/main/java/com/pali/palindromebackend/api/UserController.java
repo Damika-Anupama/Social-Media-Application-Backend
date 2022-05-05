@@ -179,4 +179,20 @@ public class UserController {
             return new ResponseEntity<>("Something went wrong !!", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+    // Only use this method when the authentication method runs in AuthenticateController.java
+    public void updateUserLastLogin(UserBody body, int id)
+            throws Exception {
+        try {
+            UserDTO dto = new UserDTO();
+            dto.setLastLogin(body.getLastLogin());
+            bo.updateUserNormalDetails(dto);
+            System.out.println("Successfully changed "+ id+"'s last login.");
+        } catch (NoSuchElementException e) {
+            System.out.println("No user is found !!");
+        }catch (Exception e) {
+            System.out.println("Something went wrong !! " + e);
+        }
+    }
 }
