@@ -1,7 +1,10 @@
 package com.pali.palindromebackend.api;
 
+import com.pali.palindromebackend.business.custom.ReactionBO;
 import com.pali.palindromebackend.business.custom.StatusBO;
+import com.pali.palindromebackend.business.util.ReactionEntityDTOMapper;
 import com.pali.palindromebackend.business.util.StatusEntityDTOMapper;
+import com.pali.palindromebackend.dto.ReactionDTO;
 import com.pali.palindromebackend.dto.StatusDTO;
 import com.pali.palindromebackend.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +21,10 @@ import java.util.NoSuchElementException;
 public class ReactionController {
 
     @Autowired
-    private StatusBO bo;
+    private ReactionBO bo;
 
     @Autowired
-    private StatusEntityDTOMapper mapper;
+    private ReactionEntityDTOMapper mapper;
 
     public ReactionController() throws SQLException {
 
@@ -30,9 +33,9 @@ public class ReactionController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<?> getAllStatuses() throws Exception {
+    public ResponseEntity<?> getAllReactions() throws Exception {
         try {
-            return new ResponseEntity<List<StatusDTO>>( bo.getAllStatuses(), HttpStatus.OK);
+            return new ResponseEntity<List<ReactionDTO>>( bo.getAllReactions(), HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>("No Status found !!", HttpStatus.NOT_FOUND);
         } catch (Exception e) {
@@ -41,13 +44,13 @@ public class ReactionController {
     }
 
 
-    @GetMapping(value = "/{StatusId}",
+    @GetMapping(value = "/{ReactionId}",
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<Object> getStatusById(@PathVariable("StatusId") int StatusId) throws Exception {
+    public ResponseEntity<Object> getReactionById(@PathVariable("ReactionId") int ReactionId) throws Exception {
         try {
-            return new ResponseEntity<>(bo.getStatus(StatusId), HttpStatus.OK);
+            return new ResponseEntity<>(bo.getReaction(ReactionId), HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>("No Status found !!", HttpStatus.NOT_FOUND);
         } catch (Exception e) {
@@ -57,25 +60,24 @@ public class ReactionController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(
-            produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE
+            produces = MediaType.APPLICATION_JSON_VALUE
     )
     @ResponseBody
-    public ResponseEntity<?> saveStatus(@Valid @RequestBody StatusDTO dto) throws Exception {
+    public ResponseEntity<?> saveReaction(@Valid @RequestBody ReactionDTO dto) throws Exception {
         try {
-            bo.saveStatus(dto);
+            bo.saveReaction(dto);
             return new ResponseEntity<>(dto, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Something went wrong", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @DeleteMapping("/{StatusId}")
+    @DeleteMapping("/{ReactionId}")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public ResponseEntity<Object> deleteStatus(@PathVariable("StatusId") int StatusId) throws Exception {
+    public ResponseEntity<Object> deleteReaction(@PathVariable("ReactionId") int ReactionId) throws Exception {
         try {
-            bo.deleteStatus(StatusId);
+            bo.deleteReaction(ReactionId);
             return new ResponseEntity<>("Successfully deleted the Status !!", HttpStatus.CREATED);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>("No Status is found !!", HttpStatus.NOT_FOUND);
@@ -85,19 +87,19 @@ public class ReactionController {
     }
 
     @PutMapping(
-            value = "/{StatusId}",
+            value = "/{ReactionId}",
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<?> updateStatus(@Valid @RequestBody StatusDTO dto, @PathVariable("StatusId") int StatusId)
+    public ResponseEntity<?> updateReaction(@Valid @RequestBody ReactionDTO dto, @PathVariable("ReactionId") int ReactionId)
             throws Exception {
-        if (dto.getId() != StatusId) {
+        if (dto.getId() != ReactionId) {
             return new ResponseEntity<>("Mismatch StatusId !!", HttpStatus.BAD_REQUEST);
         }
         try {
-            bo.updateStatus(dto);
+            bo.updateReaction(dto);
             return new ResponseEntity<>(dto, HttpStatus.CREATED);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>("No Status is found !!", HttpStatus.NOT_FOUND);

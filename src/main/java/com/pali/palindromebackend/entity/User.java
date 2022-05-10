@@ -82,6 +82,11 @@ public class User implements SuperEntity {
     @Setter(AccessLevel.NONE)
     private List<Suggestion> suggestions;
 
+    @OneToOne(mappedBy = "user")
+    @JsonIgnoreProperties("user")
+    @Setter(AccessLevel.NONE)
+    private Reaction reaction;
+
     public boolean getIsActive() {
         return isActive;
     }

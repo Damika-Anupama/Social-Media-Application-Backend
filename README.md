@@ -5,7 +5,7 @@ by Damika
 # Stages of the project
 
 ### 1. Stage One 
-> Releasing the basic website (palindrome) with basic functionalities,
+> Basic website (palindrome) with basic functionalities,
 > No adds, 
 > Basically seems as a prototype of the facebook,
 > No XP level,
@@ -56,7 +56,6 @@ by Damika
 
 
 ### 2. Stage Two
->Now our palindrome has already deployed :) 
 > We should Introduce XP level. 
 > For there should be sufficient reasons to popular the XP level,
 > No games and shops
@@ -105,7 +104,7 @@ by Damika
 
 ### 4. Stage Four
 >In here we're going to make the mobile application to our software,
-> Improve the scalability of palindrome
+> Improve the scalability of palindrome. And this is the deploying stage :)
 
 - Build the Mobile app for palindrome.
   - All functionalities in the web page can be accessed through the mobile device.

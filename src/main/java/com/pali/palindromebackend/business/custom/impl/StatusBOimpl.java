@@ -56,6 +56,6 @@ public class StatusBOimpl implements StatusBO {
 
     @Override
     public StatusDTO getStatus(int statusId) throws Exception {
-        return dao.findById(statusId).map(launch -> mapper.getStatusDTO(launch)).get();
+        return dao.findById(statusId).map(status -> mapper.getStatusDTO(status)).get();
     }
 }

@@ -1,12 +1,11 @@
 package com.pali.palindromebackend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author : Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
@@ -35,5 +34,10 @@ public class Launch implements SuperEntity{
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "user_id",referencedColumnName = "id",nullable = false)
     private User user;
+
+    @Setter(AccessLevel.NONE)
+    @JsonIgnoreProperties("launch")
+    @OneToMany(mappedBy = "launch")
+    private List<Reaction> reactions;
 
 }
