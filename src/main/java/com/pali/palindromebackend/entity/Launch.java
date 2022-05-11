@@ -35,10 +35,22 @@ public class Launch implements SuperEntity{
     @JoinColumn(name = "user_id",referencedColumnName = "id",nullable = false)
     private User user;
 
+    @OneToMany(mappedBy = "launch")
+    @JsonIgnoreProperties("launch")
+    @Setter(AccessLevel.NONE)
+    private List<Comment> comments;
+
+    @OneToMany(mappedBy = "launch")
+    @JsonIgnoreProperties("launch")
+    @Setter(AccessLevel.NONE)
+    private List<Share> shares;
+
     @Setter(AccessLevel.NONE)
     @JsonIgnoreProperties("launch")
     @OneToMany(mappedBy = "launch")
     private List<Reaction> reactions;
+
+
 
 
     public Launch(int id, String media, String mediaType, String description, String feeling, Date createdDate, Date updatedDate, User user) {

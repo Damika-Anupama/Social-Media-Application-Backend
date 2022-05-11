@@ -82,6 +82,16 @@ public class User implements SuperEntity {
     @Setter(AccessLevel.NONE)
     private List<Suggestion> suggestions;
 
+    @OneToMany(mappedBy = "user")
+    @JsonIgnoreProperties("user")
+    @Setter(AccessLevel.NONE)
+    private List<Comment> comments;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnoreProperties("user")
+    @Setter(AccessLevel.NONE)
+    private List<Share> shares;
+
     @OneToOne(mappedBy = "user")
     @JsonIgnoreProperties("user")
     @Setter(AccessLevel.NONE)

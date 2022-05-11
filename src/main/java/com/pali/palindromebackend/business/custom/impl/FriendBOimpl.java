@@ -22,8 +22,6 @@ public class FriendBOimpl implements FriendBO {
 
     @Autowired
     private FriendDAO dao;
-
-    @Autowired
     private FriendEntityDTOMapper mapper;
 
     public FriendBOimpl() {

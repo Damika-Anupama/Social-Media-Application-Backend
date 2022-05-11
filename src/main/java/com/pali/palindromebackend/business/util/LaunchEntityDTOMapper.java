@@ -1,9 +1,14 @@
 package com.pali.palindromebackend.business.util;
 
+import com.pali.palindromebackend.dao.LaunchDAO;
 import com.pali.palindromebackend.dao.UserDAO;
+import com.pali.palindromebackend.dto.CommentDTO;
 import com.pali.palindromebackend.dto.LaunchDTO;
+import com.pali.palindromebackend.dto.ShareDTO;
 import com.pali.palindromebackend.dto.UserDTO;
+import com.pali.palindromebackend.entity.Comment;
 import com.pali.palindromebackend.entity.Launch;
+import com.pali.palindromebackend.entity.Share;
 import com.pali.palindromebackend.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -19,6 +24,7 @@ public abstract class LaunchEntityDTOMapper {
 
     @Autowired
     private UserDAO userDAO;
+    private LaunchDAO launchDAO;
 
     @Mapping(source = ".",target = "user")
     public abstract Launch getLaunch(LaunchDTO dto);
@@ -29,6 +35,33 @@ public abstract class LaunchEntityDTOMapper {
         return userDAO.getOne(dto.getUser());
     }
 
+
     @Named("User")
     public int getUserName(User user){return user.getId();}
+
+    /*For Reactions*/
+
+    /*For comments*/
+    @Mapping(source = ".",target = "user")
+    public abstract Comment getComment(CommentDTO dto);
+    @Mapping(source = "user",target = "user",qualifiedByName = "User")
+    public abstract CommentDTO getCommentDTO(Comment comment);
+    public User getUser1(CommentDTO dto) {
+        return userDAO.getOne(dto.getUser());
+    }
+    public Launch getLaunch1(CommentDTO dto) {
+        return launchDAO.getOne(dto.getUser());
+    }
+
+    /*For shares*/
+    @Mapping(source = ".",target = "user")
+    public abstract Share getShare(ShareDTO dto);
+    @Mapping(source = "user",target = "user",qualifiedByName = "User")
+    public abstract ShareDTO getShareDTO(Share share);
+    public User getUser2(ShareDTO dto) {
+        return userDAO.getOne(dto.getUser());
+    }
+    public Launch getLaunch2(ShareDTO dto) {
+        return launchDAO.getOne(dto.getUser());
+    }
 }

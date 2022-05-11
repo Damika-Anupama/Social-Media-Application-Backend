@@ -1,8 +1,12 @@
 package com.pali.palindromebackend.business.util.impl;
 
 import com.pali.palindromebackend.business.util.LaunchEntityDTOMapper;
+import com.pali.palindromebackend.dto.CommentDTO;
 import com.pali.palindromebackend.dto.LaunchDTO;
+import com.pali.palindromebackend.dto.ShareDTO;
+import com.pali.palindromebackend.entity.Comment;
 import com.pali.palindromebackend.entity.Launch;
+import com.pali.palindromebackend.entity.Share;
 
 import javax.annotation.Generated;
 
@@ -52,5 +56,74 @@ public class LaunchEntityDTOMapperImpl extends LaunchEntityDTOMapper {
         dto.setMediaType(launch.getMediaType());
         dto.setFeeling(launch.getFeeling());
         return dto;
+    }
+
+    @Override
+    public Comment getComment(CommentDTO dto) {
+        if (dto == null){
+            return null;
+        }
+
+        Comment comment = new Comment();
+        try{
+            comment.setUser(getUser1(dto));
+            comment.setLaunch(getLaunch1(dto));
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        comment.setId(dto.getId());
+        comment.setComment(dto.getComment());
+        comment.setCommentedDate(dto.getCommentedDate());
+        comment.setLastUpdatedDate(dto.getLastUpdatedDate());
+        return comment;
+    }
+
+    @Override
+    public CommentDTO getCommentDTO(Comment comment) {
+        if(comment == null){
+            return null;
+        }
+
+        CommentDTO dto = new CommentDTO();
+        dto.setId(comment.getId());
+        dto.setComment(comment.getComment());
+        dto.setCommentedDate(comment.getCommentedDate());
+        dto.setLastUpdatedDate(comment.getLastUpdatedDate());
+        dto.setUser(comment.getUser().getId());
+        dto.setLaunch(comment.getLaunch().getId());
+        return dto;
+    }
+
+    @Override
+    public Share getShare(ShareDTO dto) {
+        if(dto == null){
+            return null;
+        }
+        Share share = new Share();
+        try{
+            share.setUser(getUser2(dto));
+            share.setLaunch(getLaunch2(dto));
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        share.setId(dto.getId());
+        share.setDateTime(dto.getDateTime());
+        share.setSharedPlaceId(dto.getSharedPlaceId());
+        share.setLastUpdatedDate(dto.getLastUpdatedDate());
+        return share;
+    }
+
+    @Override
+    public ShareDTO getShareDTO(Share share) {
+        if(share == null){
+            return null;
+        }
+        ShareDTO shareDTO = new ShareDTO();
+        shareDTO.setId(share.getId());
+        shareDTO.setLaunch(share.getLaunch().getId());
+        shareDTO.setLaunch(share.getLaunch().getId());
+        shareDTO.setLastUpdatedDate(share.getLastUpdatedDate());
+        shareDTO.setSharedPlaceId(share.getSharedPlaceId());
+        return shareDTO;
     }
 }

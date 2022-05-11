@@ -26,6 +26,7 @@ by Damika
     - public - share to your friends and your wall
     - groups
 - Put status and view status
+  - cannot put options like share, comment, reactions
 - Can maintain own profile page viewing own details to others (viewers)
 - Can make groups
     - have owners, authors, users etc.
