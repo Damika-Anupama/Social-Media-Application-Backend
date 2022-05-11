@@ -40,4 +40,15 @@ public class Launch implements SuperEntity{
     @OneToMany(mappedBy = "launch")
     private List<Reaction> reactions;
 
+
+    public Launch(int id, String media, String mediaType, String description, String feeling, Date createdDate, Date updatedDate, User user) {
+        this.id = id;
+        this.media = media;
+        this.mediaType = mediaType;
+        this.description = description;
+        this.feeling = feeling;
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
+        this.user = user;
+    }
 }

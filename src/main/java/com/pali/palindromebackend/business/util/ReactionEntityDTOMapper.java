@@ -40,7 +40,9 @@ public abstract class ReactionEntityDTOMapper {
     }
 
     public Launch getLaunch(ReactionDTO dto) {
-        return launchDAO.getOne(dto.getLaunchId());
+        Launch one = launchDAO.getOne(dto.getLaunchId());
+        System.out.println(one);
+        return one;
     }
 
     @Named("Launch")

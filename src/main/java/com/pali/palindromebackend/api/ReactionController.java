@@ -18,13 +18,16 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+/**
+ * @author : Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
+ * @since : 10/05/2022
+ **/
+@RestController
+@RequestMapping("/api/v1/reactions")
 public class ReactionController {
 
     @Autowired
     private ReactionBO bo;
-
-    @Autowired
-    private ReactionEntityDTOMapper mapper;
 
     public ReactionController() throws SQLException {
 
@@ -63,7 +66,8 @@ public class ReactionController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @ResponseBody
-    public ResponseEntity<?> saveReaction(@Valid @RequestBody ReactionDTO dto) throws Exception {
+    public ResponseEntity<?> saveReaction(ReactionDTO dto) throws Exception {
+        //reaction time and updated time should be filled from the frontend
         try {
             bo.saveReaction(dto);
             return new ResponseEntity<>(dto, HttpStatus.CREATED);

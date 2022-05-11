@@ -20,6 +20,8 @@ import java.util.Date;
 @Data
 public class Reaction implements SuperEntity{
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
     @Column(name = "type")
     private ReactionType type;

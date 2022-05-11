@@ -26,6 +26,7 @@ public class ReactionEntityDTOMapperImpl extends ReactionEntityDTOMapper  {
         reaction.setType(dto.getType());
         reaction.setReactionTime(dto.getReactionTime());
         reaction.setUpdatedTime(dto.getUpdatedTime());
+        System.out.println(reaction);
         return reaction;
     }
 
