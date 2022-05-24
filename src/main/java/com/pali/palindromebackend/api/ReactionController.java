@@ -1,12 +1,7 @@
 package com.pali.palindromebackend.api;
 
 import com.pali.palindromebackend.business.custom.ReactionBO;
-import com.pali.palindromebackend.business.custom.StatusBO;
-import com.pali.palindromebackend.business.util.ReactionEntityDTOMapper;
-import com.pali.palindromebackend.business.util.StatusEntityDTOMapper;
 import com.pali.palindromebackend.dto.ReactionDTO;
-import com.pali.palindromebackend.dto.StatusDTO;
-import com.pali.palindromebackend.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -69,6 +67,9 @@ public class ReactionController {
     public ResponseEntity<?> saveReaction(ReactionDTO dto) throws Exception {
         //reaction time and updated time should be filled from the frontend
         try {
+            Date date = new Date();
+            dto.setReactionTime(date);
+            dto.setUpdatedTime(date);
             bo.saveReaction(dto);
             return new ResponseEntity<>(dto, HttpStatus.CREATED);
         } catch (Exception e) {

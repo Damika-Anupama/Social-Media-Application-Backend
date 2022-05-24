@@ -13,7 +13,9 @@ import java.util.List;
  **/
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Setter
+@Getter
+@ToString
 @Entity
 @Table(name = "launch")
 public class Launch implements SuperEntity{

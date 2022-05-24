@@ -13,7 +13,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Entity(name = "community")
+@Entity
+@Table(name = "community")
 public class Community implements SuperEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

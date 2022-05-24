@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author : Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
@@ -20,7 +21,7 @@ import java.util.Date;
 @Data
 public class Reaction implements SuperEntity{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private int id;
     @Column(name = "type")
@@ -30,12 +31,11 @@ public class Reaction implements SuperEntity{
     @Column(name = "updated_time")
     private Date updatedTime;
 
-    @JsonIgnoreProperties("reactions")
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "launch_id",referencedColumnName = "id",nullable = false)
     private Launch launch;
 
-    @OneToOne
+    @OneToMany
     @JoinColumn(name = "user_id",referencedColumnName = "id",nullable = false)
-    private User user;
+    private List<User> user;
 }

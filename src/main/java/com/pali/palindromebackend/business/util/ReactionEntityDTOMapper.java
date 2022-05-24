@@ -25,28 +25,28 @@ public abstract class ReactionEntityDTOMapper {
     private LaunchDAO launchDAO;
 
     @Mapping(source = ".", target = "user")
+    @Mapping(source = ".", target = "launch")
     public abstract Reaction getReaction(ReactionDTO dto);
 
     @Mapping(source = "user", target = "userId", qualifiedByName = "User")
+    @Mapping(source = "launch",target = "launchId", qualifiedByName = "Launch")
     public abstract ReactionDTO getReactionDTO(Reaction reaction);
-
-    public User getUser(ReactionDTO dto) {
-        return userDAO.getOne(dto.getUserId());
-    }
 
     @Named("User")
     public int getUserName(User user) {
         return user.getId();
     }
 
-    public Launch getLaunch(ReactionDTO dto) {
-        Launch one = launchDAO.getOne(dto.getLaunchId());
-        System.out.println(one);
-        return one;
-    }
-
     @Named("Launch")
     public int getLaunchId(Launch launch) {
         return launch.getId();
     }
+
+    public Launch getLaunch(ReactionDTO dto) {return launchDAO.getOne(dto.getLaunchId());}
+
+    public User getUser(ReactionDTO dto) {
+        return userDAO.getOne(dto.getUserId());
+    }
+
+
 }

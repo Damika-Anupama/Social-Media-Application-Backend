@@ -20,6 +20,7 @@ import javax.annotation.Generated;
         comments = "version: 1.4.2.Final, compiler: javac, environment: Java 1.8.0_261 (Oracle Corporation)"
 )
 //@Component
+
 public class LaunchEntityDTOMapperImpl extends LaunchEntityDTOMapper {
     @Override
     public Launch getLaunch(LaunchDTO dto) {

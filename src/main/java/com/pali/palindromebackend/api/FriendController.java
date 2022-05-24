@@ -26,9 +26,6 @@ public class FriendController {
     @Autowired
     private FriendBO bo;
 
-    @Autowired
-    private FriendEntityDTOMapper mapper;
-
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody

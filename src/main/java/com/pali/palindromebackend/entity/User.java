@@ -20,7 +20,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "user", uniqueConstraints = @UniqueConstraint(columnNames = {"id"}))
-@Data
+@Setter
+@Getter
+@ToString
 public class User implements SuperEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -92,7 +94,7 @@ public class User implements SuperEntity {
     @Setter(AccessLevel.NONE)
     private List<Share> shares;
 
-    @OneToOne(mappedBy = "user")
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JsonIgnoreProperties("user")
     @Setter(AccessLevel.NONE)
     private Reaction reaction;

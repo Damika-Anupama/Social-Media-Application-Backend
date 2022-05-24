@@ -2,6 +2,7 @@ package com.pali.palindromebackend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
+import net.bytebuddy.implementation.bind.annotation.Super;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -17,7 +18,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "suggestion")
-public class Page {
+public class Page implements SuperEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "page_id")
