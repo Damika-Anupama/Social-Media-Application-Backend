@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -34,33 +35,8 @@ public class LaunchController {
     @Autowired
     private FileService fileService;
 
-    private EntityDTOMapper mapper;
-
     public LaunchController() throws SQLException {
     }
-
-
-/*    @PreAuthorize("permitAll()")
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public ResponseEntity<?> getAllLaunches() throws Exception {
-        try {
-            List<LaunchDTO> launches = bo.getAllLaunches();
-            List<ResponseLaunchBody> launches1 = new ArrayList<ResponseLaunchBody>();
-            launches.forEach(dto -> {
-                ResponseLaunchBody launchBody = new ResponseLaunchBody();
-                launchBody.setFile(fileService.getMedia(dto.getMedia()));
-                launchBody.setDescription(dto.getDescription());
-                launchBody.setFeeling(dto.getFeeling());
-                launches1.add(launchBody);
-            });
-            return new ResponseEntity<>(launches1, HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println(e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }*/
 
     @PreAuthorize("permitAll()")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -130,11 +106,14 @@ public class LaunchController {
         try {
             final String mediaPath = fileService.saveMediaFile(body.getFile(), body.getFile().getContentType());
             LaunchDTO dto = new LaunchDTO();
+            Date date = new Date();
             dto.setDescription(body.getDescription());
             dto.setFeeling(body.getFeeling());
             dto.setMedia(mediaPath);
             dto.setMediaType(body.getFile().getContentType());
             dto.setUser(body.getUser());
+            dto.setCreatedDate(date);
+            dto.setUpdatedDate(date);
             bo.saveLaunch(dto);
             return new ResponseEntity<>(dto.getUser(), HttpStatus.CREATED);
         } catch (Exception e) {

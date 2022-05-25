@@ -94,7 +94,7 @@ public class User implements SuperEntity {
     @Setter(AccessLevel.NONE)
     private List<Share> shares;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @OneToOne(cascade = {CascadeType.ALL})
     @JsonIgnoreProperties("user")
     @Setter(AccessLevel.NONE)
     private Reaction reaction;

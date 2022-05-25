@@ -28,7 +28,6 @@ public class UserController {
     @Autowired
     private UserBO bo;
 
-    @Autowired
     private EntityDTOMapper mapper;
 
     @Autowired
@@ -154,7 +153,7 @@ public class UserController {
         System.out.println("OK");
         if (body.getId() != id) {
             return new ResponseEntity<>("Mismatch userId !!", HttpStatus.BAD_REQUEST);
-        }else if (true){
+        } else if (true) {
             //handle the multi part file size from this stage before save it
         }
         try {
@@ -175,7 +174,7 @@ public class UserController {
             return new ResponseEntity<>(dto, HttpStatus.CREATED);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>("No user is found !!", HttpStatus.NOT_FOUND);
-        }catch (Exception e) {
+        } catch (Exception e) {
             return new ResponseEntity<>("Something went wrong !!", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -188,10 +187,10 @@ public class UserController {
             UserDTO dto = new UserDTO();
             dto.setLastLogin(body.getLastLogin());
             bo.updateUserNormalDetails(dto);
-            System.out.println("Successfully changed "+ id+"'s last login.");
+            System.out.println("Successfully changed " + id + "'s last login.");
         } catch (NoSuchElementException e) {
             System.out.println("No user is found !!");
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Something went wrong !! " + e);
         }
     }
