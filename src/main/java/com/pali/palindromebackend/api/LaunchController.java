@@ -3,6 +3,7 @@ package com.pali.palindromebackend.api;
 import com.pali.palindromebackend.business.custom.LaunchBO;
 import com.pali.palindromebackend.business.util.EntityDTOMapper;
 import com.pali.palindromebackend.dto.LaunchDTO;
+import com.pali.palindromebackend.dto.UserDTO;
 import com.pali.palindromebackend.entity.custom.LaunchUserDetails;
 import com.pali.palindromebackend.model.DashboardLaunchDetail;
 import com.pali.palindromebackend.model.LaunchBody;
@@ -139,20 +140,34 @@ public class LaunchController {
 
     @PutMapping(
             value = "/{launchId}",
-            produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE
+            produces = MediaType.MULTIPART_FORM_DATA_VALUE,
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<Object> updateLaunch(@Valid @RequestBody LaunchDTO dto,
+    public ResponseEntity<Object> updateLaunch(@Valid @RequestBody LaunchBody body,
                                                @PathVariable("launchId") int launchId) throws Exception {
-        if (!(dto.getId() == launchId)) {
-            return new ResponseEntity<>("Mismatch launchId :(", HttpStatus.BAD_REQUEST);
-        }
+
         try {
-            bo.getLaunch(launchId);
+            String filePath = null;
+            LaunchDTO dto = bo.getLaunch(launchId);
+            Date date = new Date();
+
+            if (!(dto.getUser() == body.getUser())) {
+                return new ResponseEntity<>("Mismatched User :(", HttpStatus.BAD_REQUEST);
+            }
+
+            if (body.getFile() != null) {
+                // TODO: 5/26/2022  this must contain transaction method
+                filePath = fileService.saveMediaFile(body.getFile(),body.getFile().getContentType());
+                fileService.deleteFile(dto.getMedia());
+            }
+            dto.setMedia(filePath);
+            dto.setDescription(body.getDescription());
+            dto.setUpdatedDate(date);
+            dto.setFeeling(body.getFeeling()); // user of the launch doesn't change
             bo.updateLaunch(dto);
-            return new ResponseEntity<>(dto, HttpStatus.CREATED);
+            return new ResponseEntity<>("Successfully the launch was updated!", HttpStatus.CREATED);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>("No such launch is found !!", HttpStatus.NOT_FOUND);
         } catch (Exception e) {
