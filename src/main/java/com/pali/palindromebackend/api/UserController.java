@@ -150,7 +150,6 @@ public class UserController {
     @ResponseBody
     public ResponseEntity<?> updateUser(@Valid @ModelAttribute UserBody body, @PathVariable("id") int id)
             throws Exception {
-        System.out.println("OK");
         if (body.getId() != id) {
             return new ResponseEntity<>("Mismatch userId !!", HttpStatus.BAD_REQUEST);
         } else if (true) {

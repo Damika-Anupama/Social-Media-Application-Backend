@@ -140,14 +140,14 @@ public class LaunchController {
 
     @PutMapping(
             value = "/{launchId}",
-            produces = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<Object> updateLaunch(@Valid @RequestBody LaunchBody body,
+    public ResponseEntity<?> updateLaunch(@Valid @ModelAttribute LaunchBody body,
                                                @PathVariable("launchId") int launchId) throws Exception {
-
+        System.out.println("Hello");
         try {
             String filePath = null;
             LaunchDTO dto = bo.getLaunch(launchId);
