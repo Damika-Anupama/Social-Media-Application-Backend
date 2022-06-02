@@ -94,9 +94,9 @@ public class User implements SuperEntity {
     @Setter(AccessLevel.NONE)
     private List<Share> shares;
 
-    @OneToOne(cascade = {CascadeType.ALL})
-    @JsonIgnoreProperties("user")
-    @Setter(AccessLevel.NONE)
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade =  CascadeType.ALL,
+            mappedBy = "user")
     private Reaction reaction;
 
     public boolean getIsActive() {
