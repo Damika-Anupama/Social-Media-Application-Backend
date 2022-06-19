@@ -22,6 +22,8 @@ import java.util.NoSuchElementException;
  * @author : Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
  * @since : 28/04/2021
  **/
+
+// TODO: 6/3/2022 Lock the user object while it's on use
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserController {

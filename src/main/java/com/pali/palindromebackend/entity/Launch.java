@@ -52,6 +52,10 @@ public class Launch implements SuperEntity{
     @OneToMany(mappedBy = "launch")
     private List<Reaction> reactions;
 
+    @Setter(AccessLevel.NONE)
+    @ManyToMany(mappedBy = "launches")
+    private List<Community> communities;
+
 
 
 

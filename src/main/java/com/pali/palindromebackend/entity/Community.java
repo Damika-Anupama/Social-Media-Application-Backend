@@ -31,6 +31,12 @@ public class Community implements SuperEntity {
             inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
     private List<User> users;
 
+    @ManyToMany
+    @JoinTable(name = "launch_community",
+            joinColumns = @JoinColumn(name = "community_id", referencedColumnName = "community_id"),
+            inverseJoinColumns = @JoinColumn(name = "launch_id", referencedColumnName = "id"))
+    private List<Launch> launches;
+
     public Community(int communityId, String title, String description, Date createdDate) {
         this.communityId = communityId;
         this.title = title;

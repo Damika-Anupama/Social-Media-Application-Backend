@@ -21,7 +21,7 @@ by Damika
   - Like
   - comment
     - comment tree too should be ok
-  - share
+  - share -> This should wait until I finish the pages and groups :)
     - private - only in your wall
     - public - share to your friends and your wall
     - groups

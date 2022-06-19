@@ -20,7 +20,7 @@ import java.util.NoSuchElementException;
  * @since : 17/06/2021
  **/
 @RestController
-@RequestMapping("api/v1/com")
+@RequestMapping("api/v1/community")
 public class CommunityController {
 
     @Autowired
