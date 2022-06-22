@@ -16,7 +16,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Data
 @Embeddable
-public class CommunityDetailPK implements Serializable {
+public class CommunityUserPK implements Serializable {
     @Column(name = "user_id")
     private int userId;
     @Column(name = "community_id")

@@ -20,9 +20,9 @@ import java.util.Date;
 @Data
 @Table(name = "user_community")
 @Entity
-public class CommunityDetail implements Serializable {
+public class CommunityUser implements Serializable {
     @EmbeddedId
-    private CommunityDetailPK pk;
+    private CommunityUserPK pk;
     @Column(name = "joined_date")
     private Date joinedDate;
     private Role role;

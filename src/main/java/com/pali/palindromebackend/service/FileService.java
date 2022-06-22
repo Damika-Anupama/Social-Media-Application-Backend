@@ -22,7 +22,7 @@ public class FileService {
     @Value("${media-upload.path}")
     private String UploadPath;
 
-
+    // save launch details
     public String saveMediaFile(MultipartFile file, String fileType) {
         String mediaUploadPath = UploadPath + "media/";
         String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss-"));
@@ -32,6 +32,9 @@ public class FileService {
         String folderPath = mediaUploadPath + fileType;
         File f1 = new File(folderPath);
         f1.mkdirs();
+        /*mkdirs() will create the specified directory path
+         in its entirety where mkdir() will only create the
+         bottom most directory,*/
         String filePath = folderPath + File.separator + fileName;
 
         try {
@@ -47,6 +50,7 @@ public class FileService {
         return filePath;
     }
 
+    // get launch image/video/audio
     public byte[] getMedia(String path) {
         try {
 
@@ -63,7 +67,7 @@ public class FileService {
         return null;
     }
 
-    public String saveFriend(int userId, int friendId, Date frinendshipSince) throws IOException {
+    public String saveFriend(int userId, int friendId, Date frinendshipSince) {
         String friendSavePath = UploadPath + "friend/";
         String pathName = friendSavePath + userId + ".txt";
         File file = new File(pathName);
@@ -77,7 +81,12 @@ public class FileService {
         }
         String saveFriend = String.valueOf(friendId) + "- " + frinendshipSince + "," + System.lineSeparator();
         byte[] bytes = saveFriend.getBytes();
-        Files.write(Paths.get(pathName), bytes, StandardOpenOption.APPEND);
+        try {
+            Files.write(Paths.get(pathName), bytes, StandardOpenOption.APPEND);
+        } catch (IOException e) {
+            System.out.println("Error in saving the multipart file of your friend");
+            e.printStackTrace();
+        }
         return pathName;
     }
 
@@ -98,6 +107,52 @@ public class FileService {
             fos.write(bytes);
             fos.close();
         } catch (IOException e) {
+            System.out.println(e);
+            e.printStackTrace();
+        }
+        return filePath;
+    }
+
+    public String saveCommunityGroupIcon(MultipartFile groupIcon) {
+        String mediaUploadPath = UploadPath + "community/groupIcon/";
+        String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss-"));
+        String fileName = date + groupIcon.getOriginalFilename();
+
+        File f1 = new File(mediaUploadPath);
+        f1.mkdirs();
+        String filePath = mediaUploadPath + File.separator + fileName;
+
+        try {
+            byte[] bytes = groupIcon.getBytes();
+            File file1 = new File(filePath);
+            FileOutputStream fos = new FileOutputStream(file1);
+            fos.write(bytes);
+            fos.close();
+        } catch (IOException e) {
+            System.out.println("Error when you saving your community groupIcon file try again!");
+            System.out.println(e);
+            e.printStackTrace();
+        }
+        return filePath;
+    }
+
+    public String saveCommunityWallpaper(MultipartFile wallpaper) {
+        String mediaUploadPath = UploadPath + "community/wallpaper/";
+        String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss-"));
+        String fileName = date + wallpaper.getOriginalFilename();
+
+        File f1 = new File(mediaUploadPath);
+        f1.mkdirs();
+        String filePath = mediaUploadPath + File.separator + fileName;
+
+        try {
+            byte[] bytes = wallpaper.getBytes();
+            File file1 = new File(filePath);
+            FileOutputStream fos = new FileOutputStream(file1);
+            fos.write(bytes);
+            fos.close();
+        } catch (IOException e) {
+            System.out.println("Error when you saving your community wallpaper file try again!");
             System.out.println(e);
             e.printStackTrace();
         }

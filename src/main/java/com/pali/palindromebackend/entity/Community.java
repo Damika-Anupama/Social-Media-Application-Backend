@@ -24,6 +24,9 @@ public class Community implements SuperEntity {
     private String description;
     @Column(name = "created_date")
     private Date createdDate;
+    @Column(name = "group_icon")
+    private String groupIcon;
+    private String wallpaper;
     @Setter(AccessLevel.NONE)
     @ManyToMany
     @JoinTable(name = "user_community",
@@ -37,10 +40,12 @@ public class Community implements SuperEntity {
             inverseJoinColumns = @JoinColumn(name = "launch_id", referencedColumnName = "id"))
     private List<Launch> launches;
 
-    public Community(int communityId, String title, String description, Date createdDate) {
+    public Community(int communityId, String title, String description, Date createdDate, String groupIcon, String wallpaper) {
         this.communityId = communityId;
         this.title = title;
         this.description = description;
         this.createdDate = createdDate;
+        this.groupIcon = groupIcon;
+        this.wallpaper = wallpaper;
     }
 }
