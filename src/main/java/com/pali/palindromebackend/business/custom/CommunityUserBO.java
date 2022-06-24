@@ -1,6 +1,7 @@
 package com.pali.palindromebackend.business.custom;
 
 import com.pali.palindromebackend.dto.CommunityUserDTO;
+import com.pali.palindromebackend.entity.CommunityUserPK;
 
 import java.util.List;
 
@@ -13,9 +14,9 @@ public interface CommunityUserBO {
 
     public void updateCommunityUser(CommunityUserDTO dto) throws Exception;
 
-    public void deleteCommunityUser(int comId,int userId) throws Exception;
+    public void deleteCommunityUser(CommunityUserPK pk) throws Exception;
 
     public List<CommunityUserDTO> getAllCommunityUsers() throws Exception;
 
-    public CommunityUserDTO getCommunityUser(int comId,int userId) throws Exception;
+    public CommunityUserDTO getCommunityUser(CommunityUserPK pk) throws Exception;
 }

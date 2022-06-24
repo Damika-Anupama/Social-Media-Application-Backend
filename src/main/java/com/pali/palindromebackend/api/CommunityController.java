@@ -1,6 +1,7 @@
 package com.pali.palindromebackend.api;
 
 import com.pali.palindromebackend.business.custom.CommunityBO;
+import com.pali.palindromebackend.business.custom.CommunityUserBO;
 import com.pali.palindromebackend.dto.CommunityDTO;
 import com.pali.palindromebackend.dto.CommunityUserDTO;
 import com.pali.palindromebackend.entity.Role;
@@ -28,6 +29,7 @@ public class CommunityController {
 
     @Autowired
     private CommunityBO bo;
+    private CommunityUserBO bo1;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
@@ -58,12 +60,11 @@ public class CommunityController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(
             produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
     @ResponseBody
-    public ResponseEntity<?> saveCom(@Valid @RequestBody CommunityUserBody body) throws IOException {
+    public ResponseEntity<Object> saveCom(@ModelAttribute CommunityUserBody body){
         try {
-            // TODO: 6/21/2022  update the user community table
             CommunityDTO dto = new CommunityDTO();
             CommunityUserDTO dto1 = new CommunityUserDTO();
             FileService service = new FileService();
@@ -74,17 +75,17 @@ public class CommunityController {
             dto.setCreatedDate(new Date());
             dto.setGroupIcon(service.saveCommunityGroupIcon(body.getGroupIcon()));
             dto.setWallpaper(service.saveCommunityWallpaper(body.getWallpaper()));
+            bo.saveCom(dto);
+
             //setting the userCommunity object
             dto1.setUserId(body.getUserId());
+            // TODO: 6/24/2022  we should get the community id when saving the community (as an return entity)
             dto1.setCommunityId(body.getCommunityId());
             dto1.setJoinedDate(new Date()); // User's joined date is equals to community created date.
             dto1.setRole(Role.OWNER); // When a community creation,  the user should definitely be the owner.
-            // TODO: 6/21/2022 settle the saving user community in the backend 
-            bo.saveCom(dto);
+            bo1.saveCommunityUser(dto1);
             return new ResponseEntity<>(dto, HttpStatus.CREATED);
-        } catch (NoSuchElementException e) {
-            return new ResponseEntity<>("No friend found !!", HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
+        }  catch (Exception e) {
             return new ResponseEntity<>("Something went wrong !!", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
