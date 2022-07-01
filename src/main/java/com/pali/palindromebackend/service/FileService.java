@@ -19,6 +19,7 @@ import java.util.Date;
  **/
 @Service
 public class FileService {
+    // TODO: 6/24/2022  settle the filepath according to the server machine (may be linux or windows) so the file path system may differ 
     @Value("${media-upload.path}")
     private String UploadPath;
 
@@ -114,13 +115,15 @@ public class FileService {
     }
 
     public String saveCommunityGroupIcon(MultipartFile groupIcon) {
-        String mediaUploadPath = UploadPath + "community/groupIcon/";
+        // TODO: 6/24/2022 settle the UploadPath (this was null - no reason)
+//        String mediaUploadPath = UploadPath + "community/groupIcon/";
+        String mediaUploadPath = "/home/damika/Desktop/pali-data/community/groupIcon/";
         String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss-"));
         String fileName = date + groupIcon.getOriginalFilename();
 
         File f1 = new File(mediaUploadPath);
         f1.mkdirs();
-        String filePath = mediaUploadPath + File.separator + fileName;
+        String filePath = mediaUploadPath + fileName;
 
         try {
             byte[] bytes = groupIcon.getBytes();
@@ -128,22 +131,25 @@ public class FileService {
             FileOutputStream fos = new FileOutputStream(file1);
             fos.write(bytes);
             fos.close();
+            return filePath;
         } catch (IOException e) {
             System.out.println("Error when you saving your community groupIcon file try again!");
             System.out.println(e);
             e.printStackTrace();
+            return null;
         }
-        return filePath;
+
     }
 
     public String saveCommunityWallpaper(MultipartFile wallpaper) {
-        String mediaUploadPath = UploadPath + "community/wallpaper/";
+        // TODO: 6/24/2022 settle the UploadPath (this was null - no reason)
+        String mediaUploadPath = "/home/damika/Desktop/pali-data/community/wallpaper/";
         String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss-"));
         String fileName = date + wallpaper.getOriginalFilename();
 
         File f1 = new File(mediaUploadPath);
         f1.mkdirs();
-        String filePath = mediaUploadPath + File.separator + fileName;
+        String filePath = mediaUploadPath + fileName;
 
         try {
             byte[] bytes = wallpaper.getBytes();
@@ -151,12 +157,13 @@ public class FileService {
             FileOutputStream fos = new FileOutputStream(file1);
             fos.write(bytes);
             fos.close();
+            return filePath;
         } catch (IOException e) {
             System.out.println("Error when you saving your community wallpaper file try again!");
             System.out.println(e);
             e.printStackTrace();
+            return null;
         }
-        return filePath;
     }
 
     public void deleteFile(String profilePicture) {

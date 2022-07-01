@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -36,6 +37,8 @@ public class CommunityController {
     @ResponseBody
     public ResponseEntity<?> getAllComs() throws Exception {
         try {
+            List<CommunityDTO> communityDTOS = bo.getAllComs();
+            ArrayList<CommunityUserBody> response = new ArrayList<>();
             return new ResponseEntity<List<CommunityDTO>>(bo.getAllComs(), HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>("No friend found !!", HttpStatus.NOT_FOUND);
