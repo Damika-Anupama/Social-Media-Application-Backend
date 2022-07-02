@@ -118,6 +118,7 @@ by Damika
 ### 5. Stage Five -> ***Most Important Stage***
 >Until here anyone can blame to Palindrome you're copying facebook and Whatsapp
 > But here is the time to change those all blames
+> In here we apply loads of concepts based on Artificial Intelligence, Data Science, Cyber-security, Psychology, Virtual Reality so-and-so forth
 
 - Get a connection with NFTs
   - like everyone can maintain a NFT according to their profile
@@ -129,4 +130,6 @@ by Damika
   - Try VR mode to palindrome
   - mainly on Pali-City game (like ready player one)
   - group calls
-  - if someone haven't enough money to get VR they have same functionalities in 2D version.
+  - if someone hasn't enough money to get VR they have same functionalities in 2D version.
+
+
