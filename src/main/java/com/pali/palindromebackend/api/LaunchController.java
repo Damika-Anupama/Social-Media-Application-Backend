@@ -108,6 +108,7 @@ public class LaunchController {
             final String mediaPath = fileService.saveMediaFile(body.getFile(), body.getFile().getContentType());
             LaunchDTO dto = new LaunchDTO();
             Date date = new Date();
+
             dto.setDescription(body.getDescription());
             dto.setFeeling(body.getFeeling());
             dto.setMedia(mediaPath);

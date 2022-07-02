@@ -7,6 +7,8 @@ import com.pali.palindromebackend.dao.CommunityUserDAO;
 import com.pali.palindromebackend.dto.CommunityUserDTO;
 import com.pali.palindromebackend.entity.CommunityUserPK;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,6 +17,8 @@ import java.util.stream.Collectors;
  * @author : Mr.Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
  * @since : 6/22/2022
  **/
+@Transactional
+@Service
 public class CommunityUserBOImpl implements CommunityUserBO {
     @Autowired
     private CommunityUserDAO dao;

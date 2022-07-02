@@ -4,6 +4,7 @@ import com.pali.palindromebackend.business.custom.CommunityBO;
 import com.pali.palindromebackend.business.util.EntityDTOMapper;
 import com.pali.palindromebackend.dao.CommunityDAO;
 import com.pali.palindromebackend.dto.CommunityDTO;
+import com.pali.palindromebackend.entity.Community;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,8 +26,8 @@ public class CommunityBOimpl implements CommunityBO {
     private EntityDTOMapper mapper;
 
     @Override
-    public void saveCom(CommunityDTO dto) throws Exception {
-        dao.save(mapper.getCommunity(dto));
+    public Community saveCom(CommunityDTO dto) throws Exception {
+        return dao.save(mapper.getCommunity(dto));
     }
 
     @Override

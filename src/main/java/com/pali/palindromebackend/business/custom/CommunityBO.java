@@ -3,6 +3,7 @@ package com.pali.palindromebackend.business.custom;
 import com.pali.palindromebackend.business.SuperBO;
 import com.pali.palindromebackend.dto.CommunityDTO;
 import com.pali.palindromebackend.dto.FriendDTO;
+import com.pali.palindromebackend.entity.Community;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  **/
 
 public interface CommunityBO extends SuperBO {
-    public void saveCom(CommunityDTO dto) throws Exception;
+    public Community saveCom(CommunityDTO dto) throws Exception;
 
     public void updateCom(CommunityDTO dto) throws Exception;
 

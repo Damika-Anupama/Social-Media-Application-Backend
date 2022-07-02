@@ -9,6 +9,7 @@ import java.util.List;
  * @author : Mr.Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
  * @since : 6/22/2022
  **/
+
 public interface CommunityUserBO {
     public void saveCommunityUser(CommunityUserDTO dto) throws Exception;
 

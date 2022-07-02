@@ -4,9 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author : Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
@@ -17,8 +17,11 @@ import java.io.Serializable;
 @Data
 @Embeddable
 public class CommunityUserPK implements Serializable {
-    @Column(name = "user_id")
-    private int userId;
-    @Column(name = "community_id")
-    private int communityId;
+    @ManyToMany
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private List<User> userId;
+
+    @ManyToMany
+    @JoinColumn(name = "community_id", referencedColumnName = "community_id")
+    private List<Community> communityId;
 }

@@ -4,6 +4,7 @@ import com.pali.palindromebackend.business.custom.CommunityBO;
 import com.pali.palindromebackend.business.custom.CommunityUserBO;
 import com.pali.palindromebackend.dto.CommunityDTO;
 import com.pali.palindromebackend.dto.CommunityUserDTO;
+import com.pali.palindromebackend.entity.Community;
 import com.pali.palindromebackend.entity.Role;
 import com.pali.palindromebackend.model.CommunityUserBody;
 import com.pali.palindromebackend.service.FileService;
@@ -30,6 +31,7 @@ public class CommunityController {
 
     @Autowired
     private CommunityBO bo;
+    @Autowired
     private CommunityUserBO bo1;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -78,16 +80,16 @@ public class CommunityController {
             dto.setCreatedDate(new Date());
             dto.setGroupIcon(service.saveCommunityGroupIcon(body.getGroupIcon()));
             dto.setWallpaper(service.saveCommunityWallpaper(body.getWallpaper()));
-            bo.saveCom(dto);
-
+            Community community = bo.saveCom(dto);
+            System.out.println(community);
             //setting the userCommunity object
             dto1.setUserId(body.getUserId());
             // TODO: 6/24/2022  we should get the community id when saving the community (as an return entity)
-            dto1.setCommunityId(body.getCommunityId());
+            dto1.setCommunityId(community.getCommunityId());
             dto1.setJoinedDate(new Date()); // User's joined date is equals to community created date.
             dto1.setRole(Role.OWNER); // When a community creation,  the user should definitely be the owner.
             bo1.saveCommunityUser(dto1);
-            return new ResponseEntity<>(dto, HttpStatus.CREATED);
+            return new ResponseEntity<>("Data successfully saved!", HttpStatus.CREATED);
         }  catch (Exception e) {
             return new ResponseEntity<>("Something went wrong !!", HttpStatus.INTERNAL_SERVER_ERROR);
         }
