@@ -27,15 +27,14 @@ by Damika
     - groups
 - Put status and view status
   - cannot put options like share, comment, reactions
-- Can maintain own profile page viewing own details to others (viewers)
-- Can make groups
+- Can maintain own profile page 
+  - viewing own details to others (viewers)
+  - ascending all the user details according to the date
+- Can make groups (including pages)
     - have owners, authors, users etc.
     - can publish posts
     - etc
-- Can make Pages
-  - publish posts
-  - only one owner
-- Maintain friends (No more than 5000)
+- Maintain friends (No limitation ;) -> All friends can be viewed in one pop-up window
 - Everyone can change(update) their own setting (maintain the settings page)
 - Search
   - public search among users, groups, pages
@@ -48,10 +47,8 @@ by Damika
   - etc
 - More Info page 
   - to describe about our project, future goals, etc.
-- Donate to maintain this project
-  - why you should donate(because of heavy charges of servers)
-- Suggestions
-- Contact us
+- (removed this part) Donate to maintain this project
+- Both Suggestions and Contact us in one page
   - To send private messages to the community 
 - Logout
 

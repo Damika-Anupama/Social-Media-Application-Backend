@@ -54,4 +54,9 @@ public class ReactionBOimpl implements ReactionBO {
     public ReactionDTO getReaction(int reactionId) throws Exception {
         return dao.findById(reactionId).map(reaction -> mapper.getReactionDTO(reaction)).get();
     }
+
+    @Override
+    public boolean checkUniqueness(int userId, int launchId) {
+        return dao.findReaction(userId,launchId);
+    }
 }

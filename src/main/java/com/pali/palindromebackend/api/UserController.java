@@ -62,7 +62,8 @@ public class UserController {
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>("No user found !!", HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            return new ResponseEntity<>("Something went wrong !!", HttpStatus.INTERNAL_SERVER_ERROR);
+            System.out.println(e);
+            return new ResponseEntity<>("Something went wrong !!\n"+ e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     //
@@ -130,7 +131,7 @@ public class UserController {
     @DeleteMapping("/{userId}")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public ResponseEntity<Object> deleteUser(@PathVariable("userId") int userId) throws Exception {
+    public ResponseEntity<Object> deleteUser(@PathVariable("userId") int userId){
         try {
             System.out.println(userId);
             bo.getUser(userId);
@@ -143,16 +144,47 @@ public class UserController {
         }
     }
 
+//    @PutMapping(
+//            produces = MediaType.APPLICATION_JSON_VALUE,
+//            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
+//    )
+//    @ResponseStatus(HttpStatus.OK)
+//    @ResponseBody
+//    public ResponseEntity<?> updateUser( @ModelAttribute UserBody body){
+//                try {
+//            String filePath = null;
+//            if (body.getProfilePic() != null) {
+//                filePath = fileService.saveUserProfilePicture(body.getProfilePic());
+//                UserDTO user = bo.getUser(body.getId());
+//                fileService.deleteFile(user.getProfilePicture());
+//            }
+//            UserDTO dto = new UserDTO();
+//            dto.setId(body.getId());
+//            dto.setUsername(body.getUsername());
+//            dto.setEmail(body.getEmail());
+//            dto.setShortDescription(body.getShortDes());
+//            dto.setProfilePicture(filePath);
+//            dto.setContactNum(body.getPhoneNum());
+////            dto.setOnlineStatus(true);
+//            bo.updateUserNormalDetails(dto);
+//            return new ResponseEntity<>(dto, HttpStatus.CREATED);
+//        } catch (NoSuchElementException e) {
+//            return new ResponseEntity<>("No user is found !!", HttpStatus.NOT_FOUND);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>("Something went wrong !!", HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+
+
     @PutMapping(
-            value = "/{id}",
+            value = "/{userid}",
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<?> updateUser(@Valid @ModelAttribute UserBody body, @PathVariable("id") int id)
-            throws Exception {
-        if (body.getId() != id) {
+    public ResponseEntity<?> updateUser( @ModelAttribute UserBody body, @PathVariable("userid") int userid){
+        if (body.getId() != userid) {
             return new ResponseEntity<>("Mismatch userId !!", HttpStatus.BAD_REQUEST);
         } else if (true) {
             // TODO: 5/26/2022   handle the multi part file size from this stage before save it
@@ -161,7 +193,7 @@ public class UserController {
             String filePath = null;
             if (body.getProfilePic() != null) {
                 filePath = fileService.saveUserProfilePicture(body.getProfilePic());
-                UserDTO user = bo.getUser(id);
+                UserDTO user = bo.getUser(userid);
                 fileService.deleteFile(user.getProfilePicture());
             }
             UserDTO dto = new UserDTO();
@@ -171,6 +203,7 @@ public class UserController {
             dto.setShortDescription(body.getShortDes());
             dto.setProfilePicture(filePath);
             dto.setContactNum(body.getPhoneNum());
+//            dto.setOnlineStatus(true);
             bo.updateUserNormalDetails(dto);
             return new ResponseEntity<>(dto, HttpStatus.CREATED);
         } catch (NoSuchElementException e) {
@@ -181,9 +214,9 @@ public class UserController {
     }
 
 
+
     // Only use this method when the authentication method runs in AuthenticateController.java
-    public void updateUserLastLogin(UserBody body, int id)
-            throws Exception {
+    public void updateUserLastLogin(UserBody body, int id){
         try {
             UserDTO dto = new UserDTO();
             dto.setLastLogin(body.getLastLogin());

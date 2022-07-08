@@ -40,7 +40,7 @@ public class ReactionController {
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>("No Status found !!", HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            return new ResponseEntity<>("Something went wrong !!", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Something went wrong !! \n" + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -66,6 +66,10 @@ public class ReactionController {
     @ResponseBody
     public ResponseEntity<?> saveReaction(ReactionDTO dto) throws Exception {
         //reaction time and updated time should be filled from the frontend
+        if(bo.checkUniqueness(dto.getUserId(),dto.getLaunchId())){
+            return new ResponseEntity<>("Same user has already reacted to this launch." +
+                    " So please update relevant data. You can't create another", HttpStatus.BAD_REQUEST);
+        }
         try {
             Date date = new Date();
             dto.setReactionTime(date);

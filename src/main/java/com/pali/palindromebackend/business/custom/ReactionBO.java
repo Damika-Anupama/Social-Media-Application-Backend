@@ -10,13 +10,15 @@ import java.util.List;
  * @since : 28/04/2021
  **/
 public interface ReactionBO extends SuperBO {
-    public void saveReaction(ReactionDTO dto) throws Exception;
+    void saveReaction(ReactionDTO dto) throws Exception;
 
-    public void updateReaction(ReactionDTO dto) throws Exception;
+    void updateReaction(ReactionDTO dto) throws Exception;
 
-    public void deleteReaction(int reactionId) throws Exception;
+    void deleteReaction(int reactionId) throws Exception;
 
-    public List<ReactionDTO> getAllReactions() throws Exception;
+    List<ReactionDTO> getAllReactions() throws Exception;
 
-    public ReactionDTO getReaction(int reactionId) throws Exception;
+    ReactionDTO getReaction(int reactionId) throws Exception;
+
+    boolean checkUniqueness(int userId, int launchId);
 }

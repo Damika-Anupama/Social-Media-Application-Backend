@@ -35,7 +35,7 @@ public class Reaction implements SuperEntity{
     @JoinColumn(name = "launch_id",referencedColumnName = "id",nullable = false)
     private Launch launch;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 }

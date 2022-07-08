@@ -91,7 +91,8 @@ public class CommunityController {
             bo1.saveCommunityUser(dto1);
             return new ResponseEntity<>("Data successfully saved!", HttpStatus.CREATED);
         }  catch (Exception e) {
-            return new ResponseEntity<>("Something went wrong !!", HttpStatus.INTERNAL_SERVER_ERROR);
+            System.out.println(e);
+            return new ResponseEntity<>("Something went wrong !!/n" + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

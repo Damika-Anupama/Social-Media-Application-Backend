@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "suggestion")
+@Table(name = "page")
 public class Page implements SuperEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

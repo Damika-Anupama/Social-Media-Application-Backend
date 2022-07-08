@@ -19,21 +19,24 @@ import java.util.Date;
 @NoArgsConstructor
 @Data
 public class UserDTO implements SuperDTO {
+    // implicitly setting data
     private int id;
-    @NotEmpty(message = "username cannot be empty !!")
-    private String username;
     private Date createdAt;
     private boolean isActive;
-    @NotNull(message = "password cannot be null !!")
-    private String password;
     private Role role;
     private Date updatedAt;
+    private Date lastLogin;
+//    private boolean onlineStatus;
+    //explicitly setting data
+    @NotEmpty(message = "username cannot be empty !!")
+    private String username;
+    @NotNull(message = "password cannot be null !!")
+    private String password;
     private Gender gender;
     private String email;
     private String shortDescription;
     private String profilePicture;
     private String contactNum;
-    private Date lastLogin;
 
     public boolean getIsActive() {
         return isActive;

@@ -55,6 +55,8 @@ public class User implements SuperEntity {
     private String contactNum;
     @Column(name = "last_login")
     private Date lastLogin;
+//    @Column(name = "online_status")
+//    private boolean onlineStatus;
 
     @Setter(AccessLevel.NONE)
     @JsonIgnoreProperties("user")
@@ -94,7 +96,7 @@ public class User implements SuperEntity {
     @Setter(AccessLevel.NONE)
     private List<Share> shares;
 
-    @OneToOne(fetch = FetchType.LAZY,
+    @OneToOne(
             cascade =  CascadeType.ALL,
             mappedBy = "user")
     private Reaction reaction;
