@@ -18,7 +18,7 @@ import java.util.List;
 @ToString
 @Entity
 @Table(name = "launch")
-public class Launch implements SuperEntity{
+public class    Launch implements SuperEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -51,13 +51,6 @@ public class Launch implements SuperEntity{
     @JsonIgnoreProperties("launch")
     @OneToMany(mappedBy = "launch")
     private List<Reaction> reactions;
-
-    @Setter(AccessLevel.NONE)
-    @ManyToMany(mappedBy = "launches")
-    private List<Community> communities;
-
-
-
 
     public Launch(int id, String media, String mediaType, String description, String feeling, Date createdDate, Date updatedDate, User user) {
         this.id = id;

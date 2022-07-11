@@ -23,7 +23,7 @@ public class CommunityUserBOImpl implements CommunityUserBO {
     @Autowired
     private CommunityUserDAO dao;
     @Autowired
-    private EntityDTOMapper  mapper;
+    private CommunityUserEntityDTOMapper  mapper;
 
     @Override
     public void saveCommunityUser(CommunityUserDTO dto) throws Exception {

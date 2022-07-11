@@ -81,18 +81,19 @@ public class CommunityController {
             dto.setGroupIcon(service.saveCommunityGroupIcon(body.getGroupIcon()));
             dto.setWallpaper(service.saveCommunityWallpaper(body.getWallpaper()));
             Community community = bo.saveCom(dto);
-            System.out.println(community);
             //setting the userCommunity object
             dto1.setUserId(body.getUserId());
-            // TODO: 6/24/2022  we should get the community id when saving the community (as an return entity)
             dto1.setCommunityId(community.getCommunityId());
             dto1.setJoinedDate(new Date()); // User's joined date is equals to community created date.
+            // TODO: 7/12/2022 updated date not saving in the database
+            dto1.setUpdatedDate(new Date());
             dto1.setRole(Role.OWNER); // When a community creation,  the user should definitely be the owner.
+            System.out.println(dto1);
             bo1.saveCommunityUser(dto1);
             return new ResponseEntity<>("Data successfully saved!", HttpStatus.CREATED);
         }  catch (Exception e) {
             System.out.println(e);
-            return new ResponseEntity<>("Something went wrong !!/n" + e, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Something went wrong !! " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

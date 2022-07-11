@@ -158,7 +158,7 @@ public class FileService {
             fos.write(bytes);
             fos.close();
             return filePath;
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println("Error when you saving your community wallpaper file try again!");
             System.out.println(e);
             e.printStackTrace();

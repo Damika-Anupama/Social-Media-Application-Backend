@@ -27,25 +27,4 @@ public class Community implements SuperEntity {
     @Column(name = "group_icon")
     private String groupIcon;
     private String wallpaper;
-    @Setter(AccessLevel.NONE)
-    @ManyToMany
-    @JoinTable(name = "user_community",
-            joinColumns = @JoinColumn(name = "community_id", referencedColumnName = "community_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
-    private List<User> users;
-
-    @ManyToMany
-    @JoinTable(name = "launch_community",
-            joinColumns = @JoinColumn(name = "community_id", referencedColumnName = "community_id"),
-            inverseJoinColumns = @JoinColumn(name = "launch_id", referencedColumnName = "id"))
-    private List<Launch> launches;
-
-    public Community(int communityId, String title, String description, Date createdDate, String groupIcon, String wallpaper) {
-        this.communityId = communityId;
-        this.title = title;
-        this.description = description;
-        this.createdDate = createdDate;
-        this.groupIcon = groupIcon;
-        this.wallpaper = wallpaper;
-    }
 }

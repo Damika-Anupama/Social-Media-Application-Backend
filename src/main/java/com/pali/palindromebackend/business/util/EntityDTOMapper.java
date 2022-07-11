@@ -16,8 +16,6 @@ public interface EntityDTOMapper {
     Community getCommunity(CommunityDTO dto);
     CommunityDTO getCommunityDTO(Community community);
 
-    CommunityUser getCommunityUser(CommunityUserDTO dto);
-    CommunityUserDTO getCommunityUserDTO(CommunityUser communityUser);
 
     Page getPage(PageDTO dto);
     PageDTO getPageDTO(Page page);

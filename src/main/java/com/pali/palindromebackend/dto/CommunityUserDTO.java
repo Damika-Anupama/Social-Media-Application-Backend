@@ -18,5 +18,6 @@ public class CommunityUserDTO implements SuperDTO{
     private int userId;
     private int communityId;
     private Date joinedDate;
+    private Date updatedDate;
     private Role role;
 }

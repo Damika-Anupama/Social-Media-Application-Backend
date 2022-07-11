@@ -143,4 +143,9 @@ public class FileServiceTest {
     @Test
     public void saveCommunityWallpaper() {
     }
+
+    @org.junit.jupiter.api.Test
+    void testSaveCommunityWallpaper() {
+
+    }
 }

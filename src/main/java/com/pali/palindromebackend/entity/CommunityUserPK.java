@@ -17,8 +17,10 @@ import java.util.List;
 @Data
 @Embeddable
 public class CommunityUserPK implements Serializable {
-    @Column(name = "user_id")
-    private int userId;
-    @Column(name = "community_id")
-    private int communityId;
+    @ManyToOne
+    @JoinColumn(name = "user_id",referencedColumnName = "id")
+    private User userId;
+    @ManyToOne
+    @JoinColumn(name = "community_id",referencedColumnName = "community_id")
+    private Community communityId;
 }
