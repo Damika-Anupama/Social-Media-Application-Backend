@@ -6,7 +6,10 @@ import com.pali.palindromebackend.dto.CommunityDTO;
 import com.pali.palindromebackend.dto.CommunityUserDTO;
 import com.pali.palindromebackend.entity.Community;
 import com.pali.palindromebackend.entity.Role;
+import com.pali.palindromebackend.entity.custom.LaunchUserDetails;
 import com.pali.palindromebackend.model.CommunityUserBody;
+import com.pali.palindromebackend.model.DashboardLaunchDetail;
+import com.pali.palindromebackend.model.ResponseCommunityBody;
 import com.pali.palindromebackend.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,15 +36,30 @@ public class CommunityController {
     private CommunityBO bo;
     @Autowired
     private CommunityUserBO bo1;
+    @Autowired
+    private FileService fileService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public ResponseEntity<?> getAllComs() throws Exception {
         try {
-            List<CommunityDTO> communityDTOS = bo.getAllComs();
-            ArrayList<CommunityUserBody> response = new ArrayList<>();
-            return new ResponseEntity<List<CommunityDTO>>(bo.getAllComs(), HttpStatus.OK);
+            List<CommunityDTO> allComs = bo.getAllComs();
+            ArrayList<ResponseCommunityBody> dlds = new ArrayList<>();
+            allComs.forEach(detail -> {
+                byte[] groupIcon = fileService.getMedia(detail.getGroupIcon());
+                byte[] wallPaper = fileService.getMedia(detail.getWallpaper());
+                ResponseCommunityBody dld = new ResponseCommunityBody(
+                        detail.getCommunityId(),
+                        detail.getTitle(),
+                        detail.getDescription(),
+                        detail.getCreatedDate(),
+                        groupIcon,
+                        wallPaper
+                );
+                dlds.add(dld);
+            });
+            return new ResponseEntity<List<ResponseCommunityBody>>(dlds, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>("No friend found !!", HttpStatus.NOT_FOUND);
         } catch (Exception e) {
@@ -90,7 +108,7 @@ public class CommunityController {
             dto1.setRole(Role.OWNER); // When a community creation,  the user should definitely be the owner.
             System.out.println(dto1);
             bo1.saveCommunityUser(dto1);
-            return new ResponseEntity<>("Data successfully saved!", HttpStatus.CREATED);
+            return new ResponseEntity<>(dto1, HttpStatus.CREATED);
         }  catch (Exception e) {
             System.out.println(e);
             return new ResponseEntity<>("Something went wrong !! " + e, HttpStatus.INTERNAL_SERVER_ERROR);
