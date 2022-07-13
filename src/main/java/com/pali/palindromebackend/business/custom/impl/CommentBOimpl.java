@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,5 +52,12 @@ public class CommentBOimpl implements CommentBO {
     @Override
     public CommentDTO getComment(int commentId) throws Exception {
         return dao.findById(commentId).map(comment -> mapper.getCommentDTO(comment)).get();
+    }
+
+    @Override
+    public List<CommentDTO> getLaunchComments(int launchId) {
+        return dao.findLaunchComment(launchId).stream().map(
+                comments -> mapper.getCommentDTO(comments)).collect(Collectors.toList()
+        );
     }
 }

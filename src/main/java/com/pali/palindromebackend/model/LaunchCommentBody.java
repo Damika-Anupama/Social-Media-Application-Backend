@@ -14,13 +14,13 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LaunchCommentObject implements Serializable {
+public class LaunchCommentBody implements Serializable {
     private int id;
     private String comment;
     private Date commentedDate;
     private Date lastUpdatedDate;
     private int userId;
-    private byte[] userImage;
     private String userName;
+    private byte[] userImage;
     private boolean userOnlineStatus;
 }

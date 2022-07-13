@@ -1,13 +1,15 @@
 package com.pali.palindromebackend.api;
 
+import com.pali.palindromebackend.business.custom.CommentBO;
 import com.pali.palindromebackend.business.custom.LaunchBO;
-import com.pali.palindromebackend.business.util.EntityDTOMapper;
+import com.pali.palindromebackend.business.custom.ReactionBO;
+import com.pali.palindromebackend.business.custom.UserBO;
+import com.pali.palindromebackend.dto.CommentDTO;
 import com.pali.palindromebackend.dto.LaunchDTO;
+import com.pali.palindromebackend.dto.ReactionDTO;
 import com.pali.palindromebackend.dto.UserDTO;
 import com.pali.palindromebackend.entity.custom.LaunchUserDetails;
-import com.pali.palindromebackend.model.DashboardLaunchDetail;
-import com.pali.palindromebackend.model.LaunchBody;
-import com.pali.palindromebackend.model.ResponseLaunchBody;
+import com.pali.palindromebackend.model.*;
 import com.pali.palindromebackend.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +34,12 @@ import java.util.NoSuchElementException;
 public class LaunchController {
     @Autowired
     private LaunchBO bo;
+    @Autowired
+    private ReactionBO bo1;
+    @Autowired
+    private CommentBO bo2;
+    @Autowired
+    private UserBO bo3;
 
     @Autowired
     private FileService fileService;
@@ -48,9 +56,64 @@ public class LaunchController {
             List<LaunchUserDetails> luds = bo.getAllLaunchesWithUserDetails();
             ArrayList<DashboardLaunchDetail> dlds = new ArrayList<>();
             luds.forEach(detail -> {
+                ArrayList<LaunchReactionBody> lr = new ArrayList<>();
+                ArrayList<LaunchCommentBody> lc = new ArrayList<>();
                 byte[] launchMedia = fileService.getMedia(detail.getMedia());
                 byte[] userMedia = fileService.getMedia(detail.getProfilePicture());
-                // TODO: 7/12/2022  settle reactions and comments lists 
+
+                List<ReactionDTO> reactions = bo1.getLaunchReactions(detail.getId());
+                List<CommentDTO> comments = bo2.getLaunchComments(detail.getId());
+
+                reactions.forEach(reaction -> {
+                    UserDTO user = null;
+                    LaunchReactionBody body;
+                    byte[] picture = new byte[0];
+
+                    try {
+                        user = bo3.getUser(reaction.getUserId());
+                        picture = fileService.getMedia(user.getProfilePicture());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+//                    assert user != null;
+                    body = new LaunchReactionBody(
+                            reaction.getId(),
+                            reaction.getType(),
+                            reaction.getReactionTime(),
+                            reaction.getUpdatedTime(),
+                            user.getId(),
+                            user.getUsername(),
+                            picture,
+                            user.getIsActive()
+                    );
+                    lr.add(body);
+                });
+
+                comments.forEach(comment -> {
+                    UserDTO user = null;
+                    LaunchCommentBody body;
+                    byte[] picture = new byte[0];
+
+                    try {
+                        user = bo3.getUser(comment.getUser());
+                        picture = fileService.getMedia(user.getProfilePicture());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+//                    assert user != null;
+                    body = new LaunchCommentBody(
+                            comment.getId(),
+                            comment.getComment(),
+                            comment.getCommentedDate(),
+                            comment.getLastUpdatedDate(),
+                            user.getId(),
+                            user.getUsername(),
+                            picture,
+                            user.getIsActive()
+                    );
+                    lc.add(body);
+                });
+
                 DashboardLaunchDetail dld = new DashboardLaunchDetail(
                         launchMedia,
                         detail.getMediaType(),
@@ -60,8 +123,8 @@ public class LaunchController {
                         detail.getUserName(),
                         detail.getShortDescription(),
                         userMedia,
-                        null,
-                        null
+                        lr,
+                        lc
                 );
                 dlds.add(dld);
             });

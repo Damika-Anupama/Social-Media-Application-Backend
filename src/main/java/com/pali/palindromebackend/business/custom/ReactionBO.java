@@ -3,6 +3,7 @@ package com.pali.palindromebackend.business.custom;
 import com.pali.palindromebackend.business.SuperBO;
 import com.pali.palindromebackend.dto.ReactionDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,4 +22,6 @@ public interface ReactionBO extends SuperBO {
     ReactionDTO getReaction(int reactionId) throws Exception;
 
     boolean checkUniqueness(int userId, int launchId);
+
+    List<ReactionDTO> getLaunchReactions(int launchId);
 }

@@ -15,7 +15,9 @@ import java.util.Date;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "comment", uniqueConstraints = @UniqueConstraint(columnNames = {"id"}))
+@Table(name = "comment",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"id"})
+)
 @Data
 public class Comment implements SuperEntity{
     @Id
@@ -31,11 +33,20 @@ public class Comment implements SuperEntity{
 
     @JsonIgnoreProperties("comments")
     @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "user_who_commented",referencedColumnName = "id",nullable = false)
+    @JoinColumn(
+            name = "user_who_commented",
+            referencedColumnName = "id",
+            nullable = false
+    )
     private User user;
 
     @JsonIgnoreProperties("comments")
     @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "launch_id",referencedColumnName = "id",nullable = false)
+    @JoinColumn(
+            name = "launch_id",
+            referencedColumnName = "id",
+            nullable = false
+    )
     private Launch launch;
+
 }

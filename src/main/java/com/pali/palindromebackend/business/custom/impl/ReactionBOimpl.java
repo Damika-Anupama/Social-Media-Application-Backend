@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -58,5 +59,12 @@ public class ReactionBOimpl implements ReactionBO {
     @Override
     public boolean checkUniqueness(int userId, int launchId) {
         return dao.findReaction(userId, launchId) != null;
+    }
+
+    @Override
+    public List<ReactionDTO> getLaunchReactions(int launchId) {
+        return dao.findLaunchReactions(launchId).stream().map(
+                reactions -> mapper.getReactionDTO(reactions)).collect(Collectors.toList()
+        );
     }
 }

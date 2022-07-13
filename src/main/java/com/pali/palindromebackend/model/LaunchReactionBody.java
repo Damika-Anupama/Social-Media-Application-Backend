@@ -21,7 +21,7 @@ public class LaunchReactionBody implements Serializable {
     private Date reactionTime;
     private Date updatedTime;
     private int userId;
-    private byte[] userImage;
     private String userName;
+    private byte[] userImage;
     private boolean userOnlineStatus;
 }
