@@ -21,14 +21,18 @@ public abstract class FriendEntityDTOMapper {
     @Autowired
     private UserDAO userDAO;
 
-    @Mapping(source = ".", target = "user")
+    @Mapping(source = "friend2", target = "user.id")
     public abstract Friend getFriend(FriendDTO dto);
 
-    @Mapping(source = "user", target = "user", qualifiedByName = "User")
+    @Mapping(
+            source = "user",
+            target = "friend2",
+            qualifiedByName = "User"
+    )
     public abstract FriendDTO getFriendDTO(Friend friend);
 
     public User getUser(FriendDTO dto) {
-        return userDAO.getOne(dto.getUser());
+        return userDAO.getOne(dto.getFriend2());
     }
 
     @Named("User")

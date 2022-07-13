@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -22,6 +23,18 @@ import java.util.NoSuchElementException;
 @RestController
 @RequestMapping("api/v1/friends")
 public class FriendController {
+    /*
+    Friend Logic
+
+    * friend1 = first user who asked for the friendship
+    * friend2 = second user who needs to confirm the friendship
+    * askedDate = the date first user asked for the friendship
+    * isConfirmed = True after second user accepts the friendship
+    * friendshipDate = second user confirmed date
+    * isBlocked = whether the friendship has blocked
+    * blockedBy = friend1 or friend2 (requested person)
+    * blockedDate
+    * */
 
     @Autowired
     private FriendBO bo;
@@ -60,12 +73,13 @@ public class FriendController {
     @ResponseBody
     public ResponseEntity<?> saveFriend(@Valid @RequestBody FriendDTO dto) throws IOException {
         try {
+            dto.setFriendshipDate(new Date());
             bo.saveFriend(dto);
             return new ResponseEntity<>(dto, HttpStatus.CREATED);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>("No friend found !!", HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            return new ResponseEntity<>("Something went wrong !!", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Something went wrong !! " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -94,9 +108,9 @@ public class FriendController {
     @ResponseBody
     public ResponseEntity<?> updateFriend(@Valid @RequestBody FriendDTO dto, @PathVariable("friendshipId") int friendshipId)
             throws Exception {
-        if (dto.getFriendId() != friendshipId) {
-            return new ResponseEntity<>("Mismatch friendshipId !!", HttpStatus.BAD_REQUEST);
-        }
+//        if (dto.getFriendId() != friendshipId) {
+//            return new ResponseEntity<>("Mismatch friendshipId !!", HttpStatus.BAD_REQUEST);
+//        }
         try {
             bo.getFriend(friendshipId);
             bo.updateFriend(dto);

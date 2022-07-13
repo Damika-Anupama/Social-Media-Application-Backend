@@ -52,7 +52,7 @@ public class UserController {
         }
     }
 
-    // send data to load the profile page
+    // send data to the profile page
     @GetMapping(value = "/info/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody

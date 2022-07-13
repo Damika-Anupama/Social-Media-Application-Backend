@@ -21,15 +21,23 @@ public class Friend implements SuperEntity {
     @Column(name = "friendship_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int friendshipId;
-    private int friendId;
-    @Column(name = "friendship_date")
-    private Date friendshipDate;
-    private boolean isBlocked;
-    private boolean isConfirmed;
-    @JsonIgnoreProperties("launches")
-    @JoinColumn(name = "user", referencedColumnName = "id", nullable = false)
+    private int friend1;
+    @JsonIgnoreProperties("friends")
+    @JoinColumn(name = "friend2", referencedColumnName = "id", nullable = false)
     @ManyToOne(cascade = {CascadeType.ALL})
     private User user;
+    @Column(name = "asked_date")
+    private Date askedDate;
+    @Column(name = "is_confirmed")
+    private boolean isConfirmed;
+    @Column(name = "friendship_date")
+    private Date friendshipDate;
+    @Column(name = "is_blocked")
+    private boolean isBlocked;
+    @Column(name = "blocked_by")
+    private String blockedBy;
+    @Column(name = "blocked_date")
+    private Date blockedDate;
 
     public boolean getIsBlocked() {
         return isBlocked;
@@ -37,5 +45,13 @@ public class Friend implements SuperEntity {
 
     public void setIsBlocked(boolean blocked) {
         isBlocked = blocked;
+    }
+
+    public boolean getIsConfirmed() {
+        return isConfirmed;
+    }
+
+    public void setIsConfirmed(boolean confirmed) {
+        isConfirmed = confirmed;
     }
 }

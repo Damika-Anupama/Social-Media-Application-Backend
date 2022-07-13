@@ -11,13 +11,13 @@ import java.util.List;
  * @since : 15/06/2021
  **/
 public interface FriendBO extends SuperBO {
-    public void saveFriend(FriendDTO dto) throws Exception;
+    void saveFriend(FriendDTO dto) throws Exception;
 
-    public void updateFriend(FriendDTO dto) throws Exception;
+    void updateFriend(FriendDTO dto) throws Exception;
 
-    public void deleteFriend(int friendshipId) throws Exception;
+    void deleteFriend(int friendshipId) throws Exception;
 
-    public List<FriendDTO> getAllFriends() throws Exception;
+    List<FriendDTO> getAllFriends() throws Exception;
 
-    public FriendDTO getFriend(int friendshipId) throws Exception;
+    FriendDTO getFriend(int friendshipId) throws Exception;
 }

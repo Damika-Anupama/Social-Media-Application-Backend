@@ -22,6 +22,7 @@ public class FriendBOimpl implements FriendBO {
 
     @Autowired
     private FriendDAO dao;
+    @Autowired
     private FriendEntityDTOMapper mapper;
 
     public FriendBOimpl() {
@@ -29,28 +30,33 @@ public class FriendBOimpl implements FriendBO {
 
 
     @Override
-    public void saveFriend(FriendDTO dto) throws Exception {
+    public void saveFriend(FriendDTO dto){
         dao.save(mapper.getFriend(dto));
     }
 
     @Override
-    public void updateFriend(FriendDTO dto) throws Exception {
+    public void updateFriend(FriendDTO dto){
         dao.save(mapper.getFriend(dto));
     }
 
     @Override
-    public void deleteFriend(int friendshipId) throws Exception {
+    public void deleteFriend(int friendshipId){
         dao.deleteById(friendshipId);
     }
 
     @Override
-    public List<FriendDTO> getAllFriends() throws Exception {
+    public List<FriendDTO> getAllFriends(){
         return dao.findAll().stream().
-                map(friend -> mapper.getFriendDTO(friend)).collect(Collectors.toList());
+                map(friend ->
+                        mapper.getFriendDTO(friend))
+                .collect(Collectors.toList()
+                );
     }
 
     @Override
-    public FriendDTO getFriend(int friendshipId) throws Exception {
-        return dao.findById(friendshipId).map(friend -> mapper.getFriendDTO(friend)).get();
+    public FriendDTO getFriend(int friendshipId){
+        return dao.findById(
+                friendshipId).map(friend -> mapper.getFriendDTO(friend)
+        ).get();
     }
 }

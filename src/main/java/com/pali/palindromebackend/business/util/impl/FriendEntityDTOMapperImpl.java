@@ -21,10 +21,13 @@ public class FriendEntityDTOMapperImpl extends FriendEntityDTOMapper {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        friend.setFriendId(dto.getFriendId());
+        friend.setFriend1(dto.getFriend1());
+        friend.setAskedDate(dto.getAskedDate());
+        friend.setIsConfirmed(dto.getIsConfirmed());
         friend.setFriendshipDate(dto.getFriendshipDate());
-        friend.setFriendshipId(dto.getFriendshipId());
-        friend.setIsBlocked(dto.isBlocked());
+        friend.setIsBlocked(dto.getIsBlocked());
+        friend.setBlockedBy(dto.getBlockedBy());
+        friend.setBlockedDate(dto.getBlockedDate());
         return friend;
     }
 
@@ -33,14 +36,16 @@ public class FriendEntityDTOMapperImpl extends FriendEntityDTOMapper {
         if (friend == null) {
             return null;
         }
-
-        FriendDTO dto = new FriendDTO();
-
-        dto.setUser(getUserName(friend.getUser()));
-        dto.setFriendId(friend.getFriendId());
-        dto.setBlocked(friend.getIsBlocked());
-        dto.setFriendshipDate(friend.getFriendshipDate());
-        dto.setFriendshipId(friend.getFriendshipId());
-        return dto;
+        return new FriendDTO(
+                friend.getFriendshipId(),
+                friend.getFriend1(),
+                friend.getUser().getId(),
+                friend.getAskedDate(),
+                friend.getIsConfirmed(),
+                friend.getFriendshipDate(),
+                friend.getIsBlocked(),
+                friend.getBlockedBy(),
+                friend.getBlockedDate()
+                );
     }
 }
