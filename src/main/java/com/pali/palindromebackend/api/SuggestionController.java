@@ -81,7 +81,7 @@ public class SuggestionController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<Object> getSuggestionById(@PathVariable("suggestionId") int suggestionId) throws Exception {
+    public ResponseEntity<Object> getSuggestionById(@PathVariable("suggestionId") int suggestionId){
         try {
             return new ResponseEntity<>(bo.getSuggestion(suggestionId), HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -97,19 +97,22 @@ public class SuggestionController {
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
     @ResponseBody
-    public ResponseEntity<?> saveSuggestion(@Valid @RequestBody SuggestionDTO dto) throws Exception {
+    public ResponseEntity<?> saveSuggestion(@Valid @RequestBody SuggestionDTO dto){
         try {
             bo.saveSuggestion(dto);
             return new ResponseEntity<>(dto, HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>("Something went wrong", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(
+                    "Something went wrong when saving the suggestion",
+                    HttpStatus.INTERNAL_SERVER_ERROR
+            );
         }
     }
 
     @DeleteMapping("/{suggestionId}")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public ResponseEntity<Object> deleteSuggestion(@PathVariable("suggestionId") int suggestionId) throws Exception {
+    public ResponseEntity<Object> deleteSuggestion(@PathVariable("suggestionId") int suggestionId){
         try {
             bo.deleteSuggestion(suggestionId);
             return new ResponseEntity<>("Successfully deleted the Suggestion !!", HttpStatus.CREATED);
@@ -127,8 +130,9 @@ public class SuggestionController {
     )
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<?> updateSuggestion(@Valid @RequestBody SuggestionDTO dto, @PathVariable("suggestionId") int suggestionId)
-            throws Exception {
+    public ResponseEntity<?> updateSuggestion(
+            @Valid @RequestBody SuggestionDTO dto,
+            @PathVariable("suggestionId") int suggestionId){
         if (dto.getId() != suggestionId) {
             return new ResponseEntity<>("Mismatch suggestionId !!", HttpStatus.BAD_REQUEST);
         }

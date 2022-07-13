@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -34,7 +35,7 @@ public class CommentController {
         try {
             return new ResponseEntity<List<CommentDTO>>(bo.getAllComments(), HttpStatus.OK);
         } catch (NoSuchElementException e) {
-            return new ResponseEntity<>("No friend found !!", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("No comment found !!", HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>("Something went wrong !!", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -47,7 +48,7 @@ public class CommentController {
         try {
             return new ResponseEntity<>(bo.getComment(comId), HttpStatus.OK);
         } catch (NoSuchElementException e) {
-            return new ResponseEntity<>("No friend found !!", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("No comment found !!", HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>("Something went wrong !!", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -59,14 +60,17 @@ public class CommentController {
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
     @ResponseBody
-    public ResponseEntity<?> saveComment(@Valid @RequestBody CommentDTO dto) throws IOException {
+    public ResponseEntity<?> saveComment(@Valid @RequestBody CommentDTO dto){
         try {
+            dto.setCommentedDate(new Date());
+            dto.setLastUpdatedDate(new Date());
             bo.saveComment(dto);
             return new ResponseEntity<>(dto, HttpStatus.CREATED);
-        } catch (NoSuchElementException e) {
-            return new ResponseEntity<>("No friend found !!", HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Something went wrong !!", HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch (Exception e) {
+            return new ResponseEntity<>(
+                    "Something went wrong when saving the comment!! " + e,
+                    HttpStatus.INTERNAL_SERVER_ERROR
+            );
         }
     }
 
@@ -78,7 +82,7 @@ public class CommentController {
             bo.deleteComment(comId);
             return new ResponseEntity<>("Successfully deleted the com !!", HttpStatus.CREATED);
         } catch (NoSuchElementException e) {
-            return new ResponseEntity<>("No friend is found !!", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("No comment is found !!", HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>("Something went wrong!!", HttpStatus.INTERNAL_SERVER_ERROR);
         }

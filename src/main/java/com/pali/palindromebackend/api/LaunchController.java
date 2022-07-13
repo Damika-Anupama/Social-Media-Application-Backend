@@ -50,7 +50,19 @@ public class LaunchController {
             luds.forEach(detail -> {
                 byte[] launchMedia = fileService.getMedia(detail.getMedia());
                 byte[] userMedia = fileService.getMedia(detail.getProfilePicture());
-                DashboardLaunchDetail dld = new DashboardLaunchDetail(launchMedia,detail.getMediaType(), detail.getDescription(), detail.getFeeling(), detail.getUserId(),detail.getUserName(),detail.getShortDescription(),userMedia);
+                // TODO: 7/12/2022  settle reactions and comments lists 
+                DashboardLaunchDetail dld = new DashboardLaunchDetail(
+                        launchMedia,
+                        detail.getMediaType(),
+                        detail.getDescription(),
+                        detail.getFeeling(),
+                        detail.getUserId(),
+                        detail.getUserName(),
+                        detail.getShortDescription(),
+                        userMedia,
+                        null,
+                        null
+                );
                 dlds.add(dld);
             });
             return new ResponseEntity<>(dlds, HttpStatus.OK);

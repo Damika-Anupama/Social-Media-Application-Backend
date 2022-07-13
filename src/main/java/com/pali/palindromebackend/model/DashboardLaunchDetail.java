@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author : Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
@@ -22,4 +23,7 @@ public class DashboardLaunchDetail implements Serializable {
     private String userName;
     private String shortDescription;
     private byte[] profilePicture;
+    private List<LaunchReactionBody> reactions;
+    private List<LaunchCommentObject> messages;
+
 }

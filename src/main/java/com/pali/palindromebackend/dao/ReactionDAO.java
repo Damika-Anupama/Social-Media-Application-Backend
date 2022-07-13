@@ -12,6 +12,6 @@ import org.springframework.data.jpa.repository.Query;
  **/
 
 public interface ReactionDAO  extends JpaRepository<Reaction,Integer> {
-    @Query("select r from Reaction r where r.user.id like ?1 AND r.launch like ?2")
-    boolean findReaction(int userId, int launchId);
+    @Query("select r from Reaction r where r.user.id like ?1 and r.launch.id like ?2")
+    Reaction findReaction(int userId, int launchId);
 }

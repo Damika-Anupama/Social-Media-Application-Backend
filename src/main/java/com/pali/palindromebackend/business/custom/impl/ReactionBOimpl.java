@@ -57,6 +57,6 @@ public class ReactionBOimpl implements ReactionBO {
 
     @Override
     public boolean checkUniqueness(int userId, int launchId) {
-        return dao.findReaction(userId,launchId);
+        return dao.findReaction(userId, launchId) != null;
     }
 }

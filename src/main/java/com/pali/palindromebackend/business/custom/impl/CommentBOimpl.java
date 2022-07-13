@@ -21,6 +21,7 @@ public class CommentBOimpl implements CommentBO {
 
     @Autowired
     private CommentDAO dao;
+    @Autowired
     private LaunchEntityDTOMapper mapper;
 
     public CommentBOimpl() {
