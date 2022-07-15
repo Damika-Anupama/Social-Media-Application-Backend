@@ -24,7 +24,7 @@ public class Friend implements SuperEntity {
     private int friend1;
     @JsonIgnoreProperties("friends")
     @JoinColumn(name = "friend2", referencedColumnName = "id", nullable = false)
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     private User user;
     @Column(name = "asked_date")
     private Date askedDate;

@@ -1,8 +1,6 @@
 package com.pali.palindromebackend.api;
 
 import com.pali.palindromebackend.business.custom.FriendBO;
-import com.pali.palindromebackend.business.util.EntityDTOMapper;
-import com.pali.palindromebackend.business.util.FriendEntityDTOMapper;
 import com.pali.palindromebackend.dto.FriendDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -42,7 +39,7 @@ public class FriendController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<?> getAllFriends() throws Exception {
+    public ResponseEntity<?> getAllFriends(){
         try {
             return new ResponseEntity<List<FriendDTO>>(bo.getAllFriends(), HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -55,7 +52,7 @@ public class FriendController {
     @GetMapping(value = "/{friendshipId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<?> getFriendById(@PathVariable("friendshipId") int friendshipId) throws Exception {
+    public ResponseEntity<?> getFriendById(@PathVariable("friendshipId") int friendshipId){
         try {
             return new ResponseEntity<>(bo.getFriend(friendshipId), HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -65,15 +62,26 @@ public class FriendController {
         }
     }
 
+    // FOR a friend request
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
     @ResponseBody
-    public ResponseEntity<?> saveFriend(@Valid @RequestBody FriendDTO dto) throws IOException {
+    public ResponseEntity<?> saveFriend(@Valid @RequestBody FriendDTO dto){
+        // TODO: 7/15/2022  check whether same friendship exists
+        /*
+        if(bo.findWhetherFriendshipExist(dto)){
+            return new ResponseEntity<>(
+                    "There's a connection between both of these users, " +
+                    "please try to update",
+                    HttpStatus.CONFLICT
+            );
+        }
+        */
         try {
-            dto.setFriendshipDate(new Date());
+            dto.setAskedDate(new Date());
             bo.saveFriend(dto);
             return new ResponseEntity<>(dto, HttpStatus.CREATED);
         } catch (NoSuchElementException e) {
@@ -86,7 +94,7 @@ public class FriendController {
     @DeleteMapping("/{friendshipId}")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public ResponseEntity<?> deleteFriend(@PathVariable("friendshipId") int friendshipId) throws Exception {
+    public ResponseEntity<?> deleteFriend(@PathVariable("friendshipId") int friendshipId){
         try {
             System.out.println(friendshipId);
             bo.getFriend(friendshipId);
@@ -106,8 +114,10 @@ public class FriendController {
     )
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<?> updateFriend(@Valid @RequestBody FriendDTO dto, @PathVariable("friendshipId") int friendshipId)
-            throws Exception {
+    public ResponseEntity<?> updateFriend(
+            @Valid @RequestBody FriendDTO dto,
+            @PathVariable("friendshipId") int friendshipId
+    ){
 //        if (dto.getFriendId() != friendshipId) {
 //            return new ResponseEntity<>("Mismatch friendshipId !!", HttpStatus.BAD_REQUEST);
 //        }

@@ -71,7 +71,10 @@ public class AuthenticateController {
         Optional<User> user = userDAO.findUserByUsername(loginDTO.getUsername());
         final UserDetails userDetails = myUserDetailsService.loadUserByUsername(loginDTO.getUsername());
         final String jwt = jwtUtil.generateToken(userDetails);
-        byte[] media = fileService.getMedia(user.get().getProfilePicture());
+        byte[] media = new byte[0];
+        if(user.get().getProfilePicture() != null) {
+            media = fileService.getMedia(user.get().getProfilePicture());
+        }
         AuthenticateBody body = new AuthenticateBody(jwt, user.get().getId(), media, user.get().getUsername());
         userController.updateUserLastLogin(userBody, user.get().getId());// update the last login time of the user
         return ResponseEntity.ok(body);

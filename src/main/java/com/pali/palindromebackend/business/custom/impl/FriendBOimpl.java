@@ -59,4 +59,12 @@ public class FriendBOimpl implements FriendBO {
                 friendshipId).map(friend -> mapper.getFriendDTO(friend)
         ).get();
     }
+
+    @Override
+    public boolean findWhetherFriendshipExist(FriendDTO dto) {
+        return dao.findFriendship(
+                dto.getFriend1(),
+                dto.getFriend2()
+        ) != null;
+    }
 }
