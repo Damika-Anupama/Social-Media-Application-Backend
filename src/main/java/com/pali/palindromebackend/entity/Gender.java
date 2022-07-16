@@ -5,5 +5,5 @@ package com.pali.palindromebackend.entity;
  * @since : 02/06/2021
  **/
 public enum Gender {
-    MALE,FEMALE,OTHER
+    MALE,FEMALE,OTHER,CUSTOM, PREFER_NOT_TO_SAY
 }

@@ -25,4 +25,5 @@ public class LaunchUserDetails implements Serializable {
     private String shortDescription;
     private String profilePicture;
     private Date updatedDate;
+    private Date createdDate;
 }

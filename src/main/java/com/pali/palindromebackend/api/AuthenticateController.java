@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -51,8 +52,14 @@ public class AuthenticateController {
     private FileService fileService;
 
     @PostMapping(value = "/api/v1/authenticate")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginDTO loginDTO) throws Exception {
-        UserController userController = new UserController();
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginDTO loginDTO){
+        UserController userController = null;
+        try {
+            userController = new UserController();
+        } catch (SQLException e) {
+            System.out.println(e);
+            e.printStackTrace();
+        }
         UserBody userBody = new UserBody();
         java.util.Date date=new java.util.Date();
         userBody.setLastLogin(date);

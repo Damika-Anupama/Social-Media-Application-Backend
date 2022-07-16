@@ -1,12 +1,12 @@
 package com.pali.palindromebackend.api;
 
 import com.pali.palindromebackend.business.custom.*;
-import com.pali.palindromebackend.dto.CommunityDTO;
-import com.pali.palindromebackend.dto.CommunityUserDTO;
-import com.pali.palindromebackend.dto.FriendDTO;
-import com.pali.palindromebackend.dto.UserDTO;
+import com.pali.palindromebackend.dto.*;
+import com.pali.palindromebackend.entity.custom.LaunchUserDetails;
 import com.pali.palindromebackend.model.*;
+import com.pali.palindromebackend.service.DateDescendentObjectCreator;
 import com.pali.palindromebackend.service.FileService;
+import com.pali.palindromebackend.service.FullLaunchBodyPackager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -46,6 +46,12 @@ public class UserController {
     @Autowired
     private FileService fileService;
 
+    @Autowired
+    private FullLaunchBodyPackager packager;
+
+    @Autowired
+    private DateDescendentObjectCreator creator;
+
     public UserController() throws SQLException {
 
     }
@@ -69,17 +75,36 @@ public class UserController {
     @ResponseBody
     public ResponseEntity<?> getUserInfoForProfilePage(@PathVariable("userId") int userId) {
         try {
-            UserProfileBody userProfileBody = new UserProfileBody();
             UserDTO user = userBO.getUser(userId);
-            userProfileBody.setUsername(user.getUsername());
-            userProfileBody.setGender(user.getGender());
-            userProfileBody.setEmail(user.getEmail());
-            userProfileBody.setShortDescription(user.getShortDescription());
-            userProfileBody.setProfilePicture(fileService.getMedia(user.getProfilePicture()));
-            userProfileBody.setJoinedDate(user.getCreatedAt());
+
+            List<LaunchDTO> launchesByUserId = launchBO.getLaunchesByUserId(userId);
+            ArrayList<DashboardLaunchDetail> launches = new ArrayList<>();
+            launchesByUserId.forEach(dto -> {
+                UserDTO user1 = null;
+                try {
+                    user1 = userBO.getUser(dto.getId());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                DashboardLaunchDetail launch = packager.getLaunch(
+                        new LaunchUserDetails(
+                                dto.getId(),
+                                dto.getMedia(),
+                                dto.getMediaType(),
+                                dto.getDescription(),
+                                dto.getFeeling(),
+                                user1.getId(),
+                                user1.getUsername(),
+                                user1.getShortDescription(),
+                                user1.getProfilePicture(),
+                                user1.getUpdatedAt(),
+                                user1.getCreatedAt()
+                        )
+                );
+                launches.add(launch);
+            });
 
             List<CommunityUserDTO> communitiesUsers = communityUserBO.getAllCommunitiesByUserId(userId);
-            userProfileBody.setNoOfCommunities(communitiesUsers.size());
             ArrayList<ResponseCommunityBody> communities = new ArrayList<>();
             communitiesUsers.forEach(c ->{
                 CommunityDTO com = null;
@@ -99,9 +124,58 @@ public class UserController {
                 communities.add(body);
             });
 
-            List<FriendDTO> friends = friendBO.getAllFriendsByUserId(userId);
-            userProfileBody.setNoOfFriends(friends.size());
+            List<FriendDTO> friendsByUserId = friendBO.getAllFriendsByUserId(userId);
+            ArrayList<RequiredFriendDetailObject> friends = new ArrayList<>();
+            friendsByUserId.forEach(friend->{
+                UserDTO user1 = null;
+                RequiredFriendDetailObject object = new RequiredFriendDetailObject();
+                int friendId = 0;
+                if(userId == friend.getFriend1()){
+                    friendId = friend.getFriend2();
+                    object.setAsked(false);
+                }else {
+                    friendId = friend.getFriend1();
+                    object.setAsked(true);
+                }
+                object.setFriendId(friendId);
+                object.setCreatedDate(friend.getFriendshipDate());
+                try {
+                    user1 = userBO.getUser(friendId);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                object.setUsername(user1.getUsername());
+                object.setProfilePicture(fileService.getMedia(user1.getProfilePicture()));
+                friends.add(object);
+            });
 
+            List<DateDescendObject> dateDescendObjects = creator.giveDateDescendentObjet(launches, communities, friends);
+
+            UserProfileBody userProfileBody = new UserProfileBody(
+                    userId,
+                    user.getCreatedAt(),
+                    user.getIsActive(),
+                    user.getRole(),
+                    user.getUpdatedAt(),
+                    user.getLastLogin(),
+                    user.getOnlineStatus(),
+                    user.getUsername(),
+                    user.getFullName(),
+                    user.getGender(),
+                    user.getEmail(),
+                    user.getShortDescription(),
+                    fileService.getMedia(user.getProfilePicture()),
+                    user.getContactNum(),
+                    user.getLocation(),
+                    user.getEducation(),
+                    user.getSkills(),
+                    user.getDob(),
+                    user.getRelationship(),
+                    communitiesUsers.size(),
+                    friendsByUserId.size(),
+                    launchesByUserId.size(),
+                    dateDescendObjects
+                    );
 
 
             return new ResponseEntity<UserProfileBody>(userProfileBody, HttpStatus.OK);
@@ -268,6 +342,7 @@ public class UserController {
 
 
     // Only use this method when the authentication method runs in AuthenticateController.java
+    // TODO: 7/17/2022 Settle the error, when a user is logging to the application 
     public void updateUserLastLogin(UserBody body, int id){
         try {
             UserDTO dto = new UserDTO();

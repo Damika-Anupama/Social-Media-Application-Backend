@@ -55,8 +55,16 @@ public class User implements SuperEntity {
     private String contactNum;
     @Column(name = "last_login")
     private Date lastLogin;
-//    @Column(name = "online_status")
-//    private boolean onlineStatus;
+    @Column(name = "online_status")
+    private OnlineStatus onlineStatus;
+    @Column(name = "full_name")
+    private String fullName;
+    private String location;
+    private String education;
+    private String skills;
+    @Column(name = "date_of_birth")
+    private Date dob;
+    private Relationship relationship;
 
     @Setter(AccessLevel.NONE)
     @JsonIgnoreProperties("user")

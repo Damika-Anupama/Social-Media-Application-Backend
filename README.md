@@ -67,7 +67,7 @@ by Damika
     - groups
     - etc.
   - xp level goes down
-    - when your posts reported
+    - when your posts are reported
     - when unfriend someone
     - unsuccessful pages and groups
     - etc.

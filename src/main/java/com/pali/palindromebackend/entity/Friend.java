@@ -63,3 +63,15 @@ public class Friend implements SuperEntity {
         this.askedDate = askedDate;
     }
 }
+ /*
+    Friend Logic
+
+    * friend1 = first user who asked for the friendship
+    * friend2 = second user who needs to confirm the friendship
+    * askedDate = the date first user asked for the friendship
+    * isConfirmed = True after second user accepts the friendship
+    * friendshipDate = second user confirmed date
+    * isBlocked = whether the friendship has blocked
+    * blockedBy = friend1 or friend2 (requested person)
+    * blockedDate
+    * */

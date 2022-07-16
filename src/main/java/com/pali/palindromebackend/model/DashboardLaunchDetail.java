@@ -26,6 +26,7 @@ public class DashboardLaunchDetail implements Serializable {
     private String shortDescription;
     private byte[] profilePicture;
     private Date updatedTime;
+    private Date createdDate;
     private List<LaunchReactionBody> reactions;
     private List<LaunchCommentBody> comments;
 

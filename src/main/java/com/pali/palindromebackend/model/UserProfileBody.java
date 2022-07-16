@@ -3,6 +3,8 @@ package com.pali.palindromebackend.model;
 import com.pali.palindromebackend.dto.CommunityDTO;
 import com.pali.palindromebackend.dto.FriendDTO;
 import com.pali.palindromebackend.entity.Gender;
+import com.pali.palindromebackend.entity.OnlineStatus;
+import com.pali.palindromebackend.entity.Relationship;
 import com.pali.palindromebackend.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,32 +25,34 @@ import java.util.List;
 public class UserProfileBody implements Serializable {
     // implicitly setting data
     private int id;
-    private Date createdAt;
+    private Date createdDate;
     private boolean isActive;
     private Role role;
-    private Date updatedAt;
+    private Date updatedDate;
     private Date lastLogin;
-    private boolean onlineStatus;
+    private OnlineStatus onlineStatus;
     //explicitly setting data
     @NotEmpty(message = "username cannot be empty !!")
     private String username;
+    private String fullName;
     private Gender gender;
     private String email;
     private String shortDescription;
     private byte[] profilePicture;
     private String contactNum;
-    private Date joinedDate;
+    private String location;
+    private String education;
+    private String skills;
+    private Date dob;
+    private Relationship relationship;
 
     //other details of the user
     private int noOfCommunities;
     private int noOfFriends;
+    private int noOfLaunches;
 
-    // details about the launches shared
-    private List<DashboardLaunchDetail> launches;
-    // community names with date + id
-    private List<ResponseCommunityBody> communities;
-    // friends with details
-    private List<FriendDTO> friends;
+    // full details about the other objects according to their created date
+    private List<DateDescendObject> dateDescendObjects;
 
     public boolean getIsActive() {
         return isActive;

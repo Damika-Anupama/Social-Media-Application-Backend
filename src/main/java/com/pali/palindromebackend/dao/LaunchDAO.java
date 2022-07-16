@@ -26,6 +26,6 @@ public interface LaunchDAO extends JpaRepository<Launch,Integer> {
             ") from Launch l where l.user.id like ?1")
     List<Launch> findLaunchesByUserId(int userId);
 
-    @Query("select new com.pali.palindromebackend.entity.custom.LaunchUserDetails (l.id,l.media,l.mediaType,l.description,l.feeling,u.id,u.username,u.shortDescription,u.profilePicture,l.updatedDate) from Launch l join l.user u")
+    @Query("select new com.pali.palindromebackend.entity.custom.LaunchUserDetails (l.id,l.media,l.mediaType,l.description,l.feeling,u.id,u.username,u.shortDescription,u.profilePicture,l.updatedDate,l.createdDate) from Launch l join l.user u")
     Collection<LaunchUserDetails> findLaunchesWithUserDetails();
 }

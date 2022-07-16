@@ -11,6 +11,7 @@ import com.pali.palindromebackend.dto.UserDTO;
 import com.pali.palindromebackend.entity.custom.LaunchUserDetails;
 import com.pali.palindromebackend.model.*;
 import com.pali.palindromebackend.service.FileService;
+import com.pali.palindromebackend.service.FullLaunchBodyPackager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -43,6 +44,8 @@ public class LaunchController {
 
     @Autowired
     private FileService fileService;
+    @Autowired
+    private FullLaunchBodyPackager packager;
 
     public LaunchController() throws SQLException {
     }
@@ -51,84 +54,12 @@ public class LaunchController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<?> getAllLaunchesWithUserDetails() throws Exception {
+    public ResponseEntity<?> getAllLaunchesWithUserDetails(){
         try {
             List<LaunchUserDetails> luds = bo.getAllLaunchesWithUserDetails();
             ArrayList<DashboardLaunchDetail> dlds = new ArrayList<>();
             luds.forEach(detail -> {
-                ArrayList<LaunchReactionBody> lr = new ArrayList<>();
-                ArrayList<LaunchCommentBody> lc = new ArrayList<>();
-                byte[] launchMedia = fileService.getMedia(detail.getMedia());
-                byte[] userMedia = fileService.getMedia(detail.getProfilePicture());
-
-                List<ReactionDTO> reactions = bo1.getLaunchReactions(detail.getId());
-                List<CommentDTO> comments = bo2.getLaunchComments(detail.getId());
-
-                reactions.forEach(reaction -> {
-                    UserDTO user = null;
-                    LaunchReactionBody body;
-                    byte[] picture = new byte[0];
-
-                    try {
-                        user = bo3.getUser(reaction.getUserId());
-                        picture = fileService.getMedia(user.getProfilePicture());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-//                    assert user != null;
-                    body = new LaunchReactionBody(
-                            reaction.getId(),
-                            reaction.getType(),
-                            reaction.getReactionTime(),
-                            reaction.getUpdatedTime(),
-                            user.getId(),
-                            user.getUsername(),
-                            picture,
-                            user.getIsActive()
-                    );
-                    lr.add(body);
-                });
-
-                comments.forEach(comment -> {
-                    UserDTO user = null;
-                    LaunchCommentBody body;
-                    byte[] picture = new byte[0];
-
-                    try {
-                        user = bo3.getUser(comment.getUser());
-                        picture = fileService.getMedia(user.getProfilePicture());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-//                    assert user != null;
-                    body = new LaunchCommentBody(
-                            comment.getId(),
-                            comment.getComment(),
-                            comment.getCommentedDate(),
-                            comment.getLastUpdatedDate(),
-                            user.getId(),
-                            user.getUsername(),
-                            picture,
-                            user.getIsActive()
-                    );
-                    lc.add(body);
-                });
-
-                DashboardLaunchDetail dld = new DashboardLaunchDetail(
-                        detail.getId(),
-                        launchMedia,
-                        detail.getMediaType(),
-                        detail.getDescription(),
-                        detail.getFeeling(),
-                        detail.getUserId(),
-                        detail.getUserName(),
-                        detail.getShortDescription(),
-                        userMedia,
-                        detail.getUpdatedDate(),
-                        lr,
-                        lc
-                );
-                dlds.add(dld);
+                dlds.add(packager.getLaunch(detail));
             });
             return new ResponseEntity<>(dlds, HttpStatus.OK);
         } catch (Exception e) {
