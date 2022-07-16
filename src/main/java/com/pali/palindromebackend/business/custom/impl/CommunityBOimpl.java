@@ -50,4 +50,6 @@ public class CommunityBOimpl implements CommunityBO {
     public CommunityDTO getCom(int comId) throws Exception {
         return dao.findById(comId).map(com -> mapper.getCommunityDTO(com)).get();
     }
+
+
 }

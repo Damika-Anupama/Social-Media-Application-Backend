@@ -40,4 +40,12 @@ public class FriendDTO implements SuperDTO {
     public void setIsConfirmed(boolean confirmed) {
         isConfirmed = confirmed;
     }
+
+    public Date getAskedDate() {
+        return askedDate;
+    }
+
+    public void setAskedDate(Date askedDate) {
+        this.askedDate = askedDate;
+    }
 }

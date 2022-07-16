@@ -10,6 +10,7 @@ import java.util.List;
  * @since : 15/06/2021
  **/
 public interface FriendBO extends SuperBO {
+
     void saveFriend(FriendDTO dto);
 
     void updateFriend(FriendDTO dto);
@@ -21,4 +22,6 @@ public interface FriendBO extends SuperBO {
     FriendDTO getFriend(int friendshipId);
 
     boolean findWhetherFriendshipExist(FriendDTO dto);
+
+    List<FriendDTO> getAllFriendsByUserId(int userId);
 }

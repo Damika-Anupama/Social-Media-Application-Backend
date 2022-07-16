@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author : Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
@@ -23,4 +24,5 @@ public class LaunchUserDetails implements Serializable {
     private String userName;
     private String shortDescription;
     private String profilePicture;
+    private Date updatedDate;
 }

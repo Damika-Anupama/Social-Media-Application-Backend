@@ -1,11 +1,11 @@
 package com.pali.palindromebackend.api;
 
-import com.pali.palindromebackend.business.custom.UserBO;
-import com.pali.palindromebackend.business.util.EntityDTOMapper;
+import com.pali.palindromebackend.business.custom.*;
+import com.pali.palindromebackend.dto.CommunityDTO;
+import com.pali.palindromebackend.dto.CommunityUserDTO;
+import com.pali.palindromebackend.dto.FriendDTO;
 import com.pali.palindromebackend.dto.UserDTO;
-import com.pali.palindromebackend.model.HomePageLoading;
-import com.pali.palindromebackend.model.SendingUserBody;
-import com.pali.palindromebackend.model.UserBody;
+import com.pali.palindromebackend.model.*;
 import com.pali.palindromebackend.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -28,9 +29,19 @@ import java.util.NoSuchElementException;
 @RequestMapping("/api/v1/users")
 public class UserController {
     @Autowired
-    private UserBO bo;
+    private UserBO userBO;
 
-    private EntityDTOMapper mapper;
+    @Autowired
+    private CommunityUserBO communityUserBO;
+
+    @Autowired
+    private CommunityBO communityBO;
+
+    @Autowired
+    private FriendBO friendBO;
+
+    @Autowired
+    private LaunchBO launchBO;
 
     @Autowired
     private FileService fileService;
@@ -44,7 +55,7 @@ public class UserController {
     @ResponseBody
     public ResponseEntity<?> getAllUsers() throws Exception {
         try {
-            return new ResponseEntity<List<UserDTO>>(bo.getAllUsers(), HttpStatus.OK);
+            return new ResponseEntity<List<UserDTO>>(userBO.getAllUsers(), HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>("No user found !!", HttpStatus.NOT_FOUND);
         } catch (Exception e) {
@@ -56,9 +67,44 @@ public class UserController {
     @GetMapping(value = "/info/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<?> getUserInfoForProfilePage(@PathVariable("userId") int userId) throws Exception {
+    public ResponseEntity<?> getUserInfoForProfilePage(@PathVariable("userId") int userId) {
         try {
-            return new ResponseEntity<List<UserDTO>>(bo.getAllUsers(), HttpStatus.OK);
+            UserProfileBody userProfileBody = new UserProfileBody();
+            UserDTO user = userBO.getUser(userId);
+            userProfileBody.setUsername(user.getUsername());
+            userProfileBody.setGender(user.getGender());
+            userProfileBody.setEmail(user.getEmail());
+            userProfileBody.setShortDescription(user.getShortDescription());
+            userProfileBody.setProfilePicture(fileService.getMedia(user.getProfilePicture()));
+            userProfileBody.setJoinedDate(user.getCreatedAt());
+
+            List<CommunityUserDTO> communitiesUsers = communityUserBO.getAllCommunitiesByUserId(userId);
+            userProfileBody.setNoOfCommunities(communitiesUsers.size());
+            ArrayList<ResponseCommunityBody> communities = new ArrayList<>();
+            communitiesUsers.forEach(c ->{
+                CommunityDTO com = null;
+                try {
+                    com = communityBO.getCom(c.getCommunityId());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                ResponseCommunityBody body = new ResponseCommunityBody(
+                        com.getCommunityId(),
+                        com.getTitle(),
+                        com.getDescription(),
+                        com.getCreatedDate(),
+                        fileService.getMedia(com.getGroupIcon()),
+                        fileService.getMedia(com.getWallpaper())
+                );
+                communities.add(body);
+            });
+
+            List<FriendDTO> friends = friendBO.getAllFriendsByUserId(userId);
+            userProfileBody.setNoOfFriends(friends.size());
+
+
+
+            return new ResponseEntity<UserProfileBody>(userProfileBody, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>("No user found !!", HttpStatus.NOT_FOUND);
         } catch (Exception e) {
@@ -72,10 +118,16 @@ public class UserController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<Object> getUserById(@PathVariable("userId") int userId) throws Exception {
+    public ResponseEntity<Object> getUserById(@PathVariable("userId") int userId){
         try {
-            UserDTO user = bo.getUser(userId);
-            SendingUserBody body = new SendingUserBody(fileService.getMedia(user.getProfilePicture()), user.getShortDescription(), user.getUsername(), user.getEmail(), user.getContactNum(), user.getPassword());
+            UserDTO user = userBO.getUser(userId);
+            SendingUserBody body = new SendingUserBody(
+                    fileService.getMedia(user.getProfilePicture()),
+                    user.getShortDescription(), user.getUsername(),
+                    user.getEmail(),
+                    user.getContactNum(),
+                    user.getPassword()
+            );
             return new ResponseEntity<>(body, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>("No user found !!", HttpStatus.NOT_FOUND);
@@ -90,7 +142,7 @@ public class UserController {
     @ResponseBody
     public ResponseEntity<?> getUserProfilePicture(@PathVariable("id") int id) throws Exception {
         try {
-            HomePageLoading hpl = new HomePageLoading(fileService.getMedia(bo.getUserProfilePicture(id)));
+            HomePageLoading hpl = new HomePageLoading(fileService.getMedia(userBO.getUserProfilePicture(id)));
             return new ResponseEntity<>(hpl, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>("No user found !!", HttpStatus.NOT_FOUND);
@@ -106,7 +158,7 @@ public class UserController {
     public ResponseEntity<Object> getUserByName(@PathVariable("userName") String userName) throws Exception {
         System.out.println("getUserByName");
         try {
-            return new ResponseEntity<>(bo.getUserByName(userName), HttpStatus.OK);
+            return new ResponseEntity<>(userBO.getUserByName(userName), HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>("No user found !!", HttpStatus.NOT_FOUND);
         } catch (Exception e) {
@@ -121,7 +173,7 @@ public class UserController {
     @ResponseBody
     public ResponseEntity<?> saveUser(@Valid @RequestBody UserDTO dto) throws Exception {
         try {
-            System.out.println(bo.saveUser(dto));
+            System.out.println(userBO.saveUser(dto));
             return new ResponseEntity<>(dto, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Something went wrong", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -134,8 +186,8 @@ public class UserController {
     public ResponseEntity<Object> deleteUser(@PathVariable("userId") int userId){
         try {
             System.out.println(userId);
-            bo.getUser(userId);
-            bo.deleteUser(userId);
+            userBO.getUser(userId);
+            userBO.deleteUser(userId);
             return new ResponseEntity<>("Successfully deleted the user !!", HttpStatus.CREATED);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>("No user is found !!", HttpStatus.NOT_FOUND);
@@ -193,7 +245,7 @@ public class UserController {
             String filePath = null;
             if (body.getProfilePic() != null) {
                 filePath = fileService.saveUserProfilePicture(body.getProfilePic());
-                UserDTO user = bo.getUser(userid);
+                UserDTO user = userBO.getUser(userid);
                 fileService.deleteFile(user.getProfilePicture());
             }
             UserDTO dto = new UserDTO();
@@ -204,7 +256,7 @@ public class UserController {
             dto.setProfilePicture(filePath);
             dto.setContactNum(body.getPhoneNum());
 //            dto.setOnlineStatus(true);
-            bo.updateUserNormalDetails(dto);
+            userBO.updateUserNormalDetails(dto);
             return new ResponseEntity<>(dto, HttpStatus.CREATED);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>("No user is found !!", HttpStatus.NOT_FOUND);
@@ -220,7 +272,7 @@ public class UserController {
         try {
             UserDTO dto = new UserDTO();
             dto.setLastLogin(body.getLastLogin());
-            bo.updateUserNormalDetails(dto);
+            userBO.updateUserNormalDetails(dto);
             System.out.println("Successfully changed " + id + "'s last login.");
         } catch (NoSuchElementException e) {
             System.out.println("No user is found !!");

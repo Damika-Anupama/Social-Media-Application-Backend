@@ -13,13 +13,14 @@ import java.util.List;
  **/
 
 public interface CommunityBO extends SuperBO {
-    public Community saveCom(CommunityDTO dto) throws Exception;
+    Community saveCom(CommunityDTO dto) throws Exception;
 
-    public void updateCom(CommunityDTO dto) throws Exception;
+    void updateCom(CommunityDTO dto) throws Exception;
 
-    public void deleteCom(int comId) throws Exception;
+    void deleteCom(int comId) throws Exception;
 
-    public List<CommunityDTO> getAllComs() throws Exception;
+    List<CommunityDTO> getAllComs() throws Exception;
 
-    public CommunityDTO getCom(int ComId) throws Exception;
+    CommunityDTO getCom(int ComId) throws Exception;
+
 }

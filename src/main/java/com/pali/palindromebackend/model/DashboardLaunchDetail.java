@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DashboardLaunchDetail implements Serializable {
+    private int launchId;
     private byte[] file;
     private String mediaType;
     private String description;
@@ -23,6 +25,7 @@ public class DashboardLaunchDetail implements Serializable {
     private String userName;
     private String shortDescription;
     private byte[] profilePicture;
+    private Date updatedTime;
     private List<LaunchReactionBody> reactions;
     private List<LaunchCommentBody> comments;
 

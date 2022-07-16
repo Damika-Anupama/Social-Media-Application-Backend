@@ -115,6 +115,7 @@ public class LaunchController {
                 });
 
                 DashboardLaunchDetail dld = new DashboardLaunchDetail(
+                        detail.getId(),
                         launchMedia,
                         detail.getMediaType(),
                         detail.getDescription(),
@@ -123,6 +124,7 @@ public class LaunchController {
                         detail.getUserName(),
                         detail.getShortDescription(),
                         userMedia,
+                        detail.getUpdatedDate(),
                         lr,
                         lc
                 );

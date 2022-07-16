@@ -1,8 +1,10 @@
 package com.pali.palindromebackend.business.custom;
 
 import com.pali.palindromebackend.dto.CommunityUserDTO;
+import com.pali.palindromebackend.entity.CommunityUser;
 import com.pali.palindromebackend.entity.CommunityUserPK;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,4 +22,6 @@ public interface CommunityUserBO {
     public List<CommunityUserDTO> getAllCommunityUsers() throws Exception;
 
     public CommunityUserDTO getCommunityUser(CommunityUserPK pk) throws Exception;
+
+    List<CommunityUserDTO> getAllCommunitiesByUserId(int userId);
 }

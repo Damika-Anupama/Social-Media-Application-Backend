@@ -65,6 +65,7 @@ public class ReactionController {
     )
     @ResponseBody
     public ResponseEntity<?> saveReaction(ReactionDTO dto) throws Exception {
+        System.out.println(dto);
         //reaction time and updated time should be filled from the frontend
         if(bo.checkUniqueness(dto.getUserId(),dto.getLaunchId())){
             return new ResponseEntity<>("Same user has already reacted to this launch." +

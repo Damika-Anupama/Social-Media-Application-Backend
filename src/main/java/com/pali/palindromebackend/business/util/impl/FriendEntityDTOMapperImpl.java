@@ -16,18 +16,18 @@ public class FriendEntityDTOMapperImpl extends FriendEntityDTOMapper {
         }
 
         Friend friend = new Friend();
-        try {
-            friend.setUser(getUser(dto));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
         friend.setFriend1(dto.getFriend1());
-        friend.setAskedDate(dto.getAskedDate());
+        friend.setAskedDate(dto.getAskedDate()); // TODO: 7/15/2022 correct this not working line
         friend.setIsConfirmed(dto.getIsConfirmed());
         friend.setFriendshipDate(dto.getFriendshipDate());
         friend.setIsBlocked(dto.getIsBlocked());
         friend.setBlockedBy(dto.getBlockedBy());
         friend.setBlockedDate(dto.getBlockedDate());
+        try {
+            friend.setUser(getUser(dto));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         return friend;
     }
 

@@ -54,4 +54,12 @@ public class Friend implements SuperEntity {
     public void setIsConfirmed(boolean confirmed) {
         isConfirmed = confirmed;
     }
+
+    public Date getAskedDate() {
+        return askedDate;
+    }
+
+    public void setAskedDate(Date askedDate) {
+        this.askedDate = askedDate;
+    }
 }

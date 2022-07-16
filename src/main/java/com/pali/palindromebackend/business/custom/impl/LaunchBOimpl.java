@@ -67,7 +67,6 @@ public class LaunchBOimpl implements LaunchBO {
 
     @Override
     public List<LaunchUserDetails> getAllLaunchesWithUserDetails() throws Exception {
-        Collection<LaunchUserDetails> launchesWithUserDetails = dao.findLaunchesWithUserDetails();
         return new ArrayList<LaunchUserDetails>(dao.findLaunchesWithUserDetails());
     }
 }

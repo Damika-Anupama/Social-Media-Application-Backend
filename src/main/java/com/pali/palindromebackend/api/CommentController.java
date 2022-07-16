@@ -64,6 +64,7 @@ public class CommentController {
         try {
             dto.setCommentedDate(new Date());
             dto.setLastUpdatedDate(new Date());
+            System.out.println(dto);
             bo.saveComment(dto);
             return new ResponseEntity<>(dto, HttpStatus.CREATED);
         }catch (Exception e) {
