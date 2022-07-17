@@ -18,10 +18,11 @@ public interface FriendDAO extends JpaRepository<Friend, Integer> {
     Friend findFriendship(int friend1, int friend2);
     @Query("select new com.pali.palindromebackend.entity.Friend (" +
             "f.friendshipId,f.friend1,f.user,f.askedDate,f.isConfirmed,f.friendshipDate,f.isBlocked,f.blockedBy,f.blockedDate" +
-            ") from friend f where f.friend1 like ?1 and f.isConfirmed and not f.isBlocked")
-    List<Friend> findAllfriend1(int userId);
+            ") from friend f where f.user.id like ?1")
+    List<Friend> findAllfriend2(int userId);
     @Query("select new com.pali.palindromebackend.entity.Friend (" +
             "f.friendshipId,f.friend1,f.user,f.askedDate,f.isConfirmed,f.friendshipDate,f.isBlocked,f.blockedBy,f.blockedDate" +
-            ") from friend f where f.user.id like ?1 and f.isConfirmed and not f.isBlocked")
-    List<Friend> findAllfriend2(int userId);
+            ") from friend f where f.friend1 like ?1")
+    List<Friend> findAllfriend1(int userId);
+    // TODO: 7/17/2022  and f.isConfirmed and not f.isBlocked
 }

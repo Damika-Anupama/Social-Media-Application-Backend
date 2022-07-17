@@ -18,7 +18,7 @@ import java.util.List;
 @ToString
 @Entity
 @Table(name = "launch")
-public class    Launch implements SuperEntity{
+public class Launch implements SuperEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

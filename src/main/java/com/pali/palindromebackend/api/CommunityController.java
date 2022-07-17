@@ -1,14 +1,17 @@
 package com.pali.palindromebackend.api;
 
 import com.pali.palindromebackend.business.custom.CommunityBO;
+import com.pali.palindromebackend.business.custom.CommunityLaunchBO;
 import com.pali.palindromebackend.business.custom.CommunityUserBO;
 import com.pali.palindromebackend.dto.CommunityDTO;
+import com.pali.palindromebackend.dto.CommunityLaunchDTO;
 import com.pali.palindromebackend.dto.CommunityUserDTO;
 import com.pali.palindromebackend.entity.Community;
+import com.pali.palindromebackend.entity.ExistingStatus;
+import com.pali.palindromebackend.entity.Launch;
 import com.pali.palindromebackend.entity.Role;
-import com.pali.palindromebackend.entity.custom.LaunchUserDetails;
+import com.pali.palindromebackend.model.CommunityLaunchCreate;
 import com.pali.palindromebackend.model.CommunityUserBody;
-import com.pali.palindromebackend.model.DashboardLaunchDetail;
 import com.pali.palindromebackend.model.ResponseCommunityBody;
 import com.pali.palindromebackend.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +21,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,12 +39,16 @@ public class CommunityController {
     @Autowired
     private CommunityUserBO bo1;
     @Autowired
+    private CommunityLaunchBO bo2;
+    @Autowired
     private FileService fileService;
+    @Autowired
+    private LaunchController launchController;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<?> getAllComs() throws Exception {
+    public ResponseEntity<?> getAllComs(){
         try {
             List<CommunityDTO> allComs = bo.getAllComs();
             ArrayList<ResponseCommunityBody> dlds = new ArrayList<>();
@@ -70,8 +76,9 @@ public class CommunityController {
     @GetMapping(value = "/{comId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<?> getComById(@PathVariable("comId") int comId) throws Exception {
+    public ResponseEntity<?> getComById(@PathVariable("comId") int comId){
         try {
+            CommunityDTO dto = bo.getCom(comId);
             return new ResponseEntity<>(bo.getCom(comId), HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>("No friend found !!", HttpStatus.NOT_FOUND);
@@ -86,7 +93,7 @@ public class CommunityController {
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
     @ResponseBody
-    public ResponseEntity<Object> saveCom(@ModelAttribute CommunityUserBody body){
+    public ResponseEntity<Object> saveCom(@ModelAttribute CommunityUserBody body) {
         try {
             CommunityDTO dto = new CommunityDTO();
             CommunityUserDTO dto1 = new CommunityUserDTO();
@@ -109,7 +116,7 @@ public class CommunityController {
             System.out.println(dto1);
             bo1.saveCommunityUser(dto1);
             return new ResponseEntity<>(dto1, HttpStatus.CREATED);
-        }  catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
             return new ResponseEntity<>("Something went wrong !! " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -152,4 +159,48 @@ public class CommunityController {
             return new ResponseEntity<>("Something went wrong !!", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(
+            value = "/launch",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
+    )
+    @ResponseBody
+    public ResponseEntity<Object> createCommunityLaunch(@ModelAttribute CommunityLaunchCreate body) {
+        try {
+            ResponseEntity<Launch> launchResponseEntity = launchController.saveLaunch(body.getLaunchBody());
+            CommunityLaunchDTO dto = new CommunityLaunchDTO(
+                    launchResponseEntity.getBody().getId(),
+                    body.getCommunityId(),
+                    ExistingStatus.CREATED,
+                    body.getSharedPersonId(),
+                    new Date()
+            );
+
+            bo2.save(dto);
+            return new ResponseEntity<>(dto, HttpStatus.CREATED);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResponseEntity<>("Something went wrong !! " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE
+    )
+    @ResponseBody
+    public ResponseEntity<Object> shareCommunityLaunch(@ModelAttribute CommunityLaunchDTO dto) {
+        try {
+            bo2.save(dto);
+            return new ResponseEntity<>(dto, HttpStatus.CREATED);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResponseEntity<>("Something went wrong !! " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

@@ -8,6 +8,7 @@ import com.pali.palindromebackend.dto.CommentDTO;
 import com.pali.palindromebackend.dto.LaunchDTO;
 import com.pali.palindromebackend.dto.ReactionDTO;
 import com.pali.palindromebackend.dto.UserDTO;
+import com.pali.palindromebackend.entity.Launch;
 import com.pali.palindromebackend.entity.custom.LaunchUserDetails;
 import com.pali.palindromebackend.model.*;
 import com.pali.palindromebackend.service.FileService;
@@ -111,7 +112,7 @@ public class LaunchController {
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
     @ResponseBody
-    public ResponseEntity<Object> saveLaunch(@ModelAttribute LaunchBody body) throws Exception {
+    public ResponseEntity<Launch> saveLaunch(@ModelAttribute LaunchBody body) throws Exception {
         try {
             final String mediaPath = fileService.saveMediaFile(body.getFile(), body.getFile().getContentType());
             LaunchDTO dto = new LaunchDTO();
@@ -124,10 +125,10 @@ public class LaunchController {
             dto.setUser(body.getUser());
             dto.setCreatedDate(date);
             dto.setUpdatedDate(date);
-            bo.saveLaunch(dto);
-            return new ResponseEntity<>(dto.getUser(), HttpStatus.CREATED);
+            Launch launch = bo.saveLaunch(dto);
+            return new ResponseEntity<Launch>(launch, HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>("Something went wrong !!", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<Launch>((Launch) null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

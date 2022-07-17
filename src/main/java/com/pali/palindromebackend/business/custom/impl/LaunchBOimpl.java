@@ -5,6 +5,7 @@ import com.pali.palindromebackend.business.util.EntityDTOMapper;
 import com.pali.palindromebackend.business.util.LaunchEntityDTOMapper;
 import com.pali.palindromebackend.dao.LaunchDAO;
 import com.pali.palindromebackend.dto.LaunchDTO;
+import com.pali.palindromebackend.entity.Launch;
 import com.pali.palindromebackend.entity.custom.LaunchUserDetails;
 import com.pali.palindromebackend.model.DashboardLaunchDetail;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +34,8 @@ public class LaunchBOimpl implements LaunchBO {
     }
 
     @Override
-    public void saveLaunch(LaunchDTO dto) throws Exception {
-        dao.save(mapper.getLaunch(dto));
+    public Launch saveLaunch(LaunchDTO dto) throws Exception {
+        return dao.save(mapper.getLaunch(dto));
     }
 
     @Override

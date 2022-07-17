@@ -39,7 +39,7 @@ public class StatusController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<?> getAllStatuses() throws Exception {
+    public ResponseEntity<?> getAllStatuses(){
         try {
             return new ResponseEntity<List<StatusDTO>>( bo.getAllStatuses(), HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -54,7 +54,7 @@ public class StatusController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<Object> getStatusById(@PathVariable("StatusId") int StatusId) throws Exception {
+    public ResponseEntity<Object> getStatusById(@PathVariable("StatusId") int StatusId){
         try {
             return new ResponseEntity<>(bo.getStatus(StatusId), HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -70,7 +70,7 @@ public class StatusController {
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
     @ResponseBody
-    public ResponseEntity<?> saveStatus(@Valid @RequestBody StatusDTO dto) throws Exception {
+    public ResponseEntity<?> saveStatus(@Valid @RequestBody StatusDTO dto){
         try {
             bo.saveStatus(dto);
             return new ResponseEntity<>(dto, HttpStatus.CREATED);
@@ -82,7 +82,7 @@ public class StatusController {
     @DeleteMapping("/{StatusId}")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public ResponseEntity<Object> deleteStatus(@PathVariable("StatusId") int StatusId) throws Exception {
+    public ResponseEntity<Object> deleteStatus(@PathVariable("StatusId") int StatusId){
         try {
             bo.deleteStatus(StatusId);
             return new ResponseEntity<>("Successfully deleted the Status !!", HttpStatus.CREATED);
