@@ -82,7 +82,7 @@ public class UserController {
             launchesByUserId.forEach(dto -> {
                 UserDTO user1 = null;
                 try {
-                    user1 = userBO.getUser(dto.getId());
+                    user1 = userBO.getUser(dto.getUser());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -97,8 +97,9 @@ public class UserController {
                                 user1.getUsername(),
                                 user1.getShortDescription(),
                                 user1.getProfilePicture(),
-                                user1.getUpdatedAt(),
-                                user1.getCreatedAt()
+                                user1.getOnlineStatus(),
+                                dto.getUpdatedDate(),
+                                dto.getCreatedDate()
                         )
                 );
                 launches.add(launch);
@@ -200,7 +201,13 @@ public class UserController {
                     user.getShortDescription(), user.getUsername(),
                     user.getEmail(),
                     user.getContactNum(),
-                    user.getPassword()
+                    user.getPassword(),
+                    user.getFullName(),
+                    user.getDob(),
+                    user.getEducation(),
+                    user.getSkills(),
+                    user.getGender(),
+                    user.getRelationship()
             );
             return new ResponseEntity<>(body, HttpStatus.OK);
         } catch (NoSuchElementException e) {

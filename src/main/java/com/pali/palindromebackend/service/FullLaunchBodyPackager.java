@@ -109,6 +109,7 @@ public class FullLaunchBodyPackager {
                 detail.getUserName(),
                 detail.getShortDescription(),
                 userMedia,
+                detail.getUserOnlineStatus(),
                 detail.getUpdatedDate(),
                 detail.getCreatedDate(),
                 lr,

@@ -1,10 +1,13 @@
 package com.pali.palindromebackend.model;
 
+import com.pali.palindromebackend.entity.Gender;
+import com.pali.palindromebackend.entity.Relationship;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author : Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
@@ -18,4 +21,10 @@ public class SendingUserBody implements Serializable {
     private String email;
     private String contactNum;
     private String password;
+    private String fullName;
+    private Date dob;
+    private String education;
+    private String skills;
+    private Gender gender;
+    private Relationship relationship;
 }

@@ -1,5 +1,7 @@
 package com.pali.palindromebackend.model;
 
+import com.pali.palindromebackend.entity.Gender;
+import com.pali.palindromebackend.entity.Relationship;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,4 +25,14 @@ public class UserBody implements Serializable {
     private MultipartFile profilePic;
     private String phoneNum;
     private Date lastLogin;
+    private String fullName;
+    private Gender gender;
+    private String shortDescription;
+    private String profilePicture;
+    private String contactNum;
+    private String location;
+    private String education;
+    private String skills;
+    private Date dob;
+    private Relationship relationship;
 }

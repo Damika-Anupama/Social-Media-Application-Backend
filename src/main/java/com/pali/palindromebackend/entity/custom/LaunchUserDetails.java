@@ -1,5 +1,6 @@
 package com.pali.palindromebackend.entity.custom;
 
+import com.pali.palindromebackend.entity.OnlineStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,7 @@ public class LaunchUserDetails implements Serializable {
     private String userName;
     private String shortDescription;
     private String profilePicture;
+    private OnlineStatus userOnlineStatus;
     private Date updatedDate;
     private Date createdDate;
 }

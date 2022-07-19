@@ -56,6 +56,7 @@ public class User implements SuperEntity {
     @Column(name = "last_login")
     private Date lastLogin;
     @Column(name = "online_status")
+    @Enumerated(EnumType.STRING)
     private OnlineStatus onlineStatus;
     @Column(name = "full_name")
     private String fullName;
@@ -64,6 +65,7 @@ public class User implements SuperEntity {
     private String skills;
     @Column(name = "date_of_birth")
     private Date dob;
+    @Enumerated(EnumType.STRING)
     private Relationship relationship;
 
     @Setter(AccessLevel.NONE)
