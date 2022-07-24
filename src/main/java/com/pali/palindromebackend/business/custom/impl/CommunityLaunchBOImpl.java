@@ -39,4 +39,10 @@ public class CommunityLaunchBOImpl implements CommunityLaunchBO {
     public CommunityLaunchDTO get(CommunityLaunchPK pk) {
         return null;
     }
+
+    @Override
+    public CommunityLaunchDTO getCommunityLaunches(int comId) {
+        return null;
+        // TODO: 7/20/2022 continue 
+    }
 }

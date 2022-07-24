@@ -1,15 +1,12 @@
 package com.pali.palindromebackend.service;
 
 import com.pali.palindromebackend.business.custom.CommentBO;
-import com.pali.palindromebackend.business.custom.LaunchBO;
 import com.pali.palindromebackend.business.custom.ReactionBO;
 import com.pali.palindromebackend.business.custom.UserBO;
-import com.pali.palindromebackend.business.custom.impl.CommentBOimpl;
-import com.pali.palindromebackend.business.custom.impl.ReactionBOimpl;
-import com.pali.palindromebackend.business.custom.impl.UserBOimpl;
 import com.pali.palindromebackend.dto.CommentDTO;
 import com.pali.palindromebackend.dto.ReactionDTO;
 import com.pali.palindromebackend.dto.UserDTO;
+import com.pali.palindromebackend.entity.ReactionType;
 import com.pali.palindromebackend.entity.custom.LaunchUserDetails;
 import com.pali.palindromebackend.model.DashboardLaunchDetail;
 import com.pali.palindromebackend.model.LaunchCommentBody;
@@ -17,7 +14,6 @@ import com.pali.palindromebackend.model.LaunchReactionBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,8 +23,6 @@ import java.util.List;
  **/
 @Service
 public class FullLaunchBodyPackager {
-    @Autowired
-    private LaunchBO bo;
     @Autowired
     private ReactionBO bo1;
     @Autowired
@@ -41,6 +35,7 @@ public class FullLaunchBodyPackager {
 
 
     public DashboardLaunchDetail getLaunch(LaunchUserDetails detail){
+        final ReactionType[] userReactionType = new ReactionType[1];
         ArrayList<LaunchReactionBody> lr = new ArrayList<>();
         ArrayList<LaunchCommentBody> lc = new ArrayList<>();
         byte[] launchMedia = fileService.getMedia(detail.getMedia());
@@ -53,7 +48,11 @@ public class FullLaunchBodyPackager {
             UserDTO user = null;
             LaunchReactionBody body;
             byte[] picture = new byte[0];
-
+            // set whether the user has reacted to this launch
+            // then what is the type of the reaction
+            if(reaction.getUserId() == detail.getUserId()){
+                userReactionType[0] = reaction.getType();
+            }
             try {
                 user = bo3.getUser(reaction.getUserId());
                 picture = fileService.getMedia(user.getProfilePicture());
@@ -99,7 +98,7 @@ public class FullLaunchBodyPackager {
             lc.add(body);
         });
 
-        DashboardLaunchDetail dld = new DashboardLaunchDetail(
+        return new DashboardLaunchDetail(
                 detail.getId(),
                 launchMedia,
                 detail.getMediaType(),
@@ -112,9 +111,9 @@ public class FullLaunchBodyPackager {
                 detail.getUserOnlineStatus(),
                 detail.getUpdatedDate(),
                 detail.getCreatedDate(),
+                userReactionType[0],
                 lr,
                 lc
         );
-        return dld;
     }
 }

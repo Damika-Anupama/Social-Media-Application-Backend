@@ -2,16 +2,13 @@ package com.pali.palindromebackend.business.custom.impl;
 
 import com.pali.palindromebackend.business.custom.CommunityUserBO;
 import com.pali.palindromebackend.business.util.CommunityUserEntityDTOMapper;
-import com.pali.palindromebackend.business.util.EntityDTOMapper;
 import com.pali.palindromebackend.dao.CommunityUserDAO;
 import com.pali.palindromebackend.dto.CommunityUserDTO;
-import com.pali.palindromebackend.entity.CommunityUser;
 import com.pali.palindromebackend.entity.CommunityUserPK;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,5 +52,10 @@ public class CommunityUserBOImpl implements CommunityUserBO {
     @Override
     public List<CommunityUserDTO> getAllCommunitiesByUserId(int userId) {
         return dao.findAllByUserId(userId).stream().map(cu -> mapper.getCommunityUserDTO(cu)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CommunityUserDTO> getCommunityUsers(int comId) {
+        return dao.findAllByCommunityId(comId).stream().map(cu -> mapper.getCommunityUserDTO(cu)).collect(Collectors.toList());
     }
 }

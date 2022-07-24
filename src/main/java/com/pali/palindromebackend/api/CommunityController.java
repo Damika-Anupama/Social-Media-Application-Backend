@@ -79,6 +79,8 @@ public class CommunityController {
     public ResponseEntity<?> getComById(@PathVariable("comId") int comId){
         try {
             CommunityDTO dto = bo.getCom(comId);
+            List<CommunityUserDTO> communityUsers = bo1.getCommunityUsers(comId);
+            bo2.getCommunityLaunches(comId);
             return new ResponseEntity<>(bo.getCom(comId), HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>("No friend found !!", HttpStatus.NOT_FOUND);

@@ -96,9 +96,6 @@ by Damika
   - payment gateways
   - accept crypto
   - etc.
-- Remove the donate page.
-  - If someone wants to donate for our community they can buy gifts from the shop page
-- Add the new items to more info page
 
 ### 4. Stage Four
 >In here we're going to make the mobile application to our software,
@@ -112,6 +109,7 @@ by Damika
   - and also you can view status too
 - Update more info page
 
+## **_[ Send emails to each client email addresses, their notifications]_**
 ### 5. Stage Five -> ***Most Important Stage***
 >Until here anyone can blame to Palindrome you're copying facebook and Whatsapp
 > But here is the time to change those all blames

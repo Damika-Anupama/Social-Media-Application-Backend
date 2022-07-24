@@ -1,6 +1,8 @@
 package com.pali.palindromebackend.model;
 
 import com.pali.palindromebackend.entity.OnlineStatus;
+import com.pali.palindromebackend.entity.Reaction;
+import com.pali.palindromebackend.entity.ReactionType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,6 +31,7 @@ public class DashboardLaunchDetail implements Serializable {
     private OnlineStatus userOnlineStatus;
     private Date updatedTime;
     private Date createdDate;
+    private ReactionType reactType;
     private List<LaunchReactionBody> reactions;
     private List<LaunchCommentBody> comments;
 

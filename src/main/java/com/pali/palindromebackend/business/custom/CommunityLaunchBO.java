@@ -21,4 +21,6 @@ public interface CommunityLaunchBO extends SuperBO {
     List<CommunityLaunchDTO> getAll();
 
     CommunityLaunchDTO get(CommunityLaunchPK pk);
+
+    CommunityLaunchDTO getCommunityLaunches(int comId);
 }

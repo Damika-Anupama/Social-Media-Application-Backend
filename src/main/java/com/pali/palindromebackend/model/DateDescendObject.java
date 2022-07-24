@@ -27,7 +27,7 @@ public class DateDescendObject implements Serializable {
     private byte[] groupIcon;
     private byte[] wallpaper;
     //from friend
-    private String username;
+    private String friendUsername;
     private boolean asked; // whether the friend requested and you accepted or you asked friend accepted
     private byte[] profilePicture;
     //from launch

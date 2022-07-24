@@ -13,15 +13,17 @@ import java.util.List;
  **/
 
 public interface CommunityUserBO {
-    public void saveCommunityUser(CommunityUserDTO dto) throws Exception;
+    void saveCommunityUser(CommunityUserDTO dto) throws Exception;
 
-    public void updateCommunityUser(CommunityUserDTO dto) throws Exception;
+    void updateCommunityUser(CommunityUserDTO dto) throws Exception;
 
-    public void deleteCommunityUser(CommunityUserPK pk) throws Exception;
+    void deleteCommunityUser(CommunityUserPK pk) throws Exception;
 
-    public List<CommunityUserDTO> getAllCommunityUsers() throws Exception;
+    List<CommunityUserDTO> getAllCommunityUsers() throws Exception;
 
-    public CommunityUserDTO getCommunityUser(CommunityUserPK pk) throws Exception;
+    CommunityUserDTO getCommunityUser(CommunityUserPK pk) throws Exception;
 
     List<CommunityUserDTO> getAllCommunitiesByUserId(int userId);
+
+    List<CommunityUserDTO> getCommunityUsers(int comId);
 }

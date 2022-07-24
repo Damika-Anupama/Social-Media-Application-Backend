@@ -92,7 +92,7 @@ public class DateDescendentObjectCreator {
             dateDescendObject.setId(friend.getFriendId());
             dateDescendObject.setType(ObjectType.FRIEND);
 
-            dateDescendObject.setUsername(friend.getUsername());
+            dateDescendObject.setFriendUsername(friend.getUsername());
             dateDescendObject.setAsked(friend.getAsked());
             dateDescendObject.setProfilePicture(friend.getProfilePicture());
 
@@ -110,7 +110,7 @@ public class DateDescendentObjectCreator {
             object.setLaunchDescription(launch.getDescription());
             object.setFeeling(launch.getFeeling());
             object.setUserId(launch.getUserId());
-            object.setUsername(launch.getUserName());
+            object.setFriendUsername(launch.getUserName());
             object.setShortDescription(launch.getShortDescription());
             object.setUserprofilePicture(launch.getProfilePicture());
             object.setUpdatedTime(launch.getUpdatedTime());
