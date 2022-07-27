@@ -3,6 +3,7 @@ package com.pali.palindromebackend.business.custom;
 import com.pali.palindromebackend.dto.CommunityUserDTO;
 import com.pali.palindromebackend.entity.CommunityUser;
 import com.pali.palindromebackend.entity.CommunityUserPK;
+import com.pali.palindromebackend.model.MiniUserComDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,5 +26,5 @@ public interface CommunityUserBO {
 
     List<CommunityUserDTO> getAllCommunitiesByUserId(int userId);
 
-    List<CommunityUserDTO> getCommunityUsers(int comId);
+    List<MiniUserComDTO> getCommunityUsers(int comId);
 }

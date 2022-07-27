@@ -10,10 +10,10 @@ import com.pali.palindromebackend.entity.Community;
 import com.pali.palindromebackend.entity.ExistingStatus;
 import com.pali.palindromebackend.entity.Launch;
 import com.pali.palindromebackend.entity.Role;
-import com.pali.palindromebackend.model.CommunityLaunchCreate;
-import com.pali.palindromebackend.model.CommunityUserBody;
-import com.pali.palindromebackend.model.ResponseCommunityBody;
+import com.pali.palindromebackend.entity.custom.LaunchUserDetails;
+import com.pali.palindromebackend.model.*;
 import com.pali.palindromebackend.service.FileService;
+import com.pali.palindromebackend.service.FullLaunchBodyPackager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -44,6 +44,8 @@ public class CommunityController {
     private FileService fileService;
     @Autowired
     private LaunchController launchController;
+    @Autowired
+    private FullLaunchBodyPackager packager;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
@@ -73,15 +75,84 @@ public class CommunityController {
         }
     }
 
-    @GetMapping(value = "/{comId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{comId}",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.MULTIPART_FORM_DATA_VALUE
+    )
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public ResponseEntity<?> getComById(@PathVariable("comId") int comId){
         try {
+            List<MiniUserCom> miniUserComs = new ArrayList<>();
+            List<CommunityDashboardLaunchDetail> dashboardLaunchDetails = new ArrayList<>();
             CommunityDTO dto = bo.getCom(comId);
-            List<CommunityUserDTO> communityUsers = bo1.getCommunityUsers(comId);
-            bo2.getCommunityLaunches(comId);
-            return new ResponseEntity<>(bo.getCom(comId), HttpStatus.OK);
+            List<MiniUserComDTO> communityUsers = bo1.getCommunityUsers(comId);
+            // converting the whole miniUserComsDTO array
+            // into miniUserComs array
+            communityUsers.forEach(value -> {
+                miniUserComs.add(new MiniUserCom(
+                        value.getUserId(),
+                        value.getUsername(),
+                        value.getShortDescription(),
+                        fileService.getMedia(value.getProfilePicture()),
+                        value.getOnlineStatus(),
+                        value.getJoinedDate(),
+                        value.getUpdatedDate(),
+                        value.getRole()
+                ));
+            });
+            List<CommunityLaunchDetail> communityLaunches = bo2.getCommunityLaunches(comId);
+            communityLaunches.forEach(value -> {
+                DashboardLaunchDetail launch = packager.getLaunch(
+                        new LaunchUserDetails(
+                                value.getId(),
+                                value.getMedia(),
+                                value.getMediaType(),
+                                value.getDescription(),
+                                value.getFeeling(),
+                                value.getUserId(),
+                                value.getUserName(),
+                                value.getShortDescription(),
+                                value.getProfilePicture(),
+                                value.getUserOnlineStatus(),
+                                value.getUpdatedDate(),
+                                value.getCreatedDate()
+                        )
+                );
+                CommunityDashboardLaunchDetail communityDashboardLaunchDetail = new CommunityDashboardLaunchDetail(
+                        launch.getLaunchId(),
+                        launch.getFile(),
+                        launch.getMediaType(),
+                        launch.getDescription(),
+                        launch.getFeeling(),
+                        launch.getUserId(),
+                        launch.getUserName(),
+                        launch.getShortDescription(),
+                        launch.getProfilePicture(),
+                        launch.getUserOnlineStatus(),
+                        launch.getUpdatedTime(),
+                        launch.getCreatedDate(),
+                        launch.getReactType(),
+                        launch.getReactions(),
+                        launch.getComments(),
+                        value.getExistingStatus(),
+                        value.getSharedPersonId(),
+                        value.getSharedTime()
+                );
+                dashboardLaunchDetails.add(communityDashboardLaunchDetail);
+            });
+
+            CommunityFullDetails communityFullDetails = new CommunityFullDetails(
+                    comId,
+                    dto.getTitle(),
+                    dto.getDescription(),
+                    dto.getCreatedDate(),
+                    this.fileService.getMedia(dto.getGroupIcon()),
+                    this.fileService.getMedia(dto.getWallpaper()),
+                    miniUserComs,
+                    dashboardLaunchDetails
+                    );
+            return new ResponseEntity<>(communityFullDetails, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>("No friend found !!", HttpStatus.NOT_FOUND);
         } catch (Exception e) {

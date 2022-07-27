@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author : Mr.Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
@@ -20,6 +21,6 @@ public class CommunityFullDetails {
     private Date createdDate;
     private byte[] groupIcon;
     private byte[] wallpaper;
-    private MiniUserCom miniUserCom;
-    private DashboardLaunchDetail dashboardLaunchDetail;
+    private List<MiniUserCom> miniUserCom;
+    private List<CommunityDashboardLaunchDetail> dashboardLaunchDetail;
 }

@@ -4,6 +4,7 @@ import com.pali.palindromebackend.business.SuperBO;
 import com.pali.palindromebackend.dto.CommunityLaunchDTO;
 import com.pali.palindromebackend.dto.PageDTO;
 import com.pali.palindromebackend.entity.CommunityLaunchPK;
+import com.pali.palindromebackend.model.CommunityLaunchDetail;
 
 import java.util.List;
 
@@ -22,5 +23,5 @@ public interface CommunityLaunchBO extends SuperBO {
 
     CommunityLaunchDTO get(CommunityLaunchPK pk);
 
-    CommunityLaunchDTO getCommunityLaunches(int comId);
+    List<CommunityLaunchDetail> getCommunityLaunches(int comId);
 }

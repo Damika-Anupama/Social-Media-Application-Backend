@@ -1,12 +1,17 @@
 package com.pali.palindromebackend.business.custom.impl;
 
 import com.pali.palindromebackend.business.custom.CommunityLaunchBO;
+import com.pali.palindromebackend.business.util.CommunityLaunchEntityDTOMapper;
+import com.pali.palindromebackend.dao.CommunityLaunchDAO;
 import com.pali.palindromebackend.dto.CommunityLaunchDTO;
 import com.pali.palindromebackend.entity.CommunityLaunchPK;
+import com.pali.palindromebackend.model.CommunityLaunchDetail;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author : Mr.Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
@@ -15,6 +20,11 @@ import java.util.List;
 @Transactional
 @Service
 public class CommunityLaunchBOImpl implements CommunityLaunchBO {
+    @Autowired
+    private CommunityLaunchDAO dao;
+    @Autowired
+    private CommunityLaunchEntityDTOMapper mapper;
+
     @Override
     public void save(CommunityLaunchDTO dto) {
 
@@ -41,8 +51,7 @@ public class CommunityLaunchBOImpl implements CommunityLaunchBO {
     }
 
     @Override
-    public CommunityLaunchDTO getCommunityLaunches(int comId) {
-        return null;
-        // TODO: 7/20/2022 continue 
+    public List<CommunityLaunchDetail> getCommunityLaunches(int comId) {
+        return dao.findAllByCommunityId(comId);
     }
 }
