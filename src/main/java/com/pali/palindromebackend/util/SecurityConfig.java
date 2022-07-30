@@ -35,14 +35,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests()
-                .antMatchers("/api/v1/authenticate").permitAll()
-                .antMatchers(HttpMethod.POST,"/api/v1/users").permitAll()
-                .antMatchers(HttpMethod.GET,"/api/v1/users/name/**").permitAll()
-                .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
-                .anyRequest().authenticated()
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    protected void configure(HttpSecurity http){
+        try {
+            http.csrf().disable().authorizeRequests()
+                    .antMatchers("/api/v1/authenticate").permitAll()
+                    .antMatchers(HttpMethod.POST,"/api/v1/users").permitAll()
+                    .antMatchers(HttpMethod.GET,"/api/v1/users/name/**").permitAll()
+                    .antMatchers(HttpMethod.GET,"/api/v1/users/email/**").permitAll()
+                    .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+                    .anyRequest().authenticated()
+                    .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        } catch (Exception e) {
+            System.out.println("Error in SecurityConfig.java");
+            e.printStackTrace();
+        }
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 

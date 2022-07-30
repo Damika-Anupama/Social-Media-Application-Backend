@@ -78,4 +78,9 @@ public class UserBOimpl implements UserBO {
     public void updateUserNormalDetails(UserDTO dto) {
         userDAO.updateUserNormalDetails(dto.getId(), dto.getUsername(), dto.getEmail(), dto.getShortDescription(), dto.getProfilePicture(), dto.getContactNum());
     }
+
+    @Override
+    public UserDTO getUserByEmail(String email) {
+        return mapper.getUserDTO(userDAO.findUserByEmail(email));
+    }
 }

@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -46,20 +45,21 @@ public class UserController {
     @Autowired
     private FileService fileService;
 
+
     @Autowired
     private FullLaunchBodyPackager packager;
 
     @Autowired
     private DateDescendentObjectCreator creator;
 
-    public UserController() throws SQLException {
+    public UserController() {
 
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<?> getAllUsers() throws Exception {
+    public ResponseEntity<?> getAllUsers() {
         try {
             return new ResponseEntity<List<UserDTO>>(userBO.getAllUsers(), HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -107,7 +107,7 @@ public class UserController {
 
             List<CommunityUserDTO> communitiesUsers = communityUserBO.getAllCommunitiesByUserId(userId);
             ArrayList<ResponseCommunityBody> communities = new ArrayList<>();
-            communitiesUsers.forEach(c ->{
+            communitiesUsers.forEach(c -> {
                 CommunityDTO com = null;
                 try {
                     com = communityBO.getCom(c.getCommunityId());
@@ -127,14 +127,14 @@ public class UserController {
 
             List<FriendDTO> friendsByUserId = friendBO.getAllFriendsByUserId(userId);
             ArrayList<RequiredFriendDetailObject> friends = new ArrayList<>();
-            friendsByUserId.forEach(friend->{
+            friendsByUserId.forEach(friend -> {
                 UserDTO user1 = null;
                 RequiredFriendDetailObject object = new RequiredFriendDetailObject();
                 int friendId = 0;
-                if(userId == friend.getFriend1()){
+                if (userId == friend.getFriend1()) {
                     friendId = friend.getFriend2();
                     object.setAsked(false);
-                }else {
+                } else {
                     friendId = friend.getFriend1();
                     object.setAsked(true);
                 }
@@ -176,7 +176,7 @@ public class UserController {
                     friendsByUserId.size(),
                     launchesByUserId.size(),
                     dateDescendObjects
-                    );
+            );
 
 
             return new ResponseEntity<UserProfileBody>(userProfileBody, HttpStatus.OK);
@@ -184,7 +184,7 @@ public class UserController {
             return new ResponseEntity<>("No user found !!", HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             System.out.println(e);
-            return new ResponseEntity<>("Something went wrong !!\n"+ e, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Something went wrong !!\n" + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     //
@@ -193,7 +193,7 @@ public class UserController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<Object> getUserById(@PathVariable("userId") int userId){
+    public ResponseEntity<Object> getUserById(@PathVariable("userId") int userId) {
         try {
             UserDTO user = userBO.getUser(userId);
             SendingUserBody body = new SendingUserBody(
@@ -221,7 +221,7 @@ public class UserController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<?> getUserProfilePicture(@PathVariable("id") int id) throws Exception {
+    public ResponseEntity<?> getUserProfilePicture(@PathVariable("id") int id) {
         try {
             HomePageLoading hpl = new HomePageLoading(fileService.getMedia(userBO.getUserProfilePicture(id)));
             return new ResponseEntity<>(hpl, HttpStatus.OK);
@@ -236,10 +236,31 @@ public class UserController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<Object> getUserByName(@PathVariable("userName") String userName) throws Exception {
+    public ResponseEntity<Object> getUserByName(@PathVariable("userName") String userName) {
         System.out.println("getUserByName");
         try {
-            return new ResponseEntity<>(userBO.getUserByName(userName), HttpStatus.OK);
+            UserDTO user = userBO.getUserByName(userName);
+            UserDTO copy = new UserDTO();
+            copy.setUsername(user.getUsername());
+            return new ResponseEntity<>(copy, HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>("No user found !!", HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Something went wrong !!", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping(value = "/email/{email}",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public ResponseEntity<Object> getUserByEmail(@PathVariable("email") String email) {
+        System.out.println("getUserByEmail");
+        try {
+            UserDTO user = userBO.getUserByEmail(email);
+            UserDTO copy = new UserDTO();
+            copy.setEmail(user.getEmail());
+            return new ResponseEntity<>(copy, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>("No user found !!", HttpStatus.NOT_FOUND);
         } catch (Exception e) {
@@ -249,10 +270,28 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(
+            value = "/verify",
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<?> verifyUser(@Valid @RequestBody VerifyObject obj) {
+        try {
+//            boolean b = emailService.sendVerificationObject(obj);
+//            if (b) {
+//                return new ResponseEntity<>(obj, HttpStatus.CREATED);
+//            } else {
+                return new ResponseEntity<>("Something went wrong", HttpStatus.INTERNAL_SERVER_ERROR);
+//            }
+        } catch (Exception e) {
+            return new ResponseEntity<>("Something went wrong", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<?> saveUser(@Valid @RequestBody UserDTO dto) throws Exception {
+    public ResponseEntity<?> saveUser(@Valid @RequestBody UserDTO dto) {
         try {
             System.out.println(userBO.saveUser(dto));
             return new ResponseEntity<>(dto, HttpStatus.CREATED);
@@ -264,7 +303,7 @@ public class UserController {
     @DeleteMapping("/{userId}")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public ResponseEntity<Object> deleteUser(@PathVariable("userId") int userId){
+    public ResponseEntity<Object> deleteUser(@PathVariable("userId") int userId) {
         try {
             System.out.println(userId);
             userBO.getUser(userId);
@@ -316,7 +355,7 @@ public class UserController {
     )
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<?> updateUser( @ModelAttribute UserBody body, @PathVariable("userid") int userid){
+    public ResponseEntity<?> updateUser(@ModelAttribute UserBody body, @PathVariable("userid") int userid) {
         if (body.getId() != userid) {
             return new ResponseEntity<>("Mismatch userId !!", HttpStatus.BAD_REQUEST);
         } else if (true) {
@@ -347,10 +386,9 @@ public class UserController {
     }
 
 
-
     // Only use this method when the authentication method runs in AuthenticateController.java
     // TODO: 7/17/2022 Settle the error, when a user is logging to the application 
-    public void updateUserLastLogin(UserBody body, int id){
+    public void updateUserLastLogin(UserBody body, int id) {
         try {
             UserDTO dto = new UserDTO();
             dto.setLastLogin(body.getLastLogin());

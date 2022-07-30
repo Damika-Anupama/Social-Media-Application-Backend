@@ -54,17 +54,12 @@ public class AuthenticateController {
     @PostMapping(value = "/api/v1/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginDTO loginDTO){
         UserController userController = null;
-        try {
-            userController = new UserController();
-        } catch (SQLException e) {
-            System.out.println(e);
-            e.printStackTrace();
-        }
+        userController = new UserController();
         UserBody userBody = new UserBody();
         java.util.Date date=new java.util.Date();
         userBody.setLastLogin(date);
         try {
-            authenticationManager.authenticate(
+            Authentication authenticate = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword())
             );
 

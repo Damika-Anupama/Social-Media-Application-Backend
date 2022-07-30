@@ -30,7 +30,7 @@ public class JWTRequestFilter extends OncePerRequestFilter {
     @Autowired
     private JWTUtil jwtUtil;
     @Override
-    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain){
         final String authorizationHeader = req.getHeader("Authorization");
 
         String userName = null;
@@ -50,6 +50,11 @@ public class JWTRequestFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }
         }
-        chain.doFilter(req,res);
+        try {
+            chain.doFilter(req,res);
+        } catch (IOException | ServletException e) {
+            System.out.println("Error in JWTRequestFilter!");
+            e.printStackTrace();
+        }
     }
 }

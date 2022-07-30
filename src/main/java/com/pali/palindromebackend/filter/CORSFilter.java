@@ -16,10 +16,15 @@ import java.io.IOException;
 @Component
 public class CORSFilter extends HttpFilter {
     @Override
-    protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+    protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain){
         response.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
         response.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTION");
         response.setHeader("Access-Control-Allow-Headers", "Content-type,Origin,Authorization");
-        super.doFilter(request, response, chain);
+        try {
+            super.doFilter(request, response, chain);
+        } catch (IOException | ServletException e) {
+            System.out.println("Error in CORSFilter!");
+            e.printStackTrace();
+        }
     }
 }
