@@ -114,7 +114,7 @@ public class LaunchController {
     @ResponseBody
     public ResponseEntity<Launch> saveLaunch(@ModelAttribute LaunchBody body) throws Exception {
         try {
-            final String mediaPath = fileService.saveMediaFile(body.getFile(), body.getFile().getContentType());
+            final String mediaPath = fileService.saveFile(body.getFile(),"media/");
             LaunchDTO dto = new LaunchDTO();
             Date date = new Date();
 
@@ -169,7 +169,7 @@ public class LaunchController {
 
             if (body.getFile() != null) {
                 // TODO: 5/26/2022  this must contain transaction method
-                filePath = fileService.saveMediaFile(body.getFile(),body.getFile().getContentType());
+                filePath = fileService.saveFile(body.getFile(),"media/");
                 fileService.deleteFile(dto.getMedia());
             }
             dto.setMedia(filePath);

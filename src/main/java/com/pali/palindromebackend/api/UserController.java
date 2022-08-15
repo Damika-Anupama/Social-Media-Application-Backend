@@ -130,7 +130,7 @@ public class UserController {
             friendsByUserId.forEach(friend -> {
                 UserDTO user1 = null;
                 RequiredFriendDetailObject object = new RequiredFriendDetailObject();
-                int friendId = 0;
+                int friendId ;
                 if (userId == friend.getFriend1()) {
                     friendId = friend.getFriend2();
                     object.setAsked(false);
@@ -316,38 +316,6 @@ public class UserController {
         }
     }
 
-//    @PutMapping(
-//            produces = MediaType.APPLICATION_JSON_VALUE,
-//            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
-//    )
-//    @ResponseStatus(HttpStatus.OK)
-//    @ResponseBody
-//    public ResponseEntity<?> updateUser( @ModelAttribute UserBody body){
-//                try {
-//            String filePath = null;
-//            if (body.getProfilePic() != null) {
-//                filePath = fileService.saveUserProfilePicture(body.getProfilePic());
-//                UserDTO user = bo.getUser(body.getId());
-//                fileService.deleteFile(user.getProfilePicture());
-//            }
-//            UserDTO dto = new UserDTO();
-//            dto.setId(body.getId());
-//            dto.setUsername(body.getUsername());
-//            dto.setEmail(body.getEmail());
-//            dto.setShortDescription(body.getShortDes());
-//            dto.setProfilePicture(filePath);
-//            dto.setContactNum(body.getPhoneNum());
-////            dto.setOnlineStatus(true);
-//            bo.updateUserNormalDetails(dto);
-//            return new ResponseEntity<>(dto, HttpStatus.CREATED);
-//        } catch (NoSuchElementException e) {
-//            return new ResponseEntity<>("No user is found !!", HttpStatus.NOT_FOUND);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>("Something went wrong !!", HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-
-
     @PutMapping(
             value = "/{userid}",
             produces = MediaType.APPLICATION_JSON_VALUE,
@@ -364,7 +332,7 @@ public class UserController {
         try {
             String filePath = null;
             if (body.getProfilePic() != null) {
-                filePath = fileService.saveUserProfilePicture(body.getProfilePic());
+                filePath = fileService.saveFile(body.getProfilePic(),"users/");
                 UserDTO user = userBO.getUser(userid);
                 fileService.deleteFile(user.getProfilePicture());
             }

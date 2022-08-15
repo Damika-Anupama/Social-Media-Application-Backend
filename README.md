@@ -14,8 +14,6 @@ by Damika
 > No shops,
 > No games
 - Anyone can make accounts 
-  - using facebook, google, apple, microsoft
-  - using the form too
 - Publish posts
   - report others' posts
   - Like
@@ -37,7 +35,7 @@ by Damika
 - Maintain friends (No limitation ;) -> All friends can be viewed in one pop-up window
 - Everyone can change(update) their own setting (maintain the settings page)
 - Search
-  - public search among users, groups, pages
+  - public search among users, groups, pages, statuses
 - Notifications 
   - friend requests
   - group invites
@@ -45,9 +43,6 @@ by Damika
   - new posts on pages and groups and from friends
   - warnings or information from the developers
   - etc
-- More Info page 
-  - to describe about our project, future goals, etc.
-- (removed this part) Donate to maintain this project
 - Both Suggestions and Contact us in one page
   - To send private messages to the community 
 - Logout
@@ -73,11 +68,10 @@ by Damika
     - etc.
 - Leaderboard - based on XP level
   - shows the top ten xp leaders for improve the xp concept
-- Chatter box - Like messenger in face book
+- Chatter box 
   - This is like the messenger 
   - but your profile is linked to the palindrome account
   - you can view status though this app (maybe in mobile version)
-- Improve the More Info page including new functionalities.
 
 
 ### 3. Stage Three
@@ -86,17 +80,16 @@ by Damika
 
 - Introduce adds
     - according to your region you can publish adds or on publicly
+    - strictly need a page as business portal
     - as a status
     - as a post
+    - payment methods - bank transactions, cryptocurrencies
     - etc.
 - Introduce a game page and the shop page.
   - games are mainly based on improving the xp level
   - shops are mainly based on buying the things in games.
   - When you're developing this page call game developers publicly as offers
-  - payment gateways
-  - accept crypto
-  - etc.
-
+  
 ### 4. Stage Four
 >In here we're going to make the mobile application to our software,
 > Improve the scalability of palindrome. And this is the deploying stage :)
@@ -105,9 +98,46 @@ by Damika
   - All functionalities in the web page can be accessed through the mobile device.
 - Build another app for Chatterbox
   - You can use chatterbox through palindrome app 
-  - But in here chatterbox is only visible
+  - But in here chatterbox is only visible (can navigate)
   - and also you can view status too
 - Update more info page
+
+
+**Plan to end the whole project in december 2022**
+**The areas need to study**
+
+>> HTML5 & SCSS 
+>  UX/UI designing (figma, AdminLTE)
+>> JS, JQUERY, TS -> Animations
+>> Angular-CLI (Bootstrap, ionic, react, NgBootstrap, Angular Material, RxJS)
+> 
+>> Java 8
+> (DP, Algorithms & Data Structures, Concurrency, OOP, Debugging and Testing, Exception Handling, Programming Paradigms, JDBC, IO, NIO, Serialization, Reflection API) + Clean Code
+>> Spring-boot (Message sending, jwt, Core, Web, DataAccess, AOP, SpEL)
+>> Maven + Gradle 
+>> Postman (http client) 
+>> RabbitMQ 
+>> Microservices - Kubernetes, Docker icons (Deploying)
+> 
+>> Cyber-Security 
+>> Networking 
+>> Ethical-Hacking (Kali Linux or Parrot OS)
+> 
+>> Mobile App developing  
+>> Framework (Native-Script/ Flutter/ React), Firebase
+>> Google- App store and Apple App store (to store both apps)
+> 
+>> Database - MySQL , MySQL workbench
+> 
+>> Payment-Gates -> for money, for cryptocurrencies
+> 
+>> Game Developing -> Find a suitable framework (Unity)
+> 
+>> AWS - To store the entire backend and front end server 
+> 
+>> VCS - GIT, Github
+> 
+>> Techniques -> AJAX, JWT, OpenID Connect 
 
 ## **_[ Send emails to each client email addresses, their notifications]_**
 ### 5. Stage Five -> ***Most Important Stage***
@@ -126,5 +156,6 @@ by Damika
   - mainly on Pali-City game (like ready player one)
   - group calls
   - if someone hasn't enough money to get VR they have same functionalities in 2D version.
+
 
 

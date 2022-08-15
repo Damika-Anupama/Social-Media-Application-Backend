@@ -176,8 +176,8 @@ public class CommunityController {
             dto.setTitle(body.getTitle());
             dto.setDescription(body.getDescription());
             dto.setCreatedDate(new Date());
-            dto.setGroupIcon(service.saveCommunityGroupIcon(body.getGroupIcon()));
-            dto.setWallpaper(service.saveCommunityWallpaper(body.getWallpaper()));
+            dto.setGroupIcon(service.saveFile(body.getGroupIcon(),"community/groupIcon/"));
+            dto.setWallpaper(service.saveFile(body.getWallpaper(),"community/wallpaper/"));
             Community community = bo.saveCom(dto);
             //setting the userCommunity object
             dto1.setUserId(body.getUserId());
