@@ -1,19 +1,15 @@
 package com.pali.palindromebackend.business.custom.impl;
 
 import com.pali.palindromebackend.business.custom.LaunchBO;
-import com.pali.palindromebackend.business.util.EntityDTOMapper;
 import com.pali.palindromebackend.business.util.LaunchEntityDTOMapper;
 import com.pali.palindromebackend.dao.LaunchDAO;
 import com.pali.palindromebackend.dto.LaunchDTO;
 import com.pali.palindromebackend.entity.Launch;
 import com.pali.palindromebackend.entity.custom.LaunchUserDetails;
-import com.pali.palindromebackend.model.DashboardLaunchDetail;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,14 +19,14 @@ import java.util.stream.Collectors;
  **/
 @Transactional
 @Service
-public class LaunchBOimpl implements LaunchBO {
-    @Autowired
-    private LaunchDAO dao;
+public class LaunchBOImpl implements LaunchBO {
+    private final LaunchDAO dao;
 
-    @Autowired
-    private LaunchEntityDTOMapper mapper;
+    private final LaunchEntityDTOMapper mapper;
 
-    public LaunchBOimpl() {
+    public LaunchBOImpl(LaunchDAO dao, LaunchEntityDTOMapper mapper) {
+        this.dao = dao;
+        this.mapper = mapper;
     }
 
     @Override
@@ -52,18 +48,18 @@ public class LaunchBOimpl implements LaunchBO {
     @Override
     public List<LaunchDTO> getAllLaunches(){
         return dao.findAll().stream().
-                map(launch -> mapper.getLaunchDTO(launch)).collect(Collectors.toList());
+                map(mapper::getLaunchDTO).collect(Collectors.toList());
     }
 
     @Override
     public LaunchDTO getLaunch(int launchId){
-        return dao.findById(launchId).map(launch -> mapper.getLaunchDTO(launch)).get();
+        return dao.findById(launchId).map(mapper::getLaunchDTO).get();
     }
 
     @Override
     public List<LaunchDTO> getLaunchesByUserId(int userId){
         return dao.findLaunchesByUserId(userId).stream().
-                map(launch -> mapper.getLaunchDTO(launch)).collect(Collectors.toList());
+                map(mapper::getLaunchDTO).collect(Collectors.toList());
     }
 
     @Override

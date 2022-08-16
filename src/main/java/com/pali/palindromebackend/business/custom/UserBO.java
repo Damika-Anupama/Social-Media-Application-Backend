@@ -10,21 +10,21 @@ import java.util.List;
  * @since : 28/04/2021
  **/
 public interface UserBO extends SuperBO {
-    String saveUser(UserDTO dto) throws Exception;
+    void saveUser(UserDTO dto);
 
-    void updateUser(UserDTO dto) throws Exception;
+    void updateUser(UserDTO dto);
 
-    void deleteUser(int userId) throws Exception;
+    void deleteUser(int userId);
 
-    List<UserDTO> getAllUsers() throws Exception;
+    List<UserDTO> getAllUsers();
 
-    UserDTO getUser(int userId) throws Exception;
+    UserDTO getUser(int userId);
 
-    UserDTO getUserByName(String userName) throws Exception;
+    UserDTO getUserByName(String userName);
 
     UserDTO getUserByEmail(String email);
 
-    String getUserProfilePicture(int id) throws Exception;
+    String getUserProfilePicture(int id);
 
     void updateUserNormalDetails(UserDTO dto);
 }

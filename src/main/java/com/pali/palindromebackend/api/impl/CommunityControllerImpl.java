@@ -50,7 +50,7 @@ public class CommunityControllerImpl extends CommunityController {
     @Override
     public ResponseEntity<?> getAllCommunities() {
         try {
-            List<CommunityDTO> allCommunityDTOs = bo.getAllComs();
+            List<CommunityDTO> allCommunityDTOs = bo.getAllCommunities();
             ArrayList<ResponseCommunityBody> responseCommunityBodies = new ArrayList<>();
             allCommunityDTOs.forEach(detail -> {
                 byte[] groupIcon = fileService.getMedia(detail.getGroupIcon());

@@ -3,7 +3,6 @@ package com.pali.palindromebackend.business.custom;
 import com.pali.palindromebackend.business.SuperBO;
 import com.pali.palindromebackend.dto.CommentDTO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,15 +10,15 @@ import java.util.List;
  * @since : 5/11/2022
  **/
 public interface CommentBO extends SuperBO {
-    public void saveComment(CommentDTO dto) throws Exception;
+    void saveComment(CommentDTO dto);
 
-    public void updateComment(CommentDTO dto) throws Exception;
+    void updateComment(CommentDTO dto);
 
-    public void deleteComment(int commentId) throws Exception;
+    void deleteComment(int commentId);
 
-    public List<CommentDTO> getAllComments() throws Exception;
+    List<CommentDTO> getAllComments();
 
-    public CommentDTO getComment(int CommentId) throws Exception;
+    CommentDTO getComment(int CommentId);
 
     List<CommentDTO> getLaunchComments(int launchId);
 }

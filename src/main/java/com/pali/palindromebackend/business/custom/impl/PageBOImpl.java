@@ -4,7 +4,6 @@ import com.pali.palindromebackend.business.custom.PageBO;
 import com.pali.palindromebackend.business.util.EntityDTOMapper;
 import com.pali.palindromebackend.dao.PageDAO;
 import com.pali.palindromebackend.dto.PageDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,41 +16,41 @@ import java.util.stream.Collectors;
  **/
 @Transactional
 @Service
-public class PageBOimpl implements PageBO {
+public class PageBOImpl implements PageBO {
 
-    @Autowired
-    private PageDAO dao;
+    private final PageDAO dao;
 
-    @Autowired
-    private EntityDTOMapper mapper;
+    private final EntityDTOMapper mapper;
 
-    public PageBOimpl() {
+    public PageBOImpl(PageDAO dao, EntityDTOMapper mapper) {
+        this.dao = dao;
+        this.mapper = mapper;
     }
 
 
     @Override
-    public void savePage(PageDTO dto) throws Exception {
+    public void savePage(PageDTO dto) {
         dao.save(mapper.getPage(dto));
     }
 
     @Override
-    public void updatePage(PageDTO dto) throws Exception {
+    public void updatePage(PageDTO dto) {
         dao.save(mapper.getPage(dto));
     }
 
     @Override
-    public void deletePage(int pageId) throws Exception {
+    public void deletePage(int pageId) {
         dao.deleteById(pageId);
     }
 
     @Override
-    public List<PageDTO> getAllPages() throws Exception {
+    public List<PageDTO> getAllPages() {
         return dao.findAll().stream().
-                map(pages -> mapper.getPageDTO(pages)).collect(Collectors.toList());
+                map(mapper::getPageDTO).collect(Collectors.toList());
     }
 
     @Override
-    public PageDTO getPage(int pageId) throws Exception {
-        return dao.findById(pageId).map(page -> mapper.getPageDTO(page)).get();
+    public PageDTO getPage(int pageId) {
+        return dao.findById(pageId).map(mapper::getPageDTO).get();
     }
 }

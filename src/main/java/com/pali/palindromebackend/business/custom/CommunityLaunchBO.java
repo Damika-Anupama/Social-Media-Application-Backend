@@ -2,7 +2,6 @@ package com.pali.palindromebackend.business.custom;
 
 import com.pali.palindromebackend.business.SuperBO;
 import com.pali.palindromebackend.dto.CommunityLaunchDTO;
-import com.pali.palindromebackend.dto.PageDTO;
 import com.pali.palindromebackend.entity.CommunityLaunchPK;
 import com.pali.palindromebackend.model.CommunityLaunchDetail;
 

@@ -1,6 +1,7 @@
 package com.pali.palindromebackend.business.util.impl;
 
 import com.pali.palindromebackend.business.util.FriendEntityDTOMapper;
+import com.pali.palindromebackend.dao.UserDAO;
 import com.pali.palindromebackend.dto.FriendDTO;
 import com.pali.palindromebackend.entity.Friend;
 
@@ -9,6 +10,11 @@ import com.pali.palindromebackend.entity.Friend;
  * @since : 15/06/2021
  **/
 public class FriendEntityDTOMapperImpl extends FriendEntityDTOMapper {
+
+    protected FriendEntityDTOMapperImpl(UserDAO userDAO) {
+        super(userDAO);
+    }
+
     @Override
     public Friend getFriend(FriendDTO dto) {
         if (dto == null) {

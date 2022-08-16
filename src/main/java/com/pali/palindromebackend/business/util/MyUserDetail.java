@@ -1,13 +1,12 @@
 package com.pali.palindromebackend.business.util;
 
 import com.pali.palindromebackend.entity.User;
-import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -16,17 +15,17 @@ import java.util.List;
  **/
 public class MyUserDetail implements UserDetails {
 
-    private String username;
-    private String password;
-    private boolean isActive;
-    private int id;
-    private List<GrantedAuthority> authorities;
+    private final String username;
+    private final String password;
+    private final boolean isActive;
+    private final int id;
+    private final List<GrantedAuthority> authorities;
 
     public MyUserDetail(User user) {
         this.username = user.getUsername();
         this.password = user.getPassword();
         this.isActive = user.getIsActive();
-        this.authorities = Arrays.asList(new SimpleGrantedAuthority(user.getRole().toString()));
+        this.authorities = Collections.singletonList(new SimpleGrantedAuthority(user.getRole().toString()));
         this.id = user.getId();
     }
 

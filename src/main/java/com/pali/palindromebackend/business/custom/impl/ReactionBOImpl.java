@@ -2,15 +2,11 @@ package com.pali.palindromebackend.business.custom.impl;
 
 import com.pali.palindromebackend.business.custom.ReactionBO;
 import com.pali.palindromebackend.business.util.ReactionEntityDTOMapper;
-import com.pali.palindromebackend.business.util.StatusEntityDTOMapper;
 import com.pali.palindromebackend.dao.ReactionDAO;
-import com.pali.palindromebackend.dao.StatusDAO;
 import com.pali.palindromebackend.dto.ReactionDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,40 +16,41 @@ import java.util.stream.Collectors;
  **/
 @Transactional
 @Service
-public class ReactionBOimpl implements ReactionBO {
+public class ReactionBOImpl implements ReactionBO {
 
-    @Autowired
-    private ReactionDAO dao;
+    private final ReactionDAO dao;
 
-    @Autowired
-    private ReactionEntityDTOMapper mapper;
+    private final ReactionEntityDTOMapper mapper;
 
-    public ReactionBOimpl() {
+    public ReactionBOImpl(ReactionDAO dao, ReactionEntityDTOMapper mapper) {
+        this.dao = dao;
+        this.mapper = mapper;
     }
+
     @Override
-    public void saveReaction(ReactionDTO dto) throws Exception {
+    public void saveReaction(ReactionDTO dto) {
         dao.save(mapper.getReaction(dto));
     }
 
     @Override
-    public void updateReaction(ReactionDTO dto) throws Exception {
+    public void updateReaction(ReactionDTO dto) {
         dao.save(mapper.getReaction(dto));
     }
 
     @Override
-    public void deleteReaction(int reactionId) throws Exception {
+    public void deleteReaction(int reactionId) {
         dao.deleteById(reactionId);
     }
 
     @Override
-    public List<ReactionDTO> getAllReactions() throws Exception {
+    public List<ReactionDTO> getAllReactions() {
         return dao.findAll().stream().
-                map(reactions -> mapper.getReactionDTO(reactions)).collect(Collectors.toList());
+                map(mapper::getReactionDTO).collect(Collectors.toList());
     }
 
     @Override
-    public ReactionDTO getReaction(int reactionId) throws Exception {
-        return dao.findById(reactionId).map(reaction -> mapper.getReactionDTO(reaction)).get();
+    public ReactionDTO getReaction(int reactionId) {
+        return dao.findById(reactionId).map(mapper::getReactionDTO).get();
     }
 
     @Override
@@ -64,7 +61,7 @@ public class ReactionBOimpl implements ReactionBO {
     @Override
     public List<ReactionDTO> getLaunchReactions(int launchId) {
         return dao.findLaunchReactions(launchId).stream().map(
-                reactions -> mapper.getReactionDTO(reactions)).collect(Collectors.toList()
+                mapper::getReactionDTO).collect(Collectors.toList()
         );
     }
 }

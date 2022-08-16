@@ -1,12 +1,10 @@
 package com.pali.palindromebackend.business.custom.impl;
 
 import com.pali.palindromebackend.business.custom.FriendBO;
-import com.pali.palindromebackend.business.util.EntityDTOMapper;
 import com.pali.palindromebackend.business.util.FriendEntityDTOMapper;
 import com.pali.palindromebackend.dao.FriendDAO;
 import com.pali.palindromebackend.dto.FriendDTO;
 import com.pali.palindromebackend.entity.Friend;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,14 +18,14 @@ import java.util.stream.Stream;
  **/
 @Transactional
 @Service
-public class FriendBOimpl implements FriendBO {
+public class FriendBOImpl implements FriendBO {
 
-    @Autowired
-    private FriendDAO dao;
-    @Autowired
-    private FriendEntityDTOMapper mapper;
+    private final FriendDAO dao;
+    private final FriendEntityDTOMapper mapper;
 
-    public FriendBOimpl() {
+    public FriendBOImpl(FriendDAO dao, FriendEntityDTOMapper mapper) {
+        this.dao = dao;
+        this.mapper = mapper;
     }
 
 
@@ -52,8 +50,7 @@ public class FriendBOimpl implements FriendBO {
     @Override
     public List<FriendDTO> getAllFriends(){
         return dao.findAll().stream().
-                map(friend ->
-                        mapper.getFriendDTO(friend))
+                map(mapper::getFriendDTO)
                 .collect(Collectors.toList()
                 );
     }
@@ -61,7 +58,7 @@ public class FriendBOimpl implements FriendBO {
     @Override
     public FriendDTO getFriend(int friendshipId){
         return dao.findById(
-                friendshipId).map(friend -> mapper.getFriendDTO(friend)
+                friendshipId).map(mapper::getFriendDTO
         ).get();
     }
 
@@ -76,11 +73,10 @@ public class FriendBOimpl implements FriendBO {
     @Override
     public List<FriendDTO> getAllFriendsByUserId(int userId) {
         List<FriendDTO> collect1 = dao.findAllfriend1(userId).stream().
-                map(friend -> mapper.getFriendDTO(friend)).collect(Collectors.toList());
+                map(mapper::getFriendDTO).collect(Collectors.toList());
         List<FriendDTO> collect2 = dao.findAllfriend2(userId).stream().
-                map(friend -> mapper.getFriendDTO(friend)).collect(Collectors.toList());
-        List<FriendDTO> newList = Stream.concat(collect1.stream(), collect2.stream())
+                map(mapper::getFriendDTO).collect(Collectors.toList());
+        return Stream.concat(collect1.stream(), collect2.stream())
                 .collect(Collectors.toList());
-        return newList;
     }
 }

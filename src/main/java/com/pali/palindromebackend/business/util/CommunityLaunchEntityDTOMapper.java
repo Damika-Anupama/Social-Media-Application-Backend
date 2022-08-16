@@ -2,9 +2,7 @@ package com.pali.palindromebackend.business.util;
 
 import com.pali.palindromebackend.dao.CommunityDAO;
 import com.pali.palindromebackend.dao.LaunchDAO;
-import com.pali.palindromebackend.dao.UserDAO;
 import com.pali.palindromebackend.dto.CommunityLaunchDTO;
-import com.pali.palindromebackend.dto.CommunityUserDTO;
 import com.pali.palindromebackend.entity.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

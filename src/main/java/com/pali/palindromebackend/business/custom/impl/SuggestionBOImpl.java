@@ -5,7 +5,6 @@ import com.pali.palindromebackend.business.util.SuggestionEntityDTOMapper;
 import com.pali.palindromebackend.dao.SuggestionDAO;
 import com.pali.palindromebackend.dto.SuggestionDTO;
 import com.pali.palindromebackend.dto.SuggestionUserDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,45 +17,45 @@ import java.util.stream.Collectors;
  **/
 @Transactional
 @Service
-public class SuggestionBOimpl implements SuggestionBO {
-    @Autowired
-    private SuggestionDAO dao;
+public class SuggestionBOImpl implements SuggestionBO {
+    private final SuggestionDAO dao;
 
-    @Autowired
-    private SuggestionEntityDTOMapper mapper;
+    private final SuggestionEntityDTOMapper mapper;
 
-    public SuggestionBOimpl() {
+    public SuggestionBOImpl(SuggestionDAO dao, SuggestionEntityDTOMapper mapper) {
+        this.dao = dao;
+        this.mapper = mapper;
     }
 
     @Override
-    public void saveSuggestion(SuggestionDTO dto) throws Exception {
+    public void saveSuggestion(SuggestionDTO dto) {
         dao.save(mapper.getSuggestion(dto));
     }
 
     @Override
-    public void updateSuggestion(SuggestionDTO dto) throws Exception {
+    public void updateSuggestion(SuggestionDTO dto) {
         dao.save(mapper.getSuggestion(dto));
     }
 
     @Override
-    public void deleteSuggestion(int suggestionId) throws Exception {
+    public void deleteSuggestion(int suggestionId) {
         dao.deleteById(suggestionId);
     }
 
     @Override
-    public List<SuggestionDTO> getAllSuggestions() throws Exception {
+    public List<SuggestionDTO> getAllSuggestions() {
         return dao.findAll().stream().
-                map(suggestion -> mapper.getSuggestionDTO(suggestion)).collect(Collectors.toList());
+                map(mapper::getSuggestionDTO).collect(Collectors.toList());
     }
 
     @Override
-    public List<SuggestionUserDTO> getAllSuggestionsWithUsers() throws Exception {
+    public List<SuggestionUserDTO> getAllSuggestionsWithUsers() {
         return dao.findAllWithUsers().stream().
-                map(suggestion -> mapper.getSuggestionUserDTO(suggestion)).collect(Collectors.toList());
+                map(mapper::getSuggestionUserDTO).collect(Collectors.toList());
     }
 
     @Override
-    public SuggestionDTO getSuggestion(int suggestionId) throws Exception {
-        return dao.findById(suggestionId).map(launch -> mapper.getSuggestionDTO(launch)).get();
+    public SuggestionDTO getSuggestion(int suggestionId) {
+        return dao.findById(suggestionId).map(mapper::getSuggestionDTO).get();
     }
 }

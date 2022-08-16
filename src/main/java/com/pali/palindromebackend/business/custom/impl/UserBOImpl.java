@@ -5,7 +5,6 @@ import com.pali.palindromebackend.business.util.EntityDTOMapper;
 import com.pali.palindromebackend.dao.UserDAO;
 import com.pali.palindromebackend.dto.UserDTO;
 import com.pali.palindromebackend.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,58 +18,57 @@ import java.util.stream.Collectors;
  **/
 @Transactional
 @Service
-public class UserBOimpl implements UserBO {
-    @Autowired
-    private UserDAO userDAO;
+public class UserBOImpl implements UserBO {
+    private final UserDAO userDAO;
 
-    @Autowired
-    private EntityDTOMapper mapper;
+    private final EntityDTOMapper mapper;
 
-    public UserBOimpl() {
+    public UserBOImpl(UserDAO userDAO, EntityDTOMapper mapper) {
+        this.userDAO = userDAO;
+        this.mapper = mapper;
     }
 
     @Override
-    public String saveUser(UserDTO dto) throws Exception {
+    public void saveUser(UserDTO dto) {
         User user = mapper.getUser(dto);
         user.setCreatedAt(new Date(System.currentTimeMillis()));
         user.setIsActive(true);
         user.setUpdatedAt(new Date(System.currentTimeMillis()));
         user.setLastLogin(new Date(System.currentTimeMillis()));
         userDAO.save(user);
-        return "User Saved Successfully";
     }
 
     @Override
-    public void updateUser(UserDTO dto) throws Exception {
+    public void updateUser(UserDTO dto) {
         User user = mapper.getUser(dto);
         user.setUpdatedAt(new Date(System.currentTimeMillis()));
         userDAO.save(mapper.getUser(dto));
     }
 
     @Override
-    public void deleteUser(int userId) throws Exception {
+    public void deleteUser(int userId) {
         userDAO.deleteById(userId);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<UserDTO> getAllUsers() throws Exception {
+    public List<UserDTO> getAllUsers() {
         return userDAO.findAll().stream().
-                map(user -> mapper.getUserDTO(user)).collect(Collectors.toList());
+                map(mapper::getUserDTO).collect(Collectors.toList());
     }
 
     @Override
-    public UserDTO getUser(int userId) throws Exception {
-        return userDAO.findById(userId).map(user -> mapper.getUserDTO(user)).get();
+    public UserDTO getUser(int userId) {
+        return userDAO.findById(userId).map(mapper::getUserDTO).get();
     }
 
     @Override
-    public UserDTO getUserByName(String userName) throws Exception {
-        return userDAO.findUserByUsername(userName).map(user -> mapper.getUserDTO(user)).get();
+    public UserDTO getUserByName(String userName) {
+        return userDAO.findUserByUsername(userName).map(mapper::getUserDTO).get();
     }
 
     @Override
-    public String getUserProfilePicture(int id) throws Exception {
+    public String getUserProfilePicture(int id) {
         return userDAO.findUserProfilePicture(id);
     }
 

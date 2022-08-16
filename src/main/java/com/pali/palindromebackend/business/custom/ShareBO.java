@@ -10,14 +10,14 @@ import java.util.List;
  * @since : 5/11/2022
  **/
 public interface ShareBO extends SuperBO {
-    public void saveShare(ShareDTO dto) throws Exception;
+    public void saveShare(ShareDTO dto);
 
-    public void updateShare(ShareDTO dto) throws Exception;
+    public void updateShare(ShareDTO dto);
 
-    public void deleteShare(int shareId) throws Exception;
+    public void deleteShare(int shareId);
 
-    public List<ShareDTO> getAllShares() throws Exception;
+    public List<ShareDTO> getAllShares();
 
-    public ShareDTO getShare(int shareId) throws Exception;
+    public ShareDTO getShare(int shareId);
 
 }

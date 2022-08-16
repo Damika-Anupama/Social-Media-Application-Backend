@@ -4,7 +4,6 @@ import com.pali.palindromebackend.business.custom.ShareBO;
 import com.pali.palindromebackend.business.util.LaunchEntityDTOMapper;
 import com.pali.palindromebackend.dao.ShareDAO;
 import com.pali.palindromebackend.dto.ShareDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,38 +16,39 @@ import java.util.stream.Collectors;
  **/
 @Transactional
 @Service
-public class ShareBOimpl implements ShareBO {
+public class ShareBOImpl implements ShareBO {
 
-    @Autowired
-    private ShareDAO dao;
-    private LaunchEntityDTOMapper mapper;
+    private final ShareDAO dao;
+    private final LaunchEntityDTOMapper mapper;
 
-    public ShareBOimpl() {
+    public ShareBOImpl(ShareDAO dao, LaunchEntityDTOMapper mapper) {
+        this.dao = dao;
+        this.mapper = mapper;
     }
 
     @Override
-    public void saveShare(ShareDTO dto) throws Exception {
+    public void saveShare(ShareDTO dto) {
         dao.save(mapper.getShare(dto));
     }
 
     @Override
-    public void updateShare(ShareDTO dto) throws Exception {
+    public void updateShare(ShareDTO dto) {
         dao.save(mapper.getShare(dto));
     }
 
     @Override
-    public void deleteShare(int shareId) throws Exception {
+    public void deleteShare(int shareId) {
         dao.deleteById(shareId);
     }
 
     @Override
-    public List<ShareDTO> getAllShares() throws Exception {
+    public List<ShareDTO> getAllShares() {
         return dao.findAll().stream().
-                map(share -> mapper.getShareDTO(share)).collect(Collectors.toList());
+                map(mapper::getShareDTO).collect(Collectors.toList());
     }
 
     @Override
-    public ShareDTO getShare(int shareId) throws Exception {
-        return dao.findById(shareId).map(share -> mapper.getShareDTO(share)).get();
+    public ShareDTO getShare(int shareId) {
+        return dao.findById(shareId).map(mapper::getShareDTO).get();
     }
 }

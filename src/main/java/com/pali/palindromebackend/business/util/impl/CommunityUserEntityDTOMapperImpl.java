@@ -5,8 +5,6 @@ import com.pali.palindromebackend.dto.CommunityUserDTO;
 import com.pali.palindromebackend.entity.CommunityUser;
 import com.pali.palindromebackend.entity.CommunityUserPK;
 
-import java.util.Date;
-
 /**
  * @author : Mr.Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
  * @since : 6/23/2022
@@ -22,7 +20,6 @@ public class CommunityUserEntityDTOMapperImpl extends CommunityUserEntityDTOMapp
                     )
             );
         }catch (Exception e){
-            System.out.println(e);
             throw new RuntimeException(e);
         }
         communityUser.setRole(dto.getRole());

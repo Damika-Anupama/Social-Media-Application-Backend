@@ -11,14 +11,15 @@ import java.util.List;
  * @since : 19/06/2021
  **/
 public interface SuggestionBO extends SuperBO {
-    void saveSuggestion(SuggestionDTO dto) throws Exception;
+    void saveSuggestion(SuggestionDTO dto);
 
-    void updateSuggestion(SuggestionDTO dto) throws Exception;
+    void updateSuggestion(SuggestionDTO dto);
 
-    void deleteSuggestion(int suggestionId) throws Exception;
+    void deleteSuggestion(int suggestionId);
 
-    List<SuggestionDTO> getAllSuggestions() throws Exception;
-    List<SuggestionUserDTO> getAllSuggestionsWithUsers() throws Exception;
+    List<SuggestionDTO> getAllSuggestions();
 
-    SuggestionDTO getSuggestion(int suggestionId) throws Exception;
+    List<SuggestionUserDTO> getAllSuggestionsWithUsers();
+
+    SuggestionDTO getSuggestion(int suggestionId);
 }

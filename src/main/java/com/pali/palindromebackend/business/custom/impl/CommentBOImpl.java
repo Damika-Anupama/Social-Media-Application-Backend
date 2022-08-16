@@ -4,11 +4,9 @@ import com.pali.palindromebackend.business.custom.CommentBO;
 import com.pali.palindromebackend.business.util.LaunchEntityDTOMapper;
 import com.pali.palindromebackend.dao.CommentDAO;
 import com.pali.palindromebackend.dto.CommentDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,46 +16,45 @@ import java.util.stream.Collectors;
  **/
 @Transactional
 @Service
-public class CommentBOimpl implements CommentBO {
+public class CommentBOImpl implements CommentBO {
 
-    @Autowired
-    private CommentDAO dao;
-    @Autowired
-    private LaunchEntityDTOMapper mapper;
+    private final CommentDAO dao;
+    private final LaunchEntityDTOMapper mapper;
 
-    public CommentBOimpl() {
+    public CommentBOImpl(CommentDAO dao, LaunchEntityDTOMapper mapper) {
+        this.dao = dao;
+        this.mapper = mapper;
     }
 
     @Override
-    public void saveComment(CommentDTO dto) throws Exception {
+    public void saveComment(CommentDTO dto){
         dao.save(mapper.getComment(dto));
     }
 
     @Override
-    public void updateComment(CommentDTO dto) throws Exception {
+    public void updateComment(CommentDTO dto){
         dao.save(mapper.getComment(dto));
     }
 
     @Override
-    public void deleteComment(int commentId) throws Exception {
+    public void deleteComment(int commentId){
         dao.deleteById(commentId);
     }
 
     @Override
-    public List<CommentDTO> getAllComments() throws Exception {
+    public List<CommentDTO> getAllComments(){
         return dao.findAll().stream().
-                map(comment -> mapper.getCommentDTO(comment)).collect(Collectors.toList());
+                map(mapper::getCommentDTO).collect(Collectors.toList());
     }
 
     @Override
-    public CommentDTO getComment(int commentId) throws Exception {
-        return dao.findById(commentId).map(comment -> mapper.getCommentDTO(comment)).get();
+    public CommentDTO getComment(int commentId){
+        return dao.findById(commentId).map(mapper::getCommentDTO).get();
     }
 
     @Override
     public List<CommentDTO> getLaunchComments(int launchId) {
-        return dao.findLaunchComment(launchId).stream().map(
-                comments -> mapper.getCommentDTO(comments)).collect(Collectors.toList()
+        return dao.findLaunchComment(launchId).stream().map(mapper::getCommentDTO).collect(Collectors.toList()
         );
     }
 }

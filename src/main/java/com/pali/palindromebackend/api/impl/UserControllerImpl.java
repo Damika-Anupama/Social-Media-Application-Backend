@@ -253,7 +253,7 @@ public class UserControllerImpl extends UserController {
     @Override
     public ResponseEntity<?> saveUser(UserDTO dto) {
         try {
-            System.out.println(userBO.saveUser(dto));
+            userBO.saveUser(dto);
             return new ResponseEntity<>(dto, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Something went wrong", HttpStatus.INTERNAL_SERVER_ERROR);

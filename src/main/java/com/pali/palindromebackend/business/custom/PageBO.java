@@ -10,13 +10,13 @@ import java.util.List;
  * @since : 01/06/2021
  **/
 public interface PageBO extends SuperBO {
-    public void savePage(PageDTO dto) throws Exception;
+    void savePage(PageDTO dto);
 
-    public void updatePage(PageDTO dto) throws Exception;
+    void updatePage(PageDTO dto);
 
-    public void deletePage(int pageId) throws Exception;
+    void deletePage(int pageId);
 
-    public List<PageDTO> getAllPages() throws Exception;
+    List<PageDTO> getAllPages();
 
-    public PageDTO getPage(int PageId) throws Exception;
+    PageDTO getPage(int PageId);
 }

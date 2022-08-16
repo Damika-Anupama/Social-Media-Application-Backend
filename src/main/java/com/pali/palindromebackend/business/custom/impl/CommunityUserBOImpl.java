@@ -6,7 +6,6 @@ import com.pali.palindromebackend.dao.CommunityUserDAO;
 import com.pali.palindromebackend.dto.CommunityUserDTO;
 import com.pali.palindromebackend.entity.CommunityUserPK;
 import com.pali.palindromebackend.model.MiniUserComDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,39 +20,42 @@ import java.util.stream.Collectors;
 @Transactional
 @Service
 public class CommunityUserBOImpl implements CommunityUserBO {
-    @Autowired
-    private CommunityUserDAO dao;
-    @Autowired
-    private CommunityUserEntityDTOMapper  mapper;
+    private final CommunityUserDAO dao;
+    private final CommunityUserEntityDTOMapper  mapper;
+
+    public CommunityUserBOImpl(CommunityUserDAO dao, CommunityUserEntityDTOMapper mapper) {
+        this.dao = dao;
+        this.mapper = mapper;
+    }
 
     @Override
-    public void saveCommunityUser(CommunityUserDTO dto) throws Exception {
+    public void saveCommunityUser(CommunityUserDTO dto){
         dao.save(mapper.getCommunityUser(dto));
     }
 
     @Override
-    public void updateCommunityUser(CommunityUserDTO dto) throws Exception {
+    public void updateCommunityUser(CommunityUserDTO dto){
         dao.save(mapper.getCommunityUser(dto));
     }
 
     @Override
-    public void deleteCommunityUser(CommunityUserPK pk) throws Exception {
+    public void deleteCommunityUser(CommunityUserPK pk){
         dao.deleteById(pk);
     }
 
     @Override
-    public List<CommunityUserDTO> getAllCommunityUsers() throws Exception {
-        return dao.findAll().stream().map(cu -> mapper.getCommunityUserDTO(cu)).collect(Collectors.toList());
+    public List<CommunityUserDTO> getAllCommunityUsers(){
+        return dao.findAll().stream().map(mapper::getCommunityUserDTO).collect(Collectors.toList());
     }
 
     @Override
-    public CommunityUserDTO getCommunityUser(CommunityUserPK pk) throws Exception {
-        return dao.findById(pk).map(cu -> mapper.getCommunityUserDTO(cu)).get();
+    public CommunityUserDTO getCommunityUser(CommunityUserPK pk){
+        return dao.findById(pk).map(mapper::getCommunityUserDTO).get();
     }
 
     @Override
     public List<CommunityUserDTO> getAllCommunitiesByUserId(int userId) {
-        return dao.findAllByUserId(userId).stream().map(cu -> mapper.getCommunityUserDTO(cu)).collect(Collectors.toList());
+        return dao.findAllByUserId(userId).stream().map(mapper::getCommunityUserDTO).collect(Collectors.toList());
     }
 
     @Override
