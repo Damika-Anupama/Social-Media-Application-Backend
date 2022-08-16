@@ -33,15 +33,18 @@ public class FileService {
         return null;
     }
 
-    private String getFilePath(String fileName, String fileType, String mediaCategory) {
-        String mediaUploadPath = UploadPath + mediaCategory;
-        String folderPath = mediaUploadPath + fileType;
-        String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss-"));
+    private String getFilePath(MultipartFile file, String mediaCategory) {
+        String fileName, fileType, mediaUploadPath, folderPath, date;
+        fileName = file.getOriginalFilename();
+        fileType = file.getContentType();
+        mediaUploadPath = UploadPath + mediaCategory;
+        folderPath = mediaUploadPath + fileType;
+        date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss-"));
         return folderPath + "/" + date + "____" + fileName; // use either file.separator or "/"
     }
 
     public String saveFile(MultipartFile file, String folderType) {
-        String filePath = getFilePath(file.getOriginalFilename(), file.getContentType(), folderType);
+        String filePath = getFilePath(file, folderType);
         String output;
         File file1 = new File(filePath);
 

@@ -62,7 +62,7 @@ public class DateDescendentObjectCreator {
         }
     }
 
-    public static List<DateDescendObject> giveDateDescendentObjet(
+    public List<DateDescendObject> giveDateDescendentObjet(
             ArrayList<DashboardLaunchDetail> launches,
             ArrayList<ResponseCommunityBody> communities,
             ArrayList<RequiredFriendDetailObject> friends

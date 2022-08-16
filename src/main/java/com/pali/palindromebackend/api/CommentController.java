@@ -1,21 +1,12 @@
 package com.pali.palindromebackend.api;
 
-import com.pali.palindromebackend.business.custom.CommentBO;
-import com.pali.palindromebackend.business.custom.CommunityBO;
 import com.pali.palindromebackend.dto.CommentDTO;
-import com.pali.palindromebackend.dto.CommunityDTO;
-import com.pali.palindromebackend.entity.Comment;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-import java.util.NoSuchElementException;
 
 /**
  * @author : Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
@@ -23,36 +14,19 @@ import java.util.NoSuchElementException;
  **/
 @RestController
 @RequestMapping("api/v1/comments")
-public class CommentController {
+public abstract class CommentController {
 
-    @Autowired
-    private CommentBO bo;
+
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<?> getAllComments() throws Exception {
-        try {
-            return new ResponseEntity<List<CommentDTO>>(bo.getAllComments(), HttpStatus.OK);
-        } catch (NoSuchElementException e) {
-            return new ResponseEntity<>("No comment found !!", HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Something went wrong !!", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+    public abstract ResponseEntity<?> getAllComments();
 
     @GetMapping(value = "/{commentId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<?> getCommentById(@PathVariable("commentId") int comId) throws Exception {
-        try {
-            return new ResponseEntity<>(bo.getComment(comId), HttpStatus.OK);
-        } catch (NoSuchElementException e) {
-            return new ResponseEntity<>("No comment found !!", HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Something went wrong !!", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+    public abstract ResponseEntity<?> getCommentById(@PathVariable("commentId") int comId);
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(
@@ -60,34 +34,12 @@ public class CommentController {
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
     @ResponseBody
-    public ResponseEntity<?> saveComment(@Valid @RequestBody CommentDTO dto){
-        try {
-            dto.setCommentedDate(new Date());
-            dto.setLastUpdatedDate(new Date());
-            System.out.println(dto);
-            bo.saveComment(dto);
-            return new ResponseEntity<>(dto, HttpStatus.CREATED);
-        }catch (Exception e) {
-            return new ResponseEntity<>(
-                    "Something went wrong when saving the comment!! " + e,
-                    HttpStatus.INTERNAL_SERVER_ERROR
-            );
-        }
-    }
+    public abstract ResponseEntity<?> saveComment(@Valid @RequestBody CommentDTO dto);
 
     @DeleteMapping("/{commentId}")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public ResponseEntity<?> deleteComment(@PathVariable("commentId") int comId) throws Exception {
-        try {
-            bo.deleteComment(comId);
-            return new ResponseEntity<>("Successfully deleted the com !!", HttpStatus.CREATED);
-        } catch (NoSuchElementException e) {
-            return new ResponseEntity<>("No comment is found !!", HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Something went wrong!!", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+    public abstract ResponseEntity<?> deleteComment(@PathVariable("commentId") int comId);
 
     @PutMapping(
             value = "/{comId}",
@@ -96,18 +48,5 @@ public class CommentController {
     )
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<?> updateComment(@Valid @RequestBody CommentDTO dto, @PathVariable("comId") int comId)
-            throws Exception {
-        if (dto.getId() != comId) {
-            return new ResponseEntity<>("Mismatch comId !!", HttpStatus.BAD_REQUEST);
-        }
-        try {
-            bo.updateComment(dto);
-            return new ResponseEntity<>(dto, HttpStatus.CREATED);
-        } catch (NoSuchElementException e) {
-            return new ResponseEntity<>("No com is found !!", HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Something went wrong !!", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+    public abstract ResponseEntity<?> updateComment(@Valid @RequestBody CommentDTO dto, @PathVariable("comId") int comId);
 }

@@ -34,40 +34,40 @@ public class LaunchBOimpl implements LaunchBO {
     }
 
     @Override
-    public Launch saveLaunch(LaunchDTO dto) throws Exception {
+    public Launch saveLaunch(LaunchDTO dto){
         return dao.save(mapper.getLaunch(dto));
     }
 
     @Override
-    public void updateLaunch(LaunchDTO dto) throws Exception {
+    public void updateLaunch(LaunchDTO dto){
         dao.save(mapper.getLaunch(dto));
     }
 
     @Override
-    public void deleteLaunch(int launchId) throws Exception {
+    public void deleteLaunch(int launchId){
         dao.deleteById(launchId);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<LaunchDTO> getAllLaunches() throws Exception {
+    public List<LaunchDTO> getAllLaunches(){
         return dao.findAll().stream().
                 map(launch -> mapper.getLaunchDTO(launch)).collect(Collectors.toList());
     }
 
     @Override
-    public LaunchDTO getLaunch(int launchId) throws Exception {
+    public LaunchDTO getLaunch(int launchId){
         return dao.findById(launchId).map(launch -> mapper.getLaunchDTO(launch)).get();
     }
 
     @Override
-    public List<LaunchDTO> getLaunchesByUserId(int userId) throws Exception {
+    public List<LaunchDTO> getLaunchesByUserId(int userId){
         return dao.findLaunchesByUserId(userId).stream().
                 map(launch -> mapper.getLaunchDTO(launch)).collect(Collectors.toList());
     }
 
     @Override
-    public List<LaunchUserDetails> getAllLaunchesWithUserDetails() throws Exception {
-        return new ArrayList<LaunchUserDetails>(dao.findLaunchesWithUserDetails());
+    public List<LaunchUserDetails> getAllLaunchesWithUserDetails(){
+        return new ArrayList<>(dao.findLaunchesWithUserDetails());
     }
 }

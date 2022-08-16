@@ -1,4 +1,4 @@
-package com.pali.palindromebackend.api.Exception;
+package com.pali.palindromebackend.service.Exception;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

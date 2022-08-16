@@ -12,17 +12,17 @@ import java.util.List;
  * @since : 01/06/2021
  **/
 public interface LaunchBO extends SuperBO {
-    Launch saveLaunch(LaunchDTO dto) throws Exception;
+    Launch saveLaunch(LaunchDTO dto);
 
-    void updateLaunch(LaunchDTO dto) throws Exception;
+    void updateLaunch(LaunchDTO dto);
 
-    void deleteLaunch(int launchId) throws Exception;
+    void deleteLaunch(int launchId);
 
-    LaunchDTO getLaunch(int launchId) throws Exception;
+    LaunchDTO getLaunch(int launchId);
 
-    List<LaunchDTO> getAllLaunches() throws Exception;
+    List<LaunchDTO> getAllLaunches();
 
-    List<LaunchDTO> getLaunchesByUserId(int userId) throws Exception;
+    List<LaunchDTO> getLaunchesByUserId(int userId);
 
-    List<LaunchUserDetails> getAllLaunchesWithUserDetails() throws Exception;
+    List<LaunchUserDetails> getAllLaunchesWithUserDetails();
 }
