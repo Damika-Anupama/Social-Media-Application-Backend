@@ -11,7 +11,6 @@ import com.pali.palindromebackend.entity.custom.LaunchUserDetails;
 import com.pali.palindromebackend.model.DashboardLaunchDetail;
 import com.pali.palindromebackend.model.LaunchCommentBody;
 import com.pali.palindromebackend.model.LaunchReactionBody;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,15 +22,18 @@ import java.util.List;
  **/
 @Service
 public class FullLaunchBodyPackager {
-    @Autowired
-    private ReactionBO bo1;
-    @Autowired
-    private CommentBO bo2;
-    @Autowired
-    private UserBO bo3;
+    private final ReactionBO bo1;
+    private final CommentBO bo2;
+    private final UserBO bo3;
 
-    @Autowired
-    private FileService fileService;
+    private final FileService fileService;
+
+    public FullLaunchBodyPackager(ReactionBO bo1, CommentBO bo2, UserBO bo3, FileService fileService) {
+        this.bo1 = bo1;
+        this.bo2 = bo2;
+        this.bo3 = bo3;
+        this.fileService = fileService;
+    }
 
 
     public DashboardLaunchDetail getLaunch(LaunchUserDetails detail){

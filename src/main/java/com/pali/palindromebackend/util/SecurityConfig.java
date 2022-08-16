@@ -24,10 +24,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private MyUserDetailsService myUserDetailsService;
-    @Autowired
-    private JWTRequestFilter jwtRequestFilter;
+    private final MyUserDetailsService myUserDetailsService;
+    private final JWTRequestFilter jwtRequestFilter;
+
+    public SecurityConfig(MyUserDetailsService myUserDetailsService, JWTRequestFilter jwtRequestFilter) {
+        this.myUserDetailsService = myUserDetailsService;
+        this.jwtRequestFilter = jwtRequestFilter;
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

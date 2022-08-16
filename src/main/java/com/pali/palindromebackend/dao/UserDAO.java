@@ -1,6 +1,5 @@
 package com.pali.palindromebackend.dao;
 
-import com.pali.palindromebackend.dto.UserDTO;
 import com.pali.palindromebackend.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

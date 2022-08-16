@@ -1,11 +1,9 @@
 package com.pali.palindromebackend.dao;
 
-import com.pali.palindromebackend.dto.CommentDTO;
 import com.pali.palindromebackend.entity.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

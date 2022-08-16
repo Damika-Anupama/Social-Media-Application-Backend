@@ -1,11 +1,9 @@
 package com.pali.palindromebackend.dto;
 
-import com.pali.palindromebackend.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**

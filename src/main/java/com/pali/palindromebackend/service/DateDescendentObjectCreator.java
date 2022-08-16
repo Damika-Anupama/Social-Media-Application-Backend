@@ -57,7 +57,7 @@ public class DateDescendentObjectCreator {
             list.set(i,list.get(latest));
             list.set(latest,swap);
 
-            // Recursively heapify the affected sub-tree
+            // Recursively heapify the affected subtree
             heapify(list, n, latest);
         }
     }

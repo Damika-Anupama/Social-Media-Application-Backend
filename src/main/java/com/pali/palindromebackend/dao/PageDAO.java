@@ -1,7 +1,6 @@
 package com.pali.palindromebackend.dao;
 
 import com.pali.palindromebackend.entity.Page;
-import com.pali.palindromebackend.entity.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

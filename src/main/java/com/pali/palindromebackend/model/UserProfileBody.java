@@ -1,7 +1,5 @@
 package com.pali.palindromebackend.model;
 
-import com.pali.palindromebackend.dto.CommunityDTO;
-import com.pali.palindromebackend.dto.FriendDTO;
 import com.pali.palindromebackend.entity.Gender;
 import com.pali.palindromebackend.entity.OnlineStatus;
 import com.pali.palindromebackend.entity.Relationship;

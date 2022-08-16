@@ -1,7 +1,5 @@
 package com.pali.palindromebackend.dao;
 
-import com.pali.palindromebackend.dto.ReactionDTO;
-import com.pali.palindromebackend.entity.Launch;
 import com.pali.palindromebackend.entity.Reaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

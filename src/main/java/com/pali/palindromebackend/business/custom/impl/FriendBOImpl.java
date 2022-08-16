@@ -72,9 +72,9 @@ public class FriendBOImpl implements FriendBO {
 
     @Override
     public List<FriendDTO> getAllFriendsByUserId(int userId) {
-        List<FriendDTO> collect1 = dao.findAllfriend1(userId).stream().
+        List<FriendDTO> collect1 = dao.findAllInFriend1(userId).stream().
                 map(mapper::getFriendDTO).collect(Collectors.toList());
-        List<FriendDTO> collect2 = dao.findAllfriend2(userId).stream().
+        List<FriendDTO> collect2 = dao.findAllInFriend2(userId).stream().
                 map(mapper::getFriendDTO).collect(Collectors.toList());
         return Stream.concat(collect1.stream(), collect2.stream())
                 .collect(Collectors.toList());

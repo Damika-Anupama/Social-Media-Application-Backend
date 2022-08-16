@@ -1,7 +1,6 @@
 package com.pali.palindromebackend.service.EmailService;
 
 import com.pali.palindromebackend.model.EmailDetails;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
@@ -23,10 +22,13 @@ import java.io.File;
 // Implementing EmailService interface
 public class EmailServiceImpl implements EmailService {
 
-    @Autowired
-    private JavaMailSender javaMailSender;
+    private final JavaMailSender javaMailSender;
 
     @Value("${spring.mail.username}") private String sender;
+
+    public EmailServiceImpl(JavaMailSender javaMailSender) {
+        this.javaMailSender = javaMailSender;
+    }
 
     // Method 1
     // To send a simple email

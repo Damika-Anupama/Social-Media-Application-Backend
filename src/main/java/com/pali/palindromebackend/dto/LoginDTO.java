@@ -3,9 +3,6 @@ package com.pali.palindromebackend.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.bytebuddy.implementation.bind.annotation.Super;
-
-import java.io.Serializable;
 
 /**
  * @author : Damika Anuapama Nanayakkara <damikaanupama@gmail.com>

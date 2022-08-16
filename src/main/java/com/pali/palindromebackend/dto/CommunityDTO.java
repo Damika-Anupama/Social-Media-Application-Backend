@@ -3,10 +3,6 @@ package com.pali.palindromebackend.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.bytebuddy.implementation.bind.annotation.Super;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.Serializable;
 import java.util.Date;
 
 /**
