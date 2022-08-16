@@ -12,21 +12,8 @@ import javax.validation.Valid;
  * @author : Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
  * @since : 5/11/2022
  **/
-@RestController
-@RequestMapping("api/v1/comments")
-public abstract class CommentController {
 
-
-
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public abstract ResponseEntity<?> getAllComments();
-
-    @GetMapping(value = "/{commentId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public abstract ResponseEntity<?> getCommentById(@PathVariable("commentId") int comId);
+public abstract class CommentController implements SuperController{
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(
@@ -35,11 +22,6 @@ public abstract class CommentController {
     )
     @ResponseBody
     public abstract ResponseEntity<?> saveComment(@Valid @RequestBody CommentDTO dto);
-
-    @DeleteMapping("/{commentId}")
-    @ResponseStatus(HttpStatus.CREATED)
-    @ResponseBody
-    public abstract ResponseEntity<?> deleteComment(@PathVariable("commentId") int comId);
 
     @PutMapping(
             value = "/{comId}",

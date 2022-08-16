@@ -12,19 +12,8 @@ import javax.validation.Valid;
  * @author : Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
  * @since : 5/11/2022
  **/
-@RestController
-@RequestMapping("api/v1/shares")
-public abstract class ShareController {
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public abstract ResponseEntity<?> getAllShares();
-
-    @GetMapping(value = "/{shareId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public abstract ResponseEntity<?> getShareById(@PathVariable("shareId") int shareId);
+public abstract class ShareController implements SuperController{
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(
@@ -33,11 +22,6 @@ public abstract class ShareController {
     )
     @ResponseBody
     public abstract ResponseEntity<?> saveShare(@Valid @RequestBody ShareDTO dto);
-
-    @DeleteMapping("/{shareId}")
-    @ResponseStatus(HttpStatus.CREATED)
-    @ResponseBody
-    public abstract ResponseEntity<?> deleteShare(@PathVariable("shareId") int shareId);
 
     @PutMapping(
             value = "/{shareId}",

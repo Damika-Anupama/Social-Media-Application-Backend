@@ -5,6 +5,8 @@ import com.pali.palindromebackend.business.custom.CommentBO;
 import com.pali.palindromebackend.dto.CommentDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 import java.util.NoSuchElementException;
@@ -13,6 +15,8 @@ import java.util.NoSuchElementException;
  * @author : Mr.Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
  * @since : 8/16/2022
  **/
+@RestController
+@RequestMapping("api/v1/comments")
 public class CommentControllerImpl extends CommentController {
     private final CommentBO bo;
 
@@ -21,7 +25,7 @@ public class CommentControllerImpl extends CommentController {
     }
 
     @Override
-    public ResponseEntity<?> getAllComments() {
+    public ResponseEntity<?> findAll() {
         try {
             return new ResponseEntity<>(bo.getAllComments(), HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -32,9 +36,9 @@ public class CommentControllerImpl extends CommentController {
     }
 
     @Override
-    public ResponseEntity<?> getCommentById(int comId) {
+    public ResponseEntity<?> findById(int id) {
         try {
-            return new ResponseEntity<>(bo.getComment(comId), HttpStatus.OK);
+            return new ResponseEntity<>(bo.getComment(id), HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>("No comment found !!", HttpStatus.NOT_FOUND);
         } catch (Exception e) {
@@ -59,9 +63,9 @@ public class CommentControllerImpl extends CommentController {
     }
 
     @Override
-    public ResponseEntity<?> deleteComment(int comId) {
+    public ResponseEntity<?> deleteById(int id) {
         try {
-            bo.deleteComment(comId);
+            bo.deleteComment(id);
             return new ResponseEntity<>("Successfully deleted the com !!", HttpStatus.CREATED);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>("No comment is found !!", HttpStatus.NOT_FOUND);

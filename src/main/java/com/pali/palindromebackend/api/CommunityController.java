@@ -14,22 +14,8 @@ import javax.validation.Valid;
  * @author : Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
  * @since : 17/06/2021
  **/
-@RestController
-@RequestMapping("api/v1/community")
-public abstract class CommunityController {
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public abstract ResponseEntity<?> getAllCommunities();
-
-    @GetMapping(value = "/{comId}",
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.MULTIPART_FORM_DATA_VALUE
-    )
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public abstract ResponseEntity<?> getCommunityById(@PathVariable("comId") int comId);
+public abstract class CommunityController implements SuperController{
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(
@@ -38,11 +24,6 @@ public abstract class CommunityController {
     )
     @ResponseBody
     public abstract ResponseEntity<Object> saveCommunity(@ModelAttribute CommunityUserBody body);
-
-    @DeleteMapping("/{comId}")
-    @ResponseStatus(HttpStatus.CREATED)
-    @ResponseBody
-    public abstract ResponseEntity<?> deleteCommunity(@PathVariable("comId") int comId);
 
     @PutMapping(
             value = "/{comId}",

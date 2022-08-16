@@ -12,6 +12,8 @@ import com.pali.palindromebackend.service.FileService;
 import com.pali.palindromebackend.service.FullLaunchBodyPackager;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,6 +24,8 @@ import java.util.NoSuchElementException;
  * @author : Mr.Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
  * @since : 8/16/2022
  **/
+@RestController
+@RequestMapping("/api/v1/launches")
 public class LaunchControllerImpl extends LaunchController {
     private final LaunchBO bo;
 
@@ -35,7 +39,7 @@ public class LaunchControllerImpl extends LaunchController {
     }
 
     @Override
-    public ResponseEntity<?> getAllLaunchesWithUserDetails() {
+    public ResponseEntity<?> findAll() {
         List<LaunchUserDetails> launchUserDetails = bo.getAllLaunchesWithUserDetails();
         ArrayList<DashboardLaunchDetail> dashboardLaunchDetails = new ArrayList<>();
         launchUserDetails.forEach(detail -> dashboardLaunchDetails.add(packager.getLaunch(detail)));
@@ -63,7 +67,7 @@ public class LaunchControllerImpl extends LaunchController {
     }
 
     @Override
-    public ResponseEntity<Object> getLaunchById(int launchId) {
+    public ResponseEntity<Object> findById(int launchId) {
         try {
             return new ResponseEntity<>(bo.getLaunch(launchId), HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -95,7 +99,7 @@ public class LaunchControllerImpl extends LaunchController {
     }
 
     @Override
-    public ResponseEntity<Object> deleteLaunch(int launchId) {
+    public ResponseEntity<Object> deleteById(int launchId) {
         try {
             System.out.println(launchId);
             bo.getLaunch(launchId);

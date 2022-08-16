@@ -7,6 +7,7 @@ import com.pali.palindromebackend.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author : Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
@@ -14,12 +15,8 @@ import org.mapstruct.Named;
  **/
 @Mapper(componentModel = "spring", uses = {EntityDTOMapper.class})
 public abstract class FriendEntityDTOMapper {
-
-    private final UserDAO userDAO;
-
-    protected FriendEntityDTOMapper(UserDAO userDAO) {
-        this.userDAO = userDAO;
-    }
+    @Autowired
+    private UserDAO userDAO;
 
     @Mapping(source = "friend2", target = "user.id")
     public abstract Friend getFriend(FriendDTO dto);

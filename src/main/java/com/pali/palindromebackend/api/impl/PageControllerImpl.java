@@ -5,6 +5,8 @@ import com.pali.palindromebackend.business.custom.PageBO;
 import com.pali.palindromebackend.dto.PageDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.NoSuchElementException;
 
@@ -12,6 +14,8 @@ import java.util.NoSuchElementException;
  * @author : Mr.Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
  * @since : 8/16/2022
  **/
+@RestController
+@RequestMapping("/api/v1/page")
 public class PageControllerImpl extends PageController {
     private final PageBO bo;
 
@@ -20,7 +24,7 @@ public class PageControllerImpl extends PageController {
     }
 
     @Override
-    public ResponseEntity<?> getAllPages() {
+    public ResponseEntity<?> findAll() {
         try {
             return new ResponseEntity<>(bo.getAllPages(), HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -31,7 +35,7 @@ public class PageControllerImpl extends PageController {
     }
 
     @Override
-    public ResponseEntity<Object> getPageById(int PageId) {
+    public ResponseEntity<Object> findById(int PageId) {
         try {
             return new ResponseEntity<>(bo.getPage(PageId), HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -52,7 +56,7 @@ public class PageControllerImpl extends PageController {
     }
 
     @Override
-    public ResponseEntity<Object> deletePage(int PageId) {
+    public ResponseEntity<Object> deleteById(int PageId) {
         try {
             bo.deletePage(PageId);
             return new ResponseEntity<>("Successfully deleted the Page !!", HttpStatus.CREATED);

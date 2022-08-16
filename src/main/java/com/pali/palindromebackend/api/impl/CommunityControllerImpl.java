@@ -18,6 +18,8 @@ import com.pali.palindromebackend.service.FileService;
 import com.pali.palindromebackend.service.FullLaunchBodyPackager;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,6 +30,8 @@ import java.util.NoSuchElementException;
  * @author : Mr.Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
  * @since : 8/16/2022
  **/
+@RestController
+@RequestMapping("api/v1/community")
 public class CommunityControllerImpl extends CommunityController {
     private final CommunityBO bo;
     private final CommunityUserBO bo1;
@@ -48,7 +52,7 @@ public class CommunityControllerImpl extends CommunityController {
     }
 
     @Override
-    public ResponseEntity<?> getAllCommunities() {
+    public ResponseEntity<?> findAll() {
         try {
             List<CommunityDTO> allCommunityDTOs = bo.getAllCommunities();
             ArrayList<ResponseCommunityBody> responseCommunityBodies = new ArrayList<>();
@@ -74,12 +78,12 @@ public class CommunityControllerImpl extends CommunityController {
     }
 
     @Override
-    public ResponseEntity<?> getCommunityById(int comId){
+    public ResponseEntity<?> findById(int id){
         try {
             List<MiniUserCom> miniUserComArrayList = new ArrayList<>();
             List<CommunityDashboardLaunchDetail> dashboardLaunchDetails = new ArrayList<>();
-            CommunityDTO dto = bo.getCom(comId);
-            List<MiniUserComDTO> communityUsers = bo1.getCommunityUsers(comId);
+            CommunityDTO dto = bo.getCom(id);
+            List<MiniUserComDTO> communityUsers = bo1.getCommunityUsers(id);
             // converting the whole miniUserCommunityDTO array
             // into miniUserCommunity array
             communityUsers.forEach(value -> miniUserComArrayList.add(new MiniUserCom(
@@ -92,7 +96,7 @@ public class CommunityControllerImpl extends CommunityController {
                     value.getUpdatedDate(),
                     value.getRole()
             )));
-            List<CommunityLaunchDetail> communityLaunches = bo2.getCommunityLaunches(comId);
+            List<CommunityLaunchDetail> communityLaunches = bo2.getCommunityLaunches(id);
             communityLaunches.forEach(value -> {
                 DashboardLaunchDetail launch = packager.getLaunch(
                         new LaunchUserDetails(
@@ -134,7 +138,7 @@ public class CommunityControllerImpl extends CommunityController {
             });
 
             CommunityFullDetails communityFullDetails = new CommunityFullDetails(
-                    comId,
+                    id,
                     dto.getTitle(),
                     dto.getDescription(),
                     dto.getCreatedDate(),
@@ -181,10 +185,10 @@ public class CommunityControllerImpl extends CommunityController {
     }
 
     @Override
-    public ResponseEntity<?> deleteCommunity(int comId){
+    public ResponseEntity<?> deleteById(int id){
         try {
-            bo.getCom(comId);
-            bo.deleteCom(comId);
+            bo.getCom(id);
+            bo.deleteCom(id);
             return new ResponseEntity<>("Successfully deleted the com !!", HttpStatus.CREATED);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>("No friend is found !!", HttpStatus.NOT_FOUND);

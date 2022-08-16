@@ -14,14 +14,8 @@ import javax.validation.Valid;
  * @since : 28/04/2021
  **/
 
-@RestController
-@RequestMapping("/api/v1/users")
-public abstract class UserController {
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public abstract ResponseEntity<?> getAllUsers();
+public abstract class UserController implements SuperController {
 
     // send data to the profile page
     @GetMapping(value = "/info/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -29,17 +23,11 @@ public abstract class UserController {
     @ResponseBody
     public abstract ResponseEntity<?> getUserInfoForProfilePage(@PathVariable("userId") int userId);
 
-    @GetMapping(value = "/{userId}",
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public abstract ResponseEntity<Object> getUserById(@PathVariable("userId") int userId);
-
     @GetMapping(value = "/picture/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public abstract ResponseEntity<?> getUserProfilePicture(@PathVariable("id") int id) ;
+    public abstract ResponseEntity<?> getUserProfilePicture(@PathVariable("id") int id);
 
     @GetMapping(value = "/name/{userName}",
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -66,11 +54,6 @@ public abstract class UserController {
             consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public abstract ResponseEntity<?> saveUser(@Valid @RequestBody UserDTO dto);
-
-    @DeleteMapping("/{userId}")
-    @ResponseStatus(HttpStatus.CREATED)
-    @ResponseBody
-    public abstract ResponseEntity<Object> deleteUser(@PathVariable("userId") int userId);
 
     @PutMapping(
             value = "/{userid}",

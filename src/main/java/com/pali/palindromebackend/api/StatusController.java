@@ -12,21 +12,8 @@ import javax.validation.Valid;
  * @author : Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
  * @since : 19/06/2021
  **/
-@RestController
-@RequestMapping("/api/v1/status")
-public abstract class StatusController {
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public abstract ResponseEntity<?> getAllStatuses();
-
-
-    @GetMapping(value = "/{StatusId}",
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public abstract ResponseEntity<Object> getStatusById(@PathVariable("StatusId") int StatusId);
+public abstract class StatusController implements SuperController{
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(
@@ -35,11 +22,6 @@ public abstract class StatusController {
     )
     @ResponseBody
     public abstract ResponseEntity<?> saveStatus(@Valid @RequestBody StatusDTO dto);
-
-    @DeleteMapping("/{StatusId}")
-    @ResponseStatus(HttpStatus.CREATED)
-    @ResponseBody
-    public abstract ResponseEntity<Object> deleteStatus(@PathVariable("StatusId") int StatusId);
 
     @PutMapping(
             value = "/{StatusId}",

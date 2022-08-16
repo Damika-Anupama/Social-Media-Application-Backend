@@ -11,10 +11,6 @@ import com.pali.palindromebackend.entity.Friend;
  **/
 public class FriendEntityDTOMapperImpl extends FriendEntityDTOMapper {
 
-    protected FriendEntityDTOMapperImpl(UserDAO userDAO) {
-        super(userDAO);
-    }
-
     @Override
     public Friend getFriend(FriendDTO dto) {
         if (dto == null) {

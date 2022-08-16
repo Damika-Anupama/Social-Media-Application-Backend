@@ -4,7 +4,7 @@ import com.pali.palindromebackend.business.util.StatusEntityDTOMapper;
 import com.pali.palindromebackend.dto.StatusDTO;
 import com.pali.palindromebackend.entity.Status;
 
-public class StatusEntityDTOMapperImpl extends StatusEntityDTOMapper {
+public class StatusEntityDTOMapperimpl extends StatusEntityDTOMapper {
     @Override
     public Status getStatus(StatusDTO dto) {
         if (dto == null) {

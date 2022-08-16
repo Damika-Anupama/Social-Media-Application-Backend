@@ -1,7 +1,6 @@
 package com.pali.palindromebackend.api.impl;
 
 import com.pali.palindromebackend.api.AuthenticateController;
-import com.pali.palindromebackend.business.custom.UserBO;
 import com.pali.palindromebackend.business.util.MyUserDetailsService;
 import com.pali.palindromebackend.dao.UserDAO;
 import com.pali.palindromebackend.dto.LoginDTO;
@@ -17,6 +16,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
@@ -24,6 +25,8 @@ import java.util.Optional;
  * @author : Mr.Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
  * @since : 8/16/2022
  **/
+@RestController
+@RequestMapping("/api/v1/authenticate")
 public class AuthenticationControllerImpl extends AuthenticateController {
     private final AuthenticationManager authenticationManager;
 
@@ -36,22 +39,19 @@ public class AuthenticationControllerImpl extends AuthenticateController {
 
     private final FileService fileService;
 
-    private final UserBO userBO;
+    private final UserControllerImpl userControllerImpl;
 
-    public AuthenticationControllerImpl(AuthenticationManager authenticationManager, MyUserDetailsService myUserDetailsService, JWTUtil jwtUtil, UserDAO userDAO, FileService fileService, UserBO userBO) {
+    public AuthenticationControllerImpl(AuthenticationManager authenticationManager, MyUserDetailsService myUserDetailsService, JWTUtil jwtUtil, UserDAO userDAO, FileService fileService, UserControllerImpl userControllerImpl) {
         this.authenticationManager = authenticationManager;
         this.myUserDetailsService = myUserDetailsService;
         this.jwtUtil = jwtUtil;
         this.userDAO = userDAO;
         this.fileService = fileService;
-        this.userBO = userBO;
+        this.userControllerImpl = userControllerImpl;
     }
 
     @Override
     public ResponseEntity<?> createAuthenticationToken(LoginDTO loginDTO) {
-        UserControllerImpl userController = new UserControllerImpl(null,
-                userBO,
-                null, null, null, null, null, null);
         UserBody userBody = new UserBody();
         java.util.Date date = new java.util.Date();
         userBody.setLastLogin(date);
@@ -75,7 +75,7 @@ public class AuthenticationControllerImpl extends AuthenticateController {
             media = fileService.getMedia(user.get().getProfilePicture());
         }
         AuthenticateBody body = new AuthenticateBody(jwt, user.get().getId(), media, user.get().getUsername());
-        userController.updateUserLastLogin(userBody, user.get().getId());// update the last login time of the user
+        userControllerImpl.updateUserLastLogin(userBody, user.get().getId());// update the last login time of the user
         return ResponseEntity.ok(body);
     }
 }

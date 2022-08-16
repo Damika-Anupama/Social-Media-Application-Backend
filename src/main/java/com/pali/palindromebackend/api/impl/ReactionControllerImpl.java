@@ -5,6 +5,8 @@ import com.pali.palindromebackend.business.custom.ReactionBO;
 import com.pali.palindromebackend.dto.ReactionDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 import java.util.NoSuchElementException;
@@ -13,6 +15,8 @@ import java.util.NoSuchElementException;
  * @author : Mr.Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
  * @since : 8/16/2022
  **/
+@RestController
+@RequestMapping("/api/v1/reactions")
 public class ReactionControllerImpl extends ReactionController {
     private final ReactionBO bo;
 
@@ -21,7 +25,7 @@ public class ReactionControllerImpl extends ReactionController {
     }
 
     @Override
-    public ResponseEntity<?> getAllReactions() {
+    public ResponseEntity<?> findAll() {
         try {
             return new ResponseEntity<>(bo.getAllReactions(), HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -32,7 +36,7 @@ public class ReactionControllerImpl extends ReactionController {
     }
 
     @Override
-    public ResponseEntity<Object> getReactionById(int ReactionId) {
+    public ResponseEntity<Object> findById(int ReactionId) {
         try {
             return new ResponseEntity<>(bo.getReaction(ReactionId), HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -62,7 +66,7 @@ public class ReactionControllerImpl extends ReactionController {
     }
 
     @Override
-    public ResponseEntity<Object> deleteReaction(int ReactionId) {
+    public ResponseEntity<Object> deleteById(int ReactionId) {
         try {
             bo.deleteReaction(ReactionId);
             return new ResponseEntity<>("Successfully deleted the Status !!", HttpStatus.CREATED);

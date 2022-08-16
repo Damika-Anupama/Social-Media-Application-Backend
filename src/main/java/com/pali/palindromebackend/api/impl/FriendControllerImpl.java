@@ -5,6 +5,8 @@ import com.pali.palindromebackend.business.custom.FriendBO;
 import com.pali.palindromebackend.dto.FriendDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 import java.util.NoSuchElementException;
@@ -13,6 +15,8 @@ import java.util.NoSuchElementException;
  * @author : Mr.Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
  * @since : 8/16/2022
  **/
+@RestController
+@RequestMapping("api/v1/friends")
 public class FriendControllerImpl extends FriendController {
     private final FriendBO bo;
 
@@ -21,7 +25,7 @@ public class FriendControllerImpl extends FriendController {
     }
 
     @Override
-    public ResponseEntity<?> getAllFriends() {
+    public ResponseEntity<?> findAll() {
         try {
             return new ResponseEntity<>(bo.getAllFriends(), HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -32,7 +36,7 @@ public class FriendControllerImpl extends FriendController {
     }
 
     @Override
-    public ResponseEntity<?> getFriendById(int friendshipId) {
+    public ResponseEntity<?> findById(int friendshipId) {
         try {
             return new ResponseEntity<>(bo.getFriend(friendshipId), HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -57,7 +61,7 @@ public class FriendControllerImpl extends FriendController {
     }
 
     @Override
-    public ResponseEntity<?> deleteFriend(int friendshipId) {
+    public ResponseEntity<?> deleteById(int friendshipId) {
         try {
             System.out.println(friendshipId);
             bo.getFriend(friendshipId);

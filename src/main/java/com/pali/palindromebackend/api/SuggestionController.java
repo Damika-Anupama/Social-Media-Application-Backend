@@ -12,26 +12,13 @@ import javax.validation.Valid;
  * @author : Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
  * @since : 19/06/2021
  **/
-@RestController
-@RequestMapping("/api/v1/suggestion")
-public abstract class SuggestionController {
 
-
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public abstract ResponseEntity<?> getAllSuggestions();
+public abstract class SuggestionController implements SuperController{
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/user")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public abstract ResponseEntity<?> getAllSuggestionsWithUsers();
-
-    @GetMapping(value = "/{suggestionId}",
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public abstract ResponseEntity<Object> getSuggestionById(@PathVariable("suggestionId") int suggestionId);
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(
@@ -40,11 +27,6 @@ public abstract class SuggestionController {
     )
     @ResponseBody
     public abstract ResponseEntity<?> saveSuggestion(@Valid @RequestBody SuggestionDTO dto);
-
-    @DeleteMapping("/{suggestionId}")
-    @ResponseStatus(HttpStatus.CREATED)
-    @ResponseBody
-    public abstract ResponseEntity<Object> deleteSuggestion(@PathVariable("suggestionId") int suggestionId);
 
     @PutMapping(
             value = "/{suggestionId}",

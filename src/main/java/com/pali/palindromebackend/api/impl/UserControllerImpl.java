@@ -10,6 +10,8 @@ import com.pali.palindromebackend.service.FileService;
 import com.pali.palindromebackend.service.FullLaunchBodyPackager;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +21,8 @@ import java.util.NoSuchElementException;
  * @author : Mr.Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
  * @since : 8/16/2022
  **/
-
+@RestController
+@RequestMapping("/api/v1/users")
 public class UserControllerImpl extends UserController {
     private final UserBO userBO;
     private final CommunityUserBO communityUserBO;
@@ -44,7 +47,7 @@ public class UserControllerImpl extends UserController {
     }
 
     @Override
-    public ResponseEntity<?> getAllUsers() {
+    public ResponseEntity<?> findAll() {
         try {
             return new ResponseEntity<>(userBO.getAllUsers(), HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -170,7 +173,7 @@ public class UserControllerImpl extends UserController {
     }
 
     @Override
-    public ResponseEntity<Object> getUserById(int userId) {
+    public ResponseEntity<Object> findById(int userId) {
         try {
             UserDTO user = userBO.getUser(userId);
             SendingUserBody body = new SendingUserBody(
@@ -195,7 +198,7 @@ public class UserControllerImpl extends UserController {
     }
 
     @Override
-    public ResponseEntity<?> getUserProfilePicture(int id){
+    public ResponseEntity<?> getUserProfilePicture(int id) {
         try {
             HomePageLoading hpl = new HomePageLoading(fileService.getMedia(userBO.getUserProfilePicture(id)));
             return new ResponseEntity<>(hpl, HttpStatus.OK);
@@ -207,7 +210,7 @@ public class UserControllerImpl extends UserController {
     }
 
     @Override
-    public ResponseEntity<Object> getUserByName(String userName)  {
+    public ResponseEntity<Object> getUserByName(String userName) {
         System.out.println("getUserByName");
         try {
             UserDTO user = userBO.getUserByName(userName);
@@ -261,7 +264,7 @@ public class UserControllerImpl extends UserController {
     }
 
     @Override
-    public ResponseEntity<Object> deleteUser(int userId) {
+    public ResponseEntity<Object> deleteById(int userId) {
         try {
             System.out.println(userId);
             userBO.getUser(userId);

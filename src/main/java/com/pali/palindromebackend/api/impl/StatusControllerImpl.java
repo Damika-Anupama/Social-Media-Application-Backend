@@ -5,6 +5,8 @@ import com.pali.palindromebackend.business.custom.StatusBO;
 import com.pali.palindromebackend.dto.StatusDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -13,6 +15,8 @@ import java.util.NoSuchElementException;
  * @author : Mr.Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
  * @since : 8/16/2022
  **/
+@RestController
+@RequestMapping("/api/v1/status")
 public class StatusControllerImpl extends StatusController {
     private final StatusBO bo;
 
@@ -21,7 +25,7 @@ public class StatusControllerImpl extends StatusController {
     }
 
     @Override
-    public ResponseEntity<?> getAllStatuses() {
+    public ResponseEntity<?> findAll() {
         try {
             return new ResponseEntity<>(bo.getAllStatuses(), HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -32,7 +36,7 @@ public class StatusControllerImpl extends StatusController {
     }
 
     @Override
-    public ResponseEntity<Object> getStatusById(int StatusId) {
+    public ResponseEntity<Object> findById(int StatusId) {
         try {
             return new ResponseEntity<>(bo.getStatus(StatusId), HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -53,7 +57,7 @@ public class StatusControllerImpl extends StatusController {
     }
 
     @Override
-    public ResponseEntity<Object> deleteStatus(int StatusId) {
+    public ResponseEntity<Object> deleteById(int StatusId) {
         try {
             bo.deleteStatus(StatusId);
             return new ResponseEntity<>("Successfully deleted the Status !!", HttpStatus.CREATED);

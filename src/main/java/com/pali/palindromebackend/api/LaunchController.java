@@ -14,15 +14,8 @@ import javax.validation.Valid;
  * @author : Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
  * @since : 01/06/2021
  **/
-@RestController
-@RequestMapping("/api/v1/launches")
-abstract public class LaunchController {
 
-    @PreAuthorize("permitAll()")
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public abstract ResponseEntity<?> getAllLaunchesWithUserDetails();
+abstract public class LaunchController implements SuperController{
 
     @PreAuthorize("permitAll()")
     @GetMapping(value = "/user/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -31,11 +24,6 @@ abstract public class LaunchController {
     public abstract ResponseEntity<?> getLaunchesByUserId(@PathVariable("userId") int userId) ;
 
 
-    @GetMapping(value = "/{launchId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public abstract ResponseEntity<Object> getLaunchById(@PathVariable("launchId") int launchId);
-
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(
             produces = MediaType.APPLICATION_JSON_VALUE,
@@ -43,11 +31,6 @@ abstract public class LaunchController {
     )
     @ResponseBody
     public abstract ResponseEntity<Launch> saveLaunch(@ModelAttribute LaunchBody body) ;
-
-    @DeleteMapping("/{launchId}")
-    @ResponseStatus(HttpStatus.CREATED)
-    @ResponseBody
-    public abstract ResponseEntity<Object> deleteLaunch(@PathVariable("launchId") int launchId);
 
     @PutMapping(
             value = "/{launchId}",

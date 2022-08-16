@@ -8,6 +8,8 @@ import com.pali.palindromebackend.model.ResponseSuggestionUser;
 import com.pali.palindromebackend.service.FileService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +19,8 @@ import java.util.NoSuchElementException;
  * @author : Mr.Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
  * @since : 8/16/2022
  **/
+@RestController
+@RequestMapping("/api/v1/suggestion")
 public class SuggestionControllerImpl extends SuggestionController {
     private final SuggestionBO bo;
     private final FileService fileService;
@@ -27,7 +31,7 @@ public class SuggestionControllerImpl extends SuggestionController {
     }
 
     @Override
-    public ResponseEntity<?> getAllSuggestions(){
+    public ResponseEntity<?> findAll(){
         try {
             return new ResponseEntity<>( bo.getAllSuggestions(), HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -63,7 +67,7 @@ public class SuggestionControllerImpl extends SuggestionController {
 
 
     @Override
-    public ResponseEntity<Object> getSuggestionById(int suggestionId) {
+    public ResponseEntity<Object> findById(int suggestionId) {
         try {
             return new ResponseEntity<>(bo.getSuggestion(suggestionId), HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -87,7 +91,7 @@ public class SuggestionControllerImpl extends SuggestionController {
     }
 
     @Override
-    public ResponseEntity<Object> deleteSuggestion(int suggestionId){
+    public ResponseEntity<Object> deleteById(int suggestionId){
         try {
             bo.deleteSuggestion(suggestionId);
             return new ResponseEntity<>("Successfully deleted the Suggestion !!", HttpStatus.CREATED);

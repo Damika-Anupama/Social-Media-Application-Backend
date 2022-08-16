@@ -5,6 +5,8 @@ import com.pali.palindromebackend.business.custom.ShareBO;
 import com.pali.palindromebackend.dto.ShareDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.NoSuchElementException;
 
@@ -12,6 +14,8 @@ import java.util.NoSuchElementException;
  * @author : Mr.Damika Anuapama Nanayakkara <damikaanupama@gmail.com>
  * @since : 8/16/2022
  **/
+@RestController
+@RequestMapping("api/v1/shares")
 public class ShareControllerImpl extends ShareController {
     private final ShareBO bo;
 
@@ -20,7 +24,7 @@ public class ShareControllerImpl extends ShareController {
     }
 
     @Override
-    public ResponseEntity<?> getAllShares() {
+    public ResponseEntity<?> findAll() {
         try {
             return new ResponseEntity<>(bo.getAllShares(), HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -31,7 +35,7 @@ public class ShareControllerImpl extends ShareController {
     }
 
     @Override
-    public ResponseEntity<?> getShareById(int shareId) {
+    public ResponseEntity<?> findById(int shareId) {
         try {
             return new ResponseEntity<>(bo.getShare(shareId), HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -54,7 +58,7 @@ public class ShareControllerImpl extends ShareController {
     }
 
     @Override
-    public ResponseEntity<?> deleteShare(int shareId) {
+    public ResponseEntity<?> deleteById(int shareId) {
         try {
             bo.deleteShare(shareId);
             return new ResponseEntity<>("Successfully deleted the com !!", HttpStatus.CREATED);
