@@ -78,6 +78,11 @@ public class UserBOImpl implements UserBO {
     }
 
     @Override
+    public void setLogOut(int userId) {
+        userDAO.setLogOut(userId);
+    }
+
+    @Override
     public UserDTO getUserByEmail(String email) {
         return mapper.getUserDTO(userDAO.findUserByEmail(email));
     }

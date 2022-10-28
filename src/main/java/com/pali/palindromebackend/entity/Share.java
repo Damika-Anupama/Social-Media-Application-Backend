@@ -38,4 +38,5 @@ public class Share implements SuperEntity{
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "launch_id",referencedColumnName = "id",nullable = false)
     private Launch launch;
+
 }

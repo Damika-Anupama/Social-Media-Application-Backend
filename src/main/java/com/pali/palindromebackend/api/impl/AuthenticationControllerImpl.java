@@ -1,5 +1,6 @@
 package com.pali.palindromebackend.api.impl;
 
+import com.pali.palindromebackend.api.AdController;
 import com.pali.palindromebackend.api.AuthenticateController;
 import com.pali.palindromebackend.business.util.MyUserDetailsService;
 import com.pali.palindromebackend.dao.UserDAO;

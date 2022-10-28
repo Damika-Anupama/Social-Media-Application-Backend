@@ -51,7 +51,7 @@ public class JWTRequestFilter extends OncePerRequestFilter {
             }
         }
         try {
-            chain.doFilter(req,res);
+            super.doFilter(req, res, chain);
         } catch (IOException | ServletException e) {
             System.out.println("Error in JWTRequestFilter!");
             e.printStackTrace();

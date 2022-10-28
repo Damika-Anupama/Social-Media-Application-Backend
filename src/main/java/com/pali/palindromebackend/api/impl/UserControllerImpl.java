@@ -59,6 +59,7 @@ public class UserControllerImpl extends UserController {
 
     @Override
     public ResponseEntity<?> getUserInfoForProfilePage(int userId) {
+        System.out.println("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n"+userId+"\\\\\\\\\\\\\\\\\\\\\\\\\\n");
         try {
             UserDTO user = userBO.getUser(userId);
 
@@ -306,6 +307,11 @@ public class UserControllerImpl extends UserController {
         } catch (Exception e) {
             return new ResponseEntity<>("Something went wrong !!", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @Override
+    public void logoutUser(int userId) {
+        userBO.setLogOut(userId);
     }
 
     @Override

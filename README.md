@@ -1,107 +1,76 @@
 Palindrome Backend
 by Damika
 
+Level 1
+Complete all basic pages stuffs without friend, group pages suggestions and random status suggestions
+Includes chat, groups, pages, status
+Complete mobile app UpTo webapp content
+Apply UX techniques for both web app and mobile app (animations sounds)
+Apply docker with micro services
 
-# Stages of the project
+Level 2
+Add mock 300 users 20 groups, 20 pages (and statuses)
+Add friends suggestions, group suggestions, page suggestions , status suggestions ( algorithms )
+Introduce ads and set add suggestions according to user details
+Add cyber security features
 
-### 1. Stage One 
-> Basic website (palindrome) with basic functionalities,
-> No adds, 
-> Basically seems as a prototype of the facebook,
-> No XP level,
-> No chat facilities, 
-> No leaderboard,
-> No shops,
-> No games
-- Anyone can make accounts 
-- Publish posts
-  - report others' posts
-  - Like
-  - comment
-    - comment tree too should be ok
-  - share -> This should wait until I finish the pages and groups :)
-    - private - only in your wall
-    - public - share to your friends and your wall
-    - groups
-- Put status and view status
-  - cannot put options like share, comment, reactions
-- Can maintain own profile page 
-  - viewing own details to others (viewers)
-  - ascending all the user details according to the date
-- Can make groups (including pages)
-    - have owners, authors, users etc.
-    - can publish posts
-    - etc
-- Maintain friends (No limitation ;) -> All friends can be viewed in one pop-up window
-- Everyone can change(update) their own setting (maintain the settings page)
-- Search
-  - public search among users, groups, pages, statuses
-- Notifications 
-  - friend requests
-  - group invites
-  - pages invite to follow their page.
-  - new posts on pages and groups and from friends
-  - warnings or information from the developers
-  - etc
-- Both Suggestions and Contact us in one page
-  - To send private messages to the community 
-- Logout
+Level 3
+Check all the other social media sites and compare features according to relevant criterias
+Criterias mainly based on user experience:
+- how posts are viewing (robust in Instagram)
+- loading speed
+- more functionalities than current social media sites
+- video calls, audio calls quality (zoom)
+- extream fun in status
+- relevant friend suggestions, group page suggestions,
+- Introduce new features currently not in other social media sites ( weekly giveaways, creativity appreciation tournaments, money exchange with cryptocurrency, etc.)
 
 
-### 2. Stage Two
-> We should Introduce XP level. 
-> For there should be sufficient reasons to popular the XP level,
-> No games and shops
-
-- XP level - Can be seen on the top navigation bar
-  - your xp level goes up
-    - when you make your profile
-    - making friends
-    - making sharing posts
-    - make pages and followers
-    - groups
-    - etc.
-  - xp level goes down
-    - when your posts are reported
-    - when unfriend someone
-    - unsuccessful pages and groups
-    - etc.
-- Leaderboard - based on XP level
-  - shows the top ten xp leaders for improve the xp concept
-- Chatter box 
-  - This is like the messenger 
-  - but your profile is linked to the palindrome account
-  - you can view status though this app (maybe in mobile version)
+Level 4
+End of finishing backend (temporarily)
+- use best practices and remove bad coding
+- use design patterns ( structural, creational, behavioural)
+- add concurrency
+- reduce lot of time consuming procedures (find new frameworks)
+- apply singleton transactions for relevant requests and responses
 
 
-### 3. Stage Three
->This is the section of the appetite about the financial side,
-> So we have to introduce new functionalities to earn money
+Level 5
+End of finishing both web and mobile front ends
+- recheck all the other social media sites and check our performance is better than them
+- find new frameworks and those might be very helpful
+- check for all internet web browsers and all the types of computer devices whether our front end is compatible with them
+- research on human psychology (what colours they like, animations ,happy suggestions)
+- double the reactiveness of the site
+- image filters and video filters
 
-- Introduce adds
-    - according to your region you can publish adds or on publicly
-    - strictly need a page as business portal
-    - as a status
-    - as a post
-    - payment methods - bank transactions, cryptocurrencies
-    - etc.
-- Introduce a game page and the shop page.
-  - games are mainly based on improving the xp level
-  - shops are mainly based on buying the things in games.
-  - When you're developing this page call game developers publicly as offers
-  
-### 4. Stage Four
->In here we're going to make the mobile application to our software,
-> Improve the scalability of palindrome. And this is the deploying stage :)
+Level 6
+Release
+- Amazon web services
+- financial funding
+- Google play store
+- aid from university
+- liciening
+-
 
-- Build the Mobile app for palindrome.
-  - All functionalities in the web page can be accessed through the mobile device.
-- Build another app for Chatterbox
-  - You can use chatterbox through palindrome app 
-  - But in here chatterbox is only visible (can navigate)
-  - and also you can view status too
-- Update more info page
 
+-------------------------------------------------------------------------
+Not include in V.0.0.0
+1. Ads
+2. Shop
+3. XP levels
+4. NFTs
+5. Palindrome own games (only addiction games)
+6. Algorithms according to human psychology
+7. Machine learning advance techniques ( face detections etc.)
+8. Analyzing user data ( data science ) but keep only in database
+9. Advance cyber security features for prevent from hacking
+10. Sending messages to Phones ( cauz that costs)
+11. Apply VR goes into 3D
+
+
+Why would others buy from me instead of buying other products (Newness, Performance, Design, Price, Status, Cost Reduction, Risk Reduction, Usablity, Convenience)
+keep taking conversations btw customers (not only once)
 
 **Plan to end the whole project in december 2022**
 **The areas need to study**
@@ -138,6 +107,8 @@ by Damika
 >> VCS - GIT, Github
 > 
 >> Techniques -> AJAX, JWT, OpenID Connect 
+> 
+>> marketing
 
 ## **_[ Send emails to each client email addresses, their notifications]_**
 ### 5. Stage Five -> ***Most Important Stage***

@@ -27,4 +27,6 @@ public interface UserBO extends SuperBO {
     String getUserProfilePicture(int id);
 
     void updateUserNormalDetails(UserDTO dto);
+
+    void setLogOut(int userId);
 }

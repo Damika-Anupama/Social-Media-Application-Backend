@@ -56,7 +56,7 @@ public class User implements SuperEntity {
     @Column(name = "last_login")
     private Date lastLogin;
     @Column(name = "online_status")
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     private OnlineStatus onlineStatus;
     @Column(name = "full_name")
     private String fullName;

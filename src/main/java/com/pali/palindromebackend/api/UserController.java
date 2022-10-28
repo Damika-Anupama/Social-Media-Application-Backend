@@ -18,7 +18,7 @@ import javax.validation.Valid;
 public abstract class UserController implements SuperController {
 
     // send data to the profile page
-    @GetMapping(value = "/info/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/info/{userId}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public abstract ResponseEntity<?> getUserInfoForProfilePage(@PathVariable("userId") int userId);
@@ -63,6 +63,11 @@ public abstract class UserController implements SuperController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public abstract ResponseEntity<?> updateUser(@ModelAttribute UserBody body, @PathVariable("userid") int userid);
+
+    @PutMapping(value = "/logout")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public abstract void logoutUser(@ModelAttribute int userId);
 
 
     // TODO: 7/17/2022 Settle the error, when a user is logging to the application

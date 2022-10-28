@@ -26,4 +26,8 @@ public interface UserDAO extends JpaRepository<User, Integer> {
 
     @Query("select u from User u where u.email like ?1")
     User findUserByEmail(String email);
+
+    @Modifying
+    @Query("UPDATE User SET onlineStatus = 1 WHERE id = ?1")
+    void setLogOut(int userId);
 }
