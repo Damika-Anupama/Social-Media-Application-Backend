@@ -1,0 +1,323 @@
+repo_name: Damika-Anupama/Social-Media-Application-Backend
+report_id: 584926d390fc8a343208eab2090b5b71
+version: 0.1
+repo_type: Public
+timestamp: '2024-02-21T07:09:31+00:00'
+requested_by: Damika-Anupama
+provider: github
+branch: master
+detected_tools_count: 24
+tools:
+- name: Java
+  description: A concurrent, class-based, object-oriented, language specifically designed
+    to have as few implementation dependencies as possible
+  website_url: https://www.java.com
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/995/K85ZWV2F.png
+  detection_source_url: https://github.com/Damika-Anupama/Social-Media-Application-Backend
+  detection_source: Repo Metadata
+- name: Akka
+  description: Build powerful concurrent &amp; distributed applications more easily
+  website_url: http://akka.io/
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Concurrency Frameworks
+  image_url: https://img.stackshare.io/service/1773/bxLhidly.png
+  detection_source_url: https://github.com/Damika-Anupama/Social-Media-Application-Backend/blob/master/src/main/resources/application.properties
+  detection_source: src/main/resources/application.properties
+  last_updated_by: damika
+  last_updated_on: 2021-05-29 09:28:58.000000000 Z
+- name: Spring Framework
+  description: An application framework and inversion of control container for the
+    Java platform
+  website_url: https://spring.io/projects/spring-framework
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Frameworks (Full Stack)
+  image_url: https://img.stackshare.io/service/2006/spring-framework-project-logo.png
+  detection_source_url: https://github.com/Damika-Anupama/Social-Media-Application-Backend/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: damika
+  last_updated_on: 2022-10-28 02:33:14.000000000 Z
+- name: H2 Database
+  description: A relational database management system written in Java
+  website_url: http://www.h2database.com/
+  open_source: false
+  hosted_saas: false
+  category: Data Stores
+  sub_category: Databases
+  image_url: https://img.stackshare.io/service/3105/h2-logo_square_400x400.png
+  detection_source_url: https://github.com/Damika-Anupama/Social-Media-Application-Backend/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: damika
+  last_updated_on: 2022-10-28 02:33:14.000000000 Z
+- name: MySQL
+  description: The world's most popular open source database
+  website_url: http://www.mysql.com
+  open_source: true
+  hosted_saas: false
+  category: Data Stores
+  sub_category: Databases
+  image_url: https://img.stackshare.io/service/1025/logo-mysql-170x170.png
+  detection_source_url: https://github.com/Damika-Anupama/Social-Media-Application-Backend/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: damika
+  last_updated_on: 2021-05-29 09:28:58.000000000 Z
+- name: Git
+  description: Fast, scalable, distributed revision control system
+  website_url: http://git-scm.com/
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Version Control System
+  image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source_url: https://github.com/Damika-Anupama/Social-Media-Application-Backend
+  detection_source: Repo Metadata
+- name: JUnit
+  description: A programmer-oriented testing framework for Java
+  website_url: http://junit.org/
+  version: 4.13.1
+  license: EPL-1.0
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Testing Frameworks
+  image_url: https://img.stackshare.io/service/2020/874086.png
+  detection_source_url: https://github.com/Damika-Anupama/Social-Media-Application-Backend/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: damika
+  last_updated_on: 2021-05-29 09:28:58.000000000 Z
+- name: Apache Camel
+  description: A versatile open source integration framework
+  website_url: https://camel.apache.org/
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Application Hosting
+  sub_category: Platform as a Service
+  image_url: https://img.stackshare.io/service/3276/xWt1RFo6_400x400.jpg
+  detection_source_url: https://github.com/Damika-Anupama/Social-Media-Application-Backend/blob/master/src/main/resources/application.properties
+  detection_source: src/main/resources/application.properties
+  last_updated_by: damika
+  last_updated_on: 2021-05-29 09:28:58.000000000 Z
+- name: com.h2database:h2
+  description: H2 Database Engine
+  license: MIT-feh
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/Damika-Anupama/Social-Media-Application-Backend/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: damika
+  last_updated_on: 2022-10-28 02:33:14.000000000 Z
+- name: io.jsonwebtoken:jjwt
+  description: 'Java JWT: JSON Web Token for Java and Android'
+  version: 0.9.1
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/Damika-Anupama/Social-Media-Application-Backend/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: damika
+  last_updated_on: 2021-05-29 09:28:58.000000000 Z
+- name: junit:junit
+  description: JUnit is a unit testing framework for Java
+  version: 4.13.1
+  license: EPL-1.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/Damika-Anupama/Social-Media-Application-Backend/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: damika
+  last_updated_on: 2022-10-28 02:33:14.000000000 Z
+- name: mysql:mysql-connector-java
+  description: MySQL JDBC Type 4 driver
+  version: 8.0.23
+  license: GPL-3.0-only
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/Damika-Anupama/Social-Media-Application-Backend/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: damika
+  last_updated_on: 2022-10-28 02:33:14.000000000 Z
+  vulnerabilities:
+  - name: Incorrect Authorization in MySQL Connector Java
+    cve_id: CVE-2021-2471
+    cve_url: https://github.com/advisories/GHSA-w6f2-8wx4-47r5
+    detected_date: Jun 23
+    severity: moderate
+    first_patched: 8.0.27
+  - name: Improper Handling of Insufficient Permissions or Privileges in MySQL Connectors
+      Java
+    cve_id: CVE-2022-21363
+    cve_url: https://github.com/advisories/GHSA-g76j-4cxx-23h9
+    detected_date: Jun 21
+    severity: moderate
+    first_patched: 8.0.28
+- name: org.junit.vintage:junit-vintage-engine
+  description: Module "junit-vintage-engine" of JUnit 5
+  license: EPL-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/Damika-Anupama/Social-Media-Application-Backend/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: damika
+  last_updated_on: 2022-10-28 02:33:14.000000000 Z
+- name: org.projectlombok:lombok
+  description: 'Spice up your java: Automatic Resource Management'
+  version: 1.18.16
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/Damika-Anupama/Social-Media-Application-Backend/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: damika
+  last_updated_on: 2022-10-28 02:33:14.000000000 Z
+- name: org.springframework.boot:spring-boot-configuration-processor
+  description: Spring Boot Configuration Processor
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/Damika-Anupama/Social-Media-Application-Backend/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: damika
+  last_updated_on: 2022-10-28 02:33:14.000000000 Z
+- name: org.springframework.boot:spring-boot-starter-data-jpa
+  description: Starter for using Spring Data JPA with Hibernate
+  version: 2.4.2
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/Damika-Anupama/Social-Media-Application-Backend/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: damika
+  last_updated_on: 2022-10-28 02:33:14.000000000 Z
+- name: org.springframework.boot:spring-boot-starter-mail
+  description: Starter for using Java Mail and Spring Framework's email sending support
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/Damika-Anupama/Social-Media-Application-Backend/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: damika
+  last_updated_on: 2022-10-28 02:33:14.000000000 Z
+- name: org.springframework.boot:spring-boot-starter-security
+  description: Starter for using Spring Security
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/Damika-Anupama/Social-Media-Application-Backend/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: damika
+  last_updated_on: 2022-10-28 02:33:14.000000000 Z
+- name: org.springframework.boot:spring-boot-starter-test
+  description: Starter for testing Spring Boot applications with libraries including
+    JUnit
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/Damika-Anupama/Social-Media-Application-Backend/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: damika
+  last_updated_on: 2022-10-28 02:33:14.000000000 Z
+- name: org.springframework.boot:spring-boot-starter-validation
+  description: Starter for using Java Bean Validation with Hibernate Validator
+  version: 2.4.3
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/Damika-Anupama/Social-Media-Application-Backend/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: damika
+  last_updated_on: 2022-10-28 02:33:14.000000000 Z
+- name: org.springframework.boot:spring-boot-starter-web
+  description: Starter for building web, including RESTful, applications using Spring
+    MVC
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/Damika-Anupama/Social-Media-Application-Backend/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: damika
+  last_updated_on: 2022-10-28 02:33:14.000000000 Z
+- name: org.springframework.boot:spring-boot-test
+  description: Spring Boot Test
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/Damika-Anupama/Social-Media-Application-Backend/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: damika
+  last_updated_on: 2022-10-28 02:33:14.000000000 Z
+- name: org.springframework.security:spring-security-test
+  description: Spring-security-test
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/Damika-Anupama/Social-Media-Application-Backend/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: damika
+  last_updated_on: 2022-10-28 02:33:14.000000000 Z
+- name: org.springframework:spring-test
+  description: Spring TestContext Framework
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/Damika-Anupama/Social-Media-Application-Backend/blob/master/pom.xml
+  detection_source: pom.xml
+  last_updated_by: damika
+  last_updated_on: 2022-10-28 02:33:14.000000000 Z
